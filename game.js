@@ -340,6 +340,11 @@ function renderScore() {
 
 // Update function - contains game logic
 function update() {
+    // Only run game logic if state is 'playing'
+    if (!isPlaying()) {
+        return;  // Don't update game logic in start or gameover states
+    }
+    
     // Increment frame counter
     frameCount++;
     

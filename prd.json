@@ -552,7 +552,7 @@
         "No pipes appear in start state",
         "Game waits for player input"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F026",

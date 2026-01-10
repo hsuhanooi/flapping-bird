@@ -986,3 +986,40 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - The state machine will be used in F025-F031 to control game flow (start screen, playing, game over, restart)
 
 ---
+
+### [2026-01-10] - F025: Implement Start State Behavior
+**Status:** COMPLETE
+
+**Implemented:**
+- Modified update() function to check isPlaying() before running game logic
+- Added early return in update() when state is not 'playing' (start or gameover states)
+- Game logic (bird physics, pipe movement, collision detection) only runs when state is 'playing'
+- Bird stays stationary in start state (no gravity applied, no movement)
+- Pipes do not spawn or move in start state
+- Frame counter does not increment in start state
+- Collision detection does not run in start state
+- Bird hovers at starting position (CANVAS_HEIGHT / 2) in start state
+
+**Start State Behavior:**
+- When gameState is 'start', update() returns early without running any game logic
+- Bird remains at initial position (x: 80, y: 300) with velocity 0
+- No pipes spawn or move when in start state
+- Frame counter remains at 0 in start state
+- Game waits for player input to transition to 'playing' state (F027)
+
+**Files Modified:**
+- game.js - Added isPlaying() check in update() function with early return
+
+**Files Created:**
+- tests/start-state-behavior.test.js - 12 unit tests for start state behavior
+
+**Tests:** 12/12 passing (461 total across all test files)
+
+**Notes for Next Developer:**
+- F026 (Render Start Screen UI) is next - display title and instructions on start screen
+- The update() function now properly respects game state - only runs game logic when playing
+- Bird will remain stationary until F027 (Start Game Transition) is implemented
+- The render() function still runs in all states - F026 will add start screen rendering
+- Game state machine is now functional - start state prevents all game logic from running
+
+---
