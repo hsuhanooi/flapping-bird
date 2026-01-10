@@ -579,3 +579,39 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - The pipes array is currently empty - pipe spawning will be implemented in F017
 
 ---
+
+### [2026-01-10] - F015: Render Pipes
+**Status:** COMPLETE
+
+**Implemented:**
+- Created renderPipes() function that loops through pipes array
+- Draws top pipe section from y=0 to topHeight as green rectangle (#228B22)
+- Draws bottom pipe section from bottomY to ground as green rectangle
+- Uses PIPE_WIDTH (52px) for both pipe sections
+- Calculates bottom pipe height from bottomY to ground (CANVAS_HEIGHT - GROUND_HEIGHT)
+- Added renderPipes() call in render() function before renderBird() so pipes appear behind bird
+- Pipes render every frame when pipes array contains pipe objects
+
+**Visual Behavior:**
+- Top and bottom pipes render as green rectangles
+- Gap between pipes is visible (defined by PIPE_GAP = 120px)
+- Multiple pipes can render simultaneously when pipes array has multiple objects
+- Pipes appear behind bird and in front of background
+- Ground renders on top of pipes (correct layering)
+
+**Files Modified:**
+- game.js - Added renderPipes() function and integrated into render()
+
+**Files Created:**
+- tests/pipe-rendering.test.js - 28 unit tests for pipe rendering functionality
+
+**Tests:** 28/28 passing (294 total across all test files)
+
+**Notes for Next Developer:**
+- F016 (Implement Pipe Movement) is next - move pipes from right to left each frame
+- The renderPipes() function is ready and will render any pipes in the pipes array
+- Currently pipes array is empty - pipes need to be spawned (F017) and moved (F016) to be visible
+- Pipe rendering order: background -> pipes -> bird -> ground (correct visual layering)
+- The green color (#228B22) is a classic Flappy Bird pipe color
+
+---

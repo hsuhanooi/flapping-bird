@@ -145,6 +145,23 @@ function renderBird() {
     ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
 }
 
+// Render pipes (top and bottom sections)
+function renderPipes() {
+    ctx.fillStyle = '#228B22';  // Green color for pipes
+    const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
+    
+    // Loop through all pipes in the array
+    for (let i = 0; i < pipes.length; i++) {
+        const pipe = pipes[i];
+        
+        // Draw top pipe section (from top of canvas to topHeight)
+        ctx.fillRect(pipe.x, 0, PIPE_WIDTH, pipe.topHeight);
+        
+        // Draw bottom pipe section (from bottomY to ground)
+        ctx.fillRect(pipe.x, pipe.bottomY, PIPE_WIDTH, groundY - pipe.bottomY);
+    }
+}
+
 // Render ground at bottom of canvas
 function renderGround() {
     ctx.fillStyle = '#deb887';  // Tan/brown color
@@ -167,6 +184,7 @@ function render() {
     drawBackground();
 
     // Draw game elements
+    renderPipes();  // Draw pipes before bird so they appear behind
     renderBird();
 
     // Draw ground

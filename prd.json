@@ -327,7 +327,7 @@
         "Gap between pipes is visible",
         "Multiple pipes can render simultaneously"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F016",
