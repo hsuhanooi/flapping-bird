@@ -167,7 +167,7 @@
         "Bird immediately starts falling after flap",
         "Page does not scroll on spacebar press"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F009",

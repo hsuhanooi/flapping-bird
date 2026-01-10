@@ -35,7 +35,7 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 | F005 | Create Bird Object | COMPLETE | 23 passing |
 | F006 | Render Bird | COMPLETE | 18 passing |
 | F007 | Implement Gravity | COMPLETE | 19 passing |
-| F008 | Add Keyboard Flap Input | NOT STARTED | - |
+| F008 | Add Keyboard Flap Input | COMPLETE | 28 passing |
 | F009 | Add Mouse/Click Flap Input | NOT STARTED | - |
 | F010 | Add Velocity Cap | NOT STARTED | - |
 | **C001** | **Browser Checkpoint: Bird Physics** | NOT STARTED | Browser |
@@ -107,14 +107,14 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 ---
 
 ## Overall Progress
-**Total Items:** 7/48 (15%)
-**Features:** 7/43 (16%)
+**Total Items:** 8/48 (17%)
+**Features:** 8/43 (19%)
 **Checkpoints:** 0/5 (0%)
 
 ---
 
 ## Next Steps
-- Begin F008: Add Keyboard Flap Input
+- Begin F009: Add Mouse/Click Flap Input
 
 ---
 
@@ -332,5 +332,41 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - FLAP_STRENGTH will be defined in F008 for consistent flap power
 - Currently the bird will fall infinitely - ground collision comes in F012
 - The physics are simple: velocity += gravity, position += velocity
+
+---
+
+### [2026-01-10] - F008: Add Keyboard Flap Input
+**Status:** COMPLETE
+
+**Implemented:**
+- Defined FLAP_STRENGTH constant with value -8 (negative for upward movement)
+- Created flap() function that sets bird.velocity to FLAP_STRENGTH
+- Created handleKeyDown(event) function that:
+  - Checks if spacebar is pressed (event.code === 'Space' or event.keyCode === 32)
+  - Calls event.preventDefault() to prevent page scroll
+  - Calls flap() to make bird jump upward
+- Added document.addEventListener('keydown', handleKeyDown) to set up keyboard input
+
+**Physics Behavior:**
+- FLAP_STRENGTH of -8 provides a strong upward impulse
+- After flap, bird immediately starts decelerating due to gravity (0.5 per frame)
+- It takes ~16 frames (~0.27 seconds at 60fps) for upward velocity to reach 0
+- After that, bird begins falling again with accelerating downward velocity
+- Multiple rapid flaps work correctly - each flap resets velocity to -8
+
+**Files Modified:**
+- game.js - Added FLAP_STRENGTH constant, flap(), handleKeyDown(), and event listener
+
+**Files Created:**
+- tests/keyboard-input.test.js - 28 unit tests for keyboard flap functionality
+
+**Tests:** 28/28 passing (169 total across all test files)
+
+**Notes for Next Developer:**
+- F009 (Add Mouse/Click Flap Input) is next - add click handler to canvas
+- The flap() function is ready to be reused for mouse/touch input
+- handleKeyDown will need modification in F024 (Game State Manager) to handle start/restart states
+- Currently the bird can fly infinitely - velocity cap comes in F010
+- Currently there's no game over state - bird will fall through bottom of canvas
 
 ---

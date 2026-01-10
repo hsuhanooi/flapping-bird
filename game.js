@@ -14,6 +14,7 @@ let animationFrameId = null;
 
 // Physics constants
 const GRAVITY = 0.5;  // Acceleration due to gravity (pixels per frame squared)
+const FLAP_STRENGTH = -8;  // Velocity applied when bird flaps (negative = upward)
 
 // Bird object
 const bird = {
@@ -44,6 +45,25 @@ function updateBird() {
     // Apply velocity to position (move the bird)
     bird.y += bird.velocity;
 }
+
+// Make bird flap (move upward)
+function flap() {
+    bird.velocity = FLAP_STRENGTH;
+}
+
+// Handle keyboard input
+function handleKeyDown(event) {
+    // Check if spacebar is pressed (keyCode 32 or code 'Space')
+    if (event.code === 'Space' || event.keyCode === 32) {
+        // Prevent default spacebar behavior (page scroll)
+        event.preventDefault();
+        // Make bird flap
+        flap();
+    }
+}
+
+// Set up keyboard event listener
+document.addEventListener('keydown', handleKeyDown);
 
 // Clear canvas
 function clearCanvas() {
