@@ -763,7 +763,7 @@
         "New high score is indicated",
         "High score formatting is clear"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F035",

@@ -455,21 +455,38 @@ function renderGameOverScreen() {
     ctx.font = 'bold 64px sans-serif';  // Large, bold font for title
     ctx.textAlign = 'center';  // Center text horizontally
     ctx.textBaseline = 'middle';  // Align text from center
-    ctx.fillText('Game Over', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 80);  // Draw title centered, slightly above center
-    
+    ctx.fillText('Game Over', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 100);  // Draw title centered, slightly above center
+
     // Draw 'Score: X' showing final score
     ctx.fillStyle = '#ffffff';  // White color
     ctx.font = '48px sans-serif';  // Large font for score
     ctx.textAlign = 'center';  // Center text horizontally
     ctx.textBaseline = 'middle';  // Align text from center
-    ctx.fillText('Score: ' + score.toString(), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 20);  // Draw score below title
-    
+    ctx.fillText('Score: ' + score.toString(), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 40);  // Draw score below title
+
+    // Draw 'Best: X' showing high score (styled differently - slightly smaller font, different color)
+    ctx.fillStyle = '#ffd700';  // Gold color for high score
+    ctx.font = '36px sans-serif';  // Slightly smaller font than current score
+    ctx.textAlign = 'center';  // Center text horizontally
+    ctx.textBaseline = 'middle';  // Align text from center
+    ctx.fillText('Best: ' + highScore.toString(), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 10);  // Draw high score below current score
+
+    // Show 'New Best!' message if current score equals high score and score > 0
+    // (score equals highScore after saveHighScore() was called, meaning we beat the previous high score)
+    if (score === highScore && score > 0) {
+        ctx.fillStyle = '#ff6b6b';  // Red/coral color for emphasis
+        ctx.font = 'bold 28px sans-serif';  // Bold, noticeable font
+        ctx.textAlign = 'center';  // Center text horizontally
+        ctx.textBaseline = 'middle';  // Align text from center
+        ctx.fillText('New Best!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 50);  // Draw below high score
+    }
+
     // Draw 'Press Space or Click to Restart' instruction
     ctx.fillStyle = '#ffffff';  // White color
     ctx.font = '24px sans-serif';  // Smaller font for instructions
     ctx.textAlign = 'center';  // Center text horizontally
     ctx.textBaseline = 'middle';  // Align text from center
-    ctx.fillText('Press Space or Click to Restart', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 40);  // Draw instructions below score
+    ctx.fillText('Press Space or Click to Restart', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 100);  // Draw instructions below high score
 }
 
 // Update function - contains game logic
