@@ -269,7 +269,7 @@
         "gameOver flag is set on ground collision",
         "Bird visually rests on ground surface"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F013",

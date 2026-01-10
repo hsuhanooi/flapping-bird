@@ -470,3 +470,41 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Ground rendering order: background -> bird -> ground (ground on top, which is correct)
 
 ---
+
+### [2026-01-10] - F012: Implement Ground Collision
+**Status:** COMPLETE
+
+**Implemented:**
+- Created gameOver flag variable initialized to false
+- Added ground collision detection in updateBird() function:
+  - Calculates ground y position (CANVAS_HEIGHT - GROUND_HEIGHT = 520)
+  - Checks if bird bottom edge (bird.y + bird.height) >= ground y
+  - Sets gameOver to true when collision detected
+  - Positions bird exactly on ground surface (bird.y = groundY - bird.height)
+  - Sets bird velocity to 0 on collision
+- Modified updateBird() to return early if gameOver is true (prevents bird movement)
+- Updated resetBird() to reset gameOver flag to false
+
+**Collision Behavior:**
+- Bird stops immediately when hitting ground
+- Bird is positioned exactly on ground surface (no overlap or gap)
+- Bird velocity is set to 0 on collision
+- Bird physics updates are skipped when gameOver is true
+- Game can be reset via resetBird() which also resets gameOver flag
+
+**Files Modified:**
+- game.js - Added gameOver flag, ground collision detection, and early return logic
+
+**Files Created:**
+- tests/ground-collision.test.js - 21 unit tests for ground collision functionality
+
+**Tests:** 21/21 passing (248 total across all test files)
+
+**Notes for Next Developer:**
+- F013 (Implement Ceiling Collision) is next - similar logic but checking if bird top edge <= 0
+- The gameOver flag is now available for use in other collision detection (pipes, ceiling)
+- Ground collision detection runs every frame in updateBird()
+- The bird visually rests on the ground surface when collision occurs
+- resetBird() resets both bird state and gameOver flag for game restart functionality
+
+---

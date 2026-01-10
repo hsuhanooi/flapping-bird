@@ -20,6 +20,9 @@ const MAX_VELOCITY = 10;  // Maximum downward velocity (terminal velocity)
 // Ground constant
 const GROUND_HEIGHT = 80;  // Height of ground area at bottom of canvas (pixels)
 
+// Game state
+let gameOver = false;  // Flag to track if game is over
+
 // Bird object
 const bird = {
     x: 80,                          // Initial x position (left side of canvas)
@@ -39,10 +42,16 @@ function initBird() {
 // Reset bird to initial state
 function resetBird() {
     initBird();
+    gameOver = false;
 }
 
 // Update bird physics (gravity and velocity)
 function updateBird() {
+    // Don't update bird if game is over
+    if (gameOver) {
+        return;
+    }
+
     // Apply gravity to velocity (accelerate downward)
     bird.velocity += GRAVITY;
 
@@ -58,6 +67,18 @@ function updateBird() {
 
     // Apply velocity to position (move the bird)
     bird.y += bird.velocity;
+
+    // Check for ground collision
+    const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
+    const birdBottom = bird.y + bird.height;
+    
+    if (birdBottom >= groundY) {
+        // Bird has hit the ground
+        gameOver = true;
+        // Position bird exactly on ground surface
+        bird.y = groundY - bird.height;
+        bird.velocity = 0;
+    }
 }
 
 // Make bird flap (move upward)
