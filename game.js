@@ -17,6 +17,23 @@ let gameOver = false;  // Flag to track if game is over
 let frameCount = 0;  // Frame counter for pipe spawning
 let score = 0;  // Player's current score
 
+// Game state machine
+// States: 'start', 'playing', 'gameover'
+let gameState = 'start';  // Initial state is 'start'
+
+// Helper functions to check current game state
+function isPlaying() {
+    return gameState === 'playing';
+}
+
+function isGameOver() {
+    return gameState === 'gameover';
+}
+
+function isStart() {
+    return gameState === 'start';
+}
+
 // Physics constants
 const GRAVITY = 0.5;  // Acceleration due to gravity (pixels per frame squared)
 const FLAP_STRENGTH = -8;  // Velocity applied when bird flaps (negative = upward)

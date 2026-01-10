@@ -533,7 +533,7 @@
         "All three states are defined",
         "Helper functions return correct values"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F025",
