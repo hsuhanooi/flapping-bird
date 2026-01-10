@@ -36,7 +36,7 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 | F006 | Render Bird | COMPLETE | 18 passing |
 | F007 | Implement Gravity | COMPLETE | 19 passing |
 | F008 | Add Keyboard Flap Input | COMPLETE | 28 passing |
-| F009 | Add Mouse/Click Flap Input | NOT STARTED | - |
+| F009 | Add Mouse/Click Flap Input | COMPLETE | 14 passing |
 | F010 | Add Velocity Cap | NOT STARTED | - |
 | **C001** | **Browser Checkpoint: Bird Physics** | NOT STARTED | Browser |
 
@@ -107,14 +107,14 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 ---
 
 ## Overall Progress
-**Total Items:** 8/48 (17%)
-**Features:** 8/43 (19%)
+**Total Items:** 9/48 (19%)
+**Features:** 9/43 (21%)
 **Checkpoints:** 0/5 (0%)
 
 ---
 
 ## Next Steps
-- Begin F009: Add Mouse/Click Flap Input
+- Begin F010: Add Velocity Cap
 
 ---
 
@@ -368,5 +368,36 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - handleKeyDown will need modification in F024 (Game State Manager) to handle start/restart states
 - Currently the bird can fly infinitely - velocity cap comes in F010
 - Currently there's no game over state - bird will fall through bottom of canvas
+
+---
+
+### [2026-01-10] - F009: Add Mouse/Click Flap Input
+**Status:** COMPLETE
+
+**Implemented:**
+- Created handleClick(event) function that calls flap() when canvas is clicked
+- Added canvas.addEventListener('click', handleClick) to set up mouse click input
+- Reused existing flap() function for identical behavior to keyboard input
+
+**Event Handling:**
+- Click event listener is attached to canvas element (not document)
+- handleClick() simply calls the existing flap() function
+- Both click and spacebar trigger identical flap behavior (velocity = -8)
+- Multiple rapid clicks work correctly - each click resets velocity to FLAP_STRENGTH
+
+**Files Modified:**
+- game.js - Added handleClick() function and click event listener
+
+**Files Created:**
+- tests/mouse-input.test.js - 14 unit tests for mouse/click flap functionality
+
+**Tests:** 14/14 passing (183 total across all test files)
+
+**Notes for Next Developer:**
+- F010 (Add Velocity Cap) is next - limit maximum upward and downward velocity
+- The handleClick() function will need modification in F024 (Game State Manager) to handle start/restart states
+- Touch input for mobile comes in F035 (Add Touch Event Listener)
+- The click handler is attached to the canvas element specifically to allow clicking anywhere on the game area
+- Click events work in conjunction with spacebar - both methods are available
 
 ---

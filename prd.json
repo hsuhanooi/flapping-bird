@@ -185,7 +185,7 @@
         "Click and spacebar have identical behavior",
         "Multiple rapid clicks work correctly"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F010",

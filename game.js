@@ -62,8 +62,17 @@ function handleKeyDown(event) {
     }
 }
 
+// Handle mouse click on canvas
+function handleClick(event) {
+    // Make bird flap when canvas is clicked
+    flap();
+}
+
 // Set up keyboard event listener
 document.addEventListener('keydown', handleKeyDown);
+
+// Set up mouse click event listener on canvas
+canvas.addEventListener('click', handleClick);
 
 // Clear canvas
 function clearCanvas() {
