@@ -65,7 +65,7 @@
         "Canvas displays a solid background color",
         "No console errors on page load"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F004",
