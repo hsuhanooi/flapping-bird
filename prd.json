@@ -127,7 +127,7 @@
         "Bird is positioned at initial coordinates",
         "Bird renders every frame"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F007",

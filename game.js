@@ -44,12 +44,18 @@ function drawBackground() {
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
+// Render bird as a yellow filled rectangle
+function renderBird() {
+    ctx.fillStyle = '#f7dc6f';  // Yellow color
+    ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
+}
+
 // Placeholder update function - will contain game logic
 function update() {
     // Game logic will be added here in future features
 }
 
-// Placeholder render function - will draw game elements
+// Render function - draws all game elements
 function render() {
     // Clear the canvas at the start of each frame
     clearCanvas();
@@ -57,7 +63,8 @@ function render() {
     // Draw background
     drawBackground();
 
-    // Game elements will be rendered here in future features
+    // Draw game elements
+    renderBird();
 }
 
 // Main game loop using requestAnimationFrame

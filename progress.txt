@@ -33,7 +33,7 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 | F003 | Initialize Canvas Context | COMPLETE | 19 passing |
 | F004 | Implement Game Loop | COMPLETE | 35 passing |
 | F005 | Create Bird Object | COMPLETE | 23 passing |
-| F006 | Render Bird | NOT STARTED | - |
+| F006 | Render Bird | COMPLETE | 18 passing |
 | F007 | Implement Gravity | NOT STARTED | - |
 | F008 | Add Keyboard Flap Input | NOT STARTED | - |
 | F009 | Add Mouse/Click Flap Input | NOT STARTED | - |
@@ -107,14 +107,14 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 ---
 
 ## Overall Progress
-**Total Items:** 5/48 (10%)
-**Features:** 5/43 (12%)
+**Total Items:** 6/48 (13%)
+**Features:** 6/43 (14%)
 **Checkpoints:** 0/5 (0%)
 
 ---
 
 ## Next Steps
-- Begin F006: Render Bird
+- Begin F007: Implement Gravity
 
 ---
 
@@ -269,5 +269,32 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Use bird.x, bird.y for position and bird.width, bird.height for dimensions
 - bird.velocity will be used in F007 (Implement Gravity) for physics
 - resetBird() function is ready for game restart functionality later
+
+---
+
+### [2026-01-10] - F006: Render Bird
+**Status:** COMPLETE
+
+**Implemented:**
+- Created renderBird() function that draws bird as a yellow filled rectangle
+- Set bird color to #f7dc6f (yellow/gold color)
+- Uses ctx.fillRect() with bird.x, bird.y, bird.width, bird.height
+- Added renderBird() call in render() function after drawBackground()
+- Bird now renders every frame at its current position
+
+**Files Modified:**
+- game.js - Added renderBird() function and integrated it into render()
+
+**Files Created:**
+- tests/bird-rendering.test.js - 18 unit tests for bird rendering
+
+**Tests:** 18/18 passing (122 total across all test files)
+
+**Notes for Next Developer:**
+- F007 (Implement Gravity) is next - add gravity constant and physics to bird
+- The renderBird() function is called every frame in the render() function
+- Bird is drawn as a simple rectangle for now (will be styled in F040)
+- The bird.x and bird.y properties are used directly, so updating them will move the bird
+- bird.velocity is ready to be used in physics calculations
 
 ---
