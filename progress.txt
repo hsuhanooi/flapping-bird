@@ -802,3 +802,39 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Bird can safely pass through the gap between top and bottom pipes without collision
 
 ---
+
+### [2026-01-10] - F021: Add Score Variable and Display
+**Status:** COMPLETE
+
+**Implemented:**
+- Created score variable initialized to 0 in game state section
+- Created renderScore() function that displays score as white text
+- Score text is drawn at top center of canvas (x = CANVAS_WIDTH / 2, y = 20)
+- Used large font size (48px sans-serif) for visibility
+- Set textAlign to 'center' and textBaseline to 'top' for proper positioning
+- Score is converted to string using toString() before rendering
+- Added renderScore() call in render() function after renderGround()
+- Score is reset to 0 in initBird() function for game reset functionality
+
+**Visual Behavior:**
+- Score displays as white text (#ffffff) at top center of canvas
+- Text is clearly visible against sky blue background
+- Score starts at 0 and displays every frame
+- Font size of 48px ensures good visibility
+
+**Files Modified:**
+- game.js - Added score variable, renderScore() function, and integration into render()
+
+**Files Created:**
+- tests/score-display.test.js - 22 unit tests for score display functionality
+
+**Tests:** 22/22 passing (407 total across all test files)
+
+**Notes for Next Developer:**
+- F022 (Detect Pipe Passing) is next - add logic to detect when bird passes through pipes
+- The score variable is ready to be incremented when pipes are passed
+- Score is reset to 0 in initBird() function, ready for game restart functionality
+- The renderScore() function is called every frame in the render() function
+- Score will need to be incremented in F023 (Increment Score on Pipe Pass)
+
+---

@@ -477,7 +477,7 @@
         "Score text is clearly visible",
         "Score starts at 0"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F022",

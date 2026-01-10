@@ -227,6 +227,10 @@ describe('F004: Game Loop - Runtime Behavior', () => {
             fillStyle: '',
             fillRect: jest.fn(),
             clearRect: jest.fn(),
+            font: '',
+            textAlign: '',
+            textBaseline: '',
+            fillText: jest.fn(),
         };
         jest.spyOn(canvas, 'getContext').mockReturnValue(mockCtx);
 
@@ -240,5 +244,7 @@ describe('F004: Game Loop - Runtime Behavior', () => {
         expect(mockCtx.clearRect).toHaveBeenCalled();
         // fillRect should be called for drawing background
         expect(mockCtx.fillRect).toHaveBeenCalled();
+        // fillText should be called for drawing score
+        expect(mockCtx.fillText).toHaveBeenCalled();
     });
 });

@@ -15,6 +15,7 @@ let animationFrameId = null;
 // Game state
 let gameOver = false;  // Flag to track if game is over
 let frameCount = 0;  // Frame counter for pipe spawning
+let score = 0;  // Player's current score
 
 // Physics constants
 const GRAVITY = 0.5;  // Acceleration due to gravity (pixels per frame squared)
@@ -54,6 +55,7 @@ function initBird() {
     bird.velocity = 0;
     gameOver = false;  // Reset game over flag
     frameCount = 0;  // Reset frame counter
+    score = 0;  // Reset score
 }
 
 // Reset bird to initial state
@@ -297,6 +299,15 @@ function renderGround() {
     ctx.fillRect(0, groundY, CANVAS_WIDTH, GROUND_HEIGHT);
 }
 
+// Render score at top center of canvas
+function renderScore() {
+    ctx.fillStyle = '#ffffff';  // White color
+    ctx.font = '48px sans-serif';  // Large font size for visibility
+    ctx.textAlign = 'center';  // Center text horizontally
+    ctx.textBaseline = 'top';  // Align text from top
+    ctx.fillText(score.toString(), CANVAS_WIDTH / 2, 20);  // Draw score at top center
+}
+
 // Update function - contains game logic
 function update() {
     // Increment frame counter
@@ -326,6 +337,9 @@ function render() {
 
     // Draw ground
     renderGround();
+
+    // Draw score
+    renderScore();
 }
 
 // Main game loop using requestAnimationFrame
