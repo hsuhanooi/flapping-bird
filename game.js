@@ -151,6 +151,57 @@ function spawnPipe() {
     pipes.push(newPipe);
 }
 
+// Check if bird collides with any pipe
+function checkPipeCollisions() {
+    // Don't check collisions if game is already over
+    if (gameOver) {
+        return;
+    }
+
+    // Create bird hitbox
+    const birdHitbox = {
+        x: bird.x,
+        y: bird.y,
+        width: bird.width,
+        height: bird.height
+    };
+
+    const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
+
+    // Loop through all pipes
+    for (let i = 0; i < pipes.length; i++) {
+        const pipe = pipes[i];
+
+        // Create hitbox for top pipe section
+        const topPipeHitbox = {
+            x: pipe.x,
+            y: 0,
+            width: PIPE_WIDTH,
+            height: pipe.topHeight
+        };
+
+        // Create hitbox for bottom pipe section
+        const bottomPipeHitbox = {
+            x: pipe.x,
+            y: pipe.bottomY,
+            width: PIPE_WIDTH,
+            height: groundY - pipe.bottomY
+        };
+
+        // Check bird against top pipe
+        if (checkCollision(birdHitbox, topPipeHitbox)) {
+            gameOver = true;
+            return;  // Exit early once collision is detected
+        }
+
+        // Check bird against bottom pipe
+        if (checkCollision(birdHitbox, bottomPipeHitbox)) {
+            gameOver = true;
+            return;  // Exit early once collision is detected
+        }
+    }
+}
+
 // Update pipe positions (move pipes from right to left)
 function updatePipes() {
     // Don't update pipes if game is over
@@ -256,6 +307,9 @@ function update() {
     
     // Update pipe positions (move pipes from right to left)
     updatePipes();
+    
+    // Check for bird-pipe collisions
+    checkPipeCollisions();
 }
 
 // Render function - draws all game elements

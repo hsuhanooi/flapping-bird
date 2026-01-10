@@ -762,3 +762,43 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - All edge cases are handled: zero dimensions, negative positions, complete overlap, etc.
 
 ---
+
+### [2026-01-10] - F020: Implement Bird-Pipe Collision
+**Status:** COMPLETE
+
+**Implemented:**
+- Created checkPipeCollisions() function that detects bird collisions with pipes
+- Function creates bird hitbox from bird object properties (x, y, width, height)
+- Loops through all pipes in the pipes array
+- Creates hitbox for top pipe section (from y=0 to topHeight)
+- Creates hitbox for bottom pipe section (from bottomY to ground)
+- Uses checkCollision() function (from F019) to detect collisions
+- Sets gameOver to true when bird collides with any pipe (top or bottom)
+- Returns early after first collision is detected (optimization)
+- Returns early if gameOver is already true (prevents unnecessary checks)
+- Integrated checkPipeCollisions() into update() function after updatePipes()
+
+**Collision Detection Behavior:**
+- Bird hitting top pipe triggers game over
+- Bird hitting bottom pipe triggers game over
+- Bird passing through gap safely does not trigger game over
+- Collision detection runs every frame during gameplay
+- Multiple pipes are checked each frame
+- Function stops checking after first collision is detected
+
+**Files Modified:**
+- game.js - Added checkPipeCollisions() function and integrated into update()
+
+**Files Created:**
+- tests/bird-pipe-collision.test.js - 20 unit tests for bird-pipe collision functionality
+
+**Tests:** 20/20 passing (385 total across all test files)
+
+**Notes for Next Developer:**
+- F021 (Add Score Variable and Display) is next - create score tracking and render on screen
+- The checkPipeCollisions() function uses the checkCollision() function from F019
+- Collision detection happens after pipes are moved (updatePipes) but before rendering
+- The gameOver flag is set on pipe collision, which stops bird and pipe movement
+- Bird can safely pass through the gap between top and bottom pipes without collision
+
+---

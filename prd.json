@@ -429,7 +429,7 @@
         "Bird passing through gap is safe",
         "Collision detection runs every frame"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "C002",
