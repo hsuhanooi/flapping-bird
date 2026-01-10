@@ -147,7 +147,7 @@
         "Bird accelerates (falls faster over time)",
         "Fall speed feels natural"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F008",

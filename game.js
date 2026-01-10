@@ -12,6 +12,9 @@ const CANVAS_HEIGHT = canvas.height;
 let isGameLoopRunning = false;
 let animationFrameId = null;
 
+// Physics constants
+const GRAVITY = 0.5;  // Acceleration due to gravity (pixels per frame squared)
+
 // Bird object
 const bird = {
     x: 80,                          // Initial x position (left side of canvas)
@@ -33,6 +36,15 @@ function resetBird() {
     initBird();
 }
 
+// Update bird physics (gravity and velocity)
+function updateBird() {
+    // Apply gravity to velocity (accelerate downward)
+    bird.velocity += GRAVITY;
+
+    // Apply velocity to position (move the bird)
+    bird.y += bird.velocity;
+}
+
 // Clear canvas
 function clearCanvas() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -50,9 +62,10 @@ function renderBird() {
     ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
 }
 
-// Placeholder update function - will contain game logic
+// Update function - contains game logic
 function update() {
-    // Game logic will be added here in future features
+    // Update bird physics (gravity and movement)
+    updateBird();
 }
 
 // Render function - draws all game elements
