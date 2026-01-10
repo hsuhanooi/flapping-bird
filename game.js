@@ -14,6 +14,7 @@ let animationFrameId = null;
 
 // Game state
 let gameOver = false;  // Flag to track if game is over
+let frameCount = 0;  // Frame counter for pipe spawning
 
 // Physics constants
 const GRAVITY = 0.5;  // Acceleration due to gravity (pixels per frame squared)
@@ -27,6 +28,7 @@ const GROUND_HEIGHT = 80;  // Height of ground area at bottom of canvas (pixels)
 const PIPE_WIDTH = 52;  // Width of each pipe in pixels
 const PIPE_GAP = 120;  // Vertical gap between top and bottom pipes in pixels
 const PIPE_SPEED = 2;  // Horizontal speed of pipes (pixels per frame)
+const PIPE_SPAWN_INTERVAL = 90;  // Frames between spawning new pipes
 
 // Pipes array to hold all active pipes
 const pipes = [];
@@ -51,6 +53,7 @@ function initBird() {
     bird.y = CANVAS_HEIGHT / 2;
     bird.velocity = 0;
     gameOver = false;  // Reset game over flag
+    frameCount = 0;  // Reset frame counter
 }
 
 // Reset bird to initial state
@@ -101,6 +104,28 @@ function updateBird() {
     }
 }
 
+// Spawn a new pipe at the right edge of the canvas
+function spawnPipe() {
+    const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
+    // Generate random topHeight between 50 and (groundY - PIPE_GAP - 50)
+    // This ensures there's always at least 50px space at top and bottom
+    const minTopHeight = 50;
+    const maxTopHeight = groundY - PIPE_GAP - 50;
+    const topHeight = Math.floor(Math.random() * (maxTopHeight - minTopHeight + 1)) + minTopHeight;
+    
+    // Calculate bottomY from topHeight + PIPE_GAP
+    const bottomY = topHeight + PIPE_GAP;
+    
+    // Create new pipe object and add to pipes array
+    const newPipe = {
+        x: CANVAS_WIDTH,  // Start at right edge of canvas
+        topHeight: topHeight,
+        bottomY: bottomY
+    };
+    
+    pipes.push(newPipe);
+}
+
 // Update pipe positions (move pipes from right to left)
 function updatePipes() {
     // Don't update pipes if game is over
@@ -111,6 +136,11 @@ function updatePipes() {
     // Move each pipe to the left by PIPE_SPEED
     for (let i = 0; i < pipes.length; i++) {
         pipes[i].x -= PIPE_SPEED;
+    }
+    
+    // Spawn new pipe at regular intervals
+    if (frameCount % PIPE_SPAWN_INTERVAL === 0) {
+        spawnPipe();
     }
 }
 
@@ -185,6 +215,9 @@ function renderGround() {
 
 // Update function - contains game logic
 function update() {
+    // Increment frame counter
+    frameCount++;
+    
     // Update bird physics (gravity and movement)
     updateBird();
     

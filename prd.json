@@ -368,7 +368,7 @@
         "Pipe gap position varies randomly",
         "Pipes spawn at consistent intervals"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F018",

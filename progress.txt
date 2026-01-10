@@ -651,3 +651,43 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - The PIPE_SPEED constant (2px/frame) provides smooth, consistent movement
 
 ---
+
+### [2026-01-10] - F017: Spawn New Pipes
+**Status:** COMPLETE
+
+**Implemented:**
+- Defined PIPE_SPAWN_INTERVAL constant with value 90 (frames between pipe spawns)
+- Created frameCount variable initialized to 0 to track game frames
+- Created spawnPipe() function that:
+  - Calculates groundY position (CANVAS_HEIGHT - GROUND_HEIGHT)
+  - Generates random topHeight between 50 and (groundY - PIPE_GAP - 50)
+  - Calculates bottomY from topHeight + PIPE_GAP
+  - Creates new pipe object with x = CANVAS_WIDTH (right edge of canvas)
+  - Adds pipe to pipes array using pipes.push()
+- Modified updatePipes() function to call spawnPipe() when frameCount % PIPE_SPAWN_INTERVAL === 0
+- Modified update() function to increment frameCount each frame
+- Modified initBird() function to reset frameCount to 0 for game reset functionality
+
+**Pipe Spawning Behavior:**
+- New pipes spawn every 90 frames (1.5 seconds at 60fps)
+- Pipe gap position varies randomly between 50px from top and 50px from ground
+- Pipes start at right edge of canvas (x = 400) and move left
+- Random topHeight ensures varied gameplay with safe gap positions
+- frameCount tracks game progression for consistent spawning intervals
+
+**Files Modified:**
+- game.js - Added PIPE_SPAWN_INTERVAL constant, frameCount variable, spawnPipe() function, and spawning logic
+
+**Files Created:**
+- tests/pipe-spawning.test.js - 22 unit tests for pipe spawning functionality
+
+**Tests:** 22/22 passing (333 total across all test files)
+
+**Notes for Next Developer:**
+- F018 (Remove Off-Screen Pipes) is next - clean up pipes that have moved past the left edge
+- The spawnPipe() function generates pipes with random gap positions for varied gameplay
+- frameCount is incremented every frame in update() and reset in initBird()
+- Pipes spawn automatically every 90 frames when game is running (not game over)
+- The pipes array will grow as pipes spawn - F018 will handle removing off-screen pipes
+
+---
