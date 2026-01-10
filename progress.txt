@@ -725,3 +725,40 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - The pipes array will now maintain a reasonable size as pipes spawn and are removed
 
 ---
+
+### [2026-01-10] - F019: Create Collision Detection Function
+**Status:** COMPLETE
+
+**Implemented:**
+- Created checkCollision(rect1, rect2) function using AABB (Axis-Aligned Bounding Box) algorithm
+- Function accepts two rectangle objects with {x, y, width, height} properties
+- Returns true if rectangles overlap or touch, false otherwise
+- Uses <= and >= comparisons to handle touching edges as collisions (appropriate for game physics)
+- Function is commutative (order of arguments does not matter)
+- Handles edge cases: zero width/height, negative positions, completely overlapping rectangles
+
+**Collision Detection Algorithm:**
+- Calculates right edge (x + width) and bottom edge (y + height) for both rectangles
+- Checks if rectangles overlap in both x and y axes
+- Two rectangles overlap if:
+  - rect1's left edge is to the left of or equal to rect2's right edge AND
+  - rect1's right edge is to the right of or equal to rect2's left edge AND
+  - rect1's top edge is above or equal to rect2's bottom edge AND
+  - rect1's bottom edge is below or equal to rect2's top edge
+
+**Files Modified:**
+- game.js - Added checkCollision() function
+
+**Files Created:**
+- tests/collision-detection.test.js - 22 unit tests for collision detection functionality
+
+**Tests:** 22/22 passing (367 total across all test files)
+
+**Notes for Next Developer:**
+- F020 (Implement Bird-Pipe Collision) is next - use checkCollision() to detect bird hitting pipes
+- The checkCollision() function is ready to be used for bird-pipe collision detection
+- Function handles touching edges as collisions, which is appropriate for game physics
+- The function will be called in F020 to check bird against top and bottom pipe sections
+- All edge cases are handled: zero dimensions, negative positions, complete overlap, etc.
+
+---

@@ -61,6 +61,31 @@ function resetBird() {
     initBird();
 }
 
+// Collision detection function using AABB (Axis-Aligned Bounding Box) algorithm
+// rect1 and rect2 are objects with {x, y, width, height} properties
+// Returns true if rectangles overlap or touch, false otherwise
+function checkCollision(rect1, rect2) {
+    // Check if rectangles overlap using AABB collision detection
+    // Two rectangles overlap if:
+    // - rect1's left edge is to the left of or equal to rect2's right edge AND
+    // - rect1's right edge is to the right of or equal to rect2's left edge AND
+    // - rect1's top edge is above or equal to rect2's bottom edge AND
+    // - rect1's bottom edge is below or equal to rect2's top edge
+    // Using <= and >= allows touching edges to be considered collisions
+    
+    const rect1Right = rect1.x + rect1.width;
+    const rect1Bottom = rect1.y + rect1.height;
+    const rect2Right = rect2.x + rect2.width;
+    const rect2Bottom = rect2.y + rect2.height;
+    
+    return (
+        rect1.x <= rect2Right &&
+        rect1Right >= rect2.x &&
+        rect1.y <= rect2Bottom &&
+        rect1Bottom >= rect2.y
+    );
+}
+
 // Update bird physics (gravity and velocity)
 function updateBird() {
     // Don't update bird if game is over

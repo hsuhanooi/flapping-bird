@@ -407,7 +407,7 @@
         "Function returns false for non-overlapping rectangles",
         "Edge cases handled (touching edges)"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F020",
