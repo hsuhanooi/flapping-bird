@@ -508,3 +508,38 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - The gameOver flag will be used in F028 (Game Over State Behavior) for full game state management
 
 ---
+
+### [2026-01-10] - F013: Implement Ceiling Collision
+**Status:** COMPLETE
+
+**Implemented:**
+- Added ceiling collision detection in updateBird() function:
+  - Checks if bird top edge (bird.y) <= 0
+  - Sets gameOver to true when ceiling collision detected
+  - Positions bird exactly at top of canvas (bird.y = 0) when collision occurs
+- Ceiling collision check is performed before ground collision check
+- Bird movement stops when gameOver is true (existing early return handles this)
+
+**Collision Behavior:**
+- Bird cannot fly above canvas top (y = 0)
+- gameOver flag is set on ceiling collision
+- Bird visually rests at top of canvas when collision occurs
+- Collision detection runs every frame in updateBird()
+- Ceiling collision triggers game over state (same as ground collision)
+
+**Files Modified:**
+- game.js - Added ceiling collision detection in updateBird() function
+
+**Files Created:**
+- tests/ceiling-collision.test.js - 13 unit tests for ceiling collision functionality
+
+**Tests:** 13/13 passing (254 total across all test files)
+
+**Notes for Next Developer:**
+- F014 (Create Pipe Object Structure) is next - define pipe data structure with top and bottom sections
+- Both ceiling and ground collision now set gameOver flag and stop bird movement
+- Bird is positioned at y=0 when hitting ceiling, similar to ground collision positioning
+- The gameOver flag will be used in F028 (Game Over State Behavior) for full game state management
+- All boundary collisions (ceiling and ground) are now complete
+
+---

@@ -68,6 +68,14 @@ function updateBird() {
     // Apply velocity to position (move the bird)
     bird.y += bird.velocity;
 
+    // Check for ceiling collision
+    if (bird.y <= 0) {
+        // Bird has hit the ceiling
+        gameOver = true;
+        // Position bird exactly at top of canvas
+        bird.y = 0;
+    }
+
     // Check for ground collision
     const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
     const birdBottom = bird.y + bird.height;

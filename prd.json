@@ -287,7 +287,7 @@
         "gameOver flag is set on ceiling collision",
         "Ceiling collision feels fair"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F014",
