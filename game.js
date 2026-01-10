@@ -107,8 +107,8 @@ function checkCollision(rect1, rect2) {
 
 // Update bird physics (gravity and velocity)
 function updateBird() {
-    // Don't update bird if game is over
-    if (gameOver) {
+    // Don't update bird if game is over or not playing
+    if (gameOver || !isPlaying()) {
         return;
     }
 
@@ -132,6 +132,7 @@ function updateBird() {
     if (bird.y <= 0) {
         // Bird has hit the ceiling
         gameOver = true;
+        gameState = 'gameover';  // Set game state to gameover
         // Position bird exactly at top of canvas
         bird.y = 0;
     }
@@ -143,6 +144,7 @@ function updateBird() {
     if (birdBottom >= groundY) {
         // Bird has hit the ground
         gameOver = true;
+        gameState = 'gameover';  // Set game state to gameover
         // Position bird exactly on ground surface
         bird.y = groundY - bird.height;
     }
@@ -211,12 +213,14 @@ function checkPipeCollisions() {
         // Check bird against top pipe
         if (checkCollision(birdHitbox, topPipeHitbox)) {
             gameOver = true;
+            gameState = 'gameover';  // Set game state to gameover
             return;  // Exit early once collision is detected
         }
 
         // Check bird against bottom pipe
         if (checkCollision(birdHitbox, bottomPipeHitbox)) {
             gameOver = true;
+            gameState = 'gameover';  // Set game state to gameover
             return;  // Exit early once collision is detected
         }
     }
@@ -224,8 +228,8 @@ function checkPipeCollisions() {
 
 // Update pipe positions (move pipes from right to left)
 function updatePipes() {
-    // Don't update pipes if game is over
-    if (gameOver) {
+    // Don't update pipes if game is over or not playing
+    if (gameOver || !isPlaying()) {
         return;
     }
 

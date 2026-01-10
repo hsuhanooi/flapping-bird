@@ -610,7 +610,7 @@
         "Bird and pipes stop moving",
         "Scene remains visible"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F029",
