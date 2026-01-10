@@ -375,11 +375,41 @@ function handleClick(event) {
     }
 }
 
+// Handle touch input on canvas
+function handleTouch(event) {
+    // Prevent default touch behavior (scrolling, zooming, etc.)
+    event.preventDefault();
+
+    // Reuse same flap logic as click handler
+    // If in start state, transition to playing state
+    if (isStart()) {
+        gameState = 'playing';
+        flap();  // Trigger first flap on game start
+        return;
+    }
+
+    // If in gameover state, restart the game
+    if (isGameOver()) {
+        resetGame();
+        gameState = 'playing';
+        flap();  // Trigger first flap on restart
+        return;
+    }
+
+    // If in playing state, make bird flap
+    if (isPlaying()) {
+        flap();
+    }
+}
+
 // Set up keyboard event listener
 document.addEventListener('keydown', handleKeyDown);
 
 // Set up mouse click event listener on canvas
 canvas.addEventListener('click', handleClick);
+
+// Set up touch event listener on canvas
+canvas.addEventListener('touchstart', handleTouch);
 
 // Clear canvas
 function clearCanvas() {

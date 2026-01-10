@@ -36,20 +36,21 @@ INSTRUCTIONS:
 1. Read @prd.json to see all features and their status
 2. Read @progress.txt to see current progress
 3. Find the NEXT feature where "passes": false (in priority order). This should be the one YOU decide has the highest priority order - not necessarily the first item.
-4. Implement that feature completely:
+4. Run the test suite first and fix any broken tests.
+5. Implement that feature completely:
    - Write/modify the necessary code files
    - Write unit tests for the feature (in tests/ directory using Jest)
    - Update prd.json to set "passes": true for the completed feature
    - Append a progress update to progress.txt with what you did and leave a note for the next person working in the codebase.
-5. Run tests to verify your implementation:
+6. Run tests to verify your implementation:
    - Run "npm test" for Jest unit tests
    - For visual/browser features, use Puppeteer MCP tools to test in browser but only use this if it calls for it in the PRD. We only run this once every 10 tasks:
      a. Start local server: "npx serve -p 3000 &" (if not already running)
      b. Use mcp__puppeteer__browser_navigate to go to http://localhost:3000
      c. Use mcp__puppeteer__browser_screenshot to verify visual rendering
      d. Use mcp__puppeteer__browser_click or browser_type for interaction tests
-6. Make a git commit of that feature. ONLY WORK ON ONE FEATURE.
-7. If while implementing the feature, you notice the PRD is complete, output <promise>COMPLETE</promise>
+7. Make a git commit of that feature. ONLY WORK ON ONE FEATURE.
+8. If while implementing the feature, you notice the PRD is complete, output <promise>COMPLETE</promise>
 
 IMPORTANT RULES:
 - Only implement ONE feature per iteration
