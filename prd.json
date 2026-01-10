@@ -387,7 +387,7 @@
         "Pipes array doesn't grow indefinitely",
         "No visual glitches when removing pipes"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F019",

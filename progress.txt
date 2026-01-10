@@ -691,3 +691,37 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - The pipes array will grow as pipes spawn - F018 will handle removing off-screen pipes
 
 ---
+
+### [2026-01-10] - F018: Remove Off-Screen Pipes
+**Status:** COMPLETE
+
+**Implemented:**
+- Added pipe removal logic in updatePipes() function
+- Checks if pipe right edge (x + PIPE_WIDTH) is off-screen (< 0)
+- Uses reverse loop (from end to start) with splice() to safely remove pipes
+- Removes pipes after movement update but before spawning new pipes
+- Prevents pipes array from growing indefinitely
+
+**Pipe Removal Behavior:**
+- Pipes are removed when their right edge (x + PIPE_WIDTH) is less than 0
+- Removal happens after pipes are moved left by PIPE_SPEED
+- Reverse iteration prevents index issues when removing elements
+- Empty pipes array is handled gracefully
+- Memory is properly managed - pipes array doesn't grow unbounded
+
+**Files Modified:**
+- game.js - Added pipe removal logic in updatePipes() function
+
+**Files Created:**
+- tests/pipe-removal.test.js - 12 unit tests for pipe removal functionality
+
+**Tests:** 12/12 passing (345 total across all test files)
+
+**Notes for Next Developer:**
+- F019 (Create Collision Detection Function) is next - implement rectangle intersection detection
+- The updatePipes() function now handles the full pipe lifecycle: movement, removal, and spawning
+- Pipes are removed when fully off-screen to the left (right edge < 0)
+- The reverse loop with splice() is the safe way to remove elements while iterating
+- The pipes array will now maintain a reasonable size as pipes spawn and are removed
+
+---

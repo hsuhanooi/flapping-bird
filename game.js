@@ -138,6 +138,14 @@ function updatePipes() {
         pipes[i].x -= PIPE_SPEED;
     }
     
+    // Remove pipes that have moved completely off-screen to the left
+    // A pipe is off-screen when its right edge (x + PIPE_WIDTH) is less than 0
+    for (let i = pipes.length - 1; i >= 0; i--) {
+        if (pipes[i].x + PIPE_WIDTH < 0) {
+            pipes.splice(i, 1);
+        }
+    }
+    
     // Spawn new pipe at regular intervals
     if (frameCount % PIPE_SPAWN_INTERVAL === 0) {
         spawnPipe();
