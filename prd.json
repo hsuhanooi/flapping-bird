@@ -1,0 +1,1023 @@
+{
+  "project": "Flappy Bird - Browser Game",
+  "version": "1.0.0",
+  "description": "A browser-based clone of the classic Flappy Bird game with simple graphics and full game mechanics",
+  "tech_stack": {
+    "frontend": "HTML5 Canvas, Vanilla JavaScript, CSS",
+    "testing": "Jest"
+  },
+  "features": [
+    {
+      "id": "F001",
+      "category": "setup",
+      "priority": 1,
+      "title": "Create HTML Structure",
+      "description": "Create the base HTML file with canvas element",
+      "steps": [
+        "Create index.html file",
+        "Add HTML5 doctype and basic structure",
+        "Add canvas element with id 'gameCanvas'",
+        "Set canvas width to 400px and height to 600px",
+        "Link to styles.css and game.js files"
+      ],
+      "acceptance_criteria": [
+        "index.html exists with valid HTML5 structure",
+        "Canvas element is present with correct dimensions",
+        "CSS and JS files are properly linked"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F002",
+      "category": "setup",
+      "priority": 2,
+      "title": "Create Base CSS Styling",
+      "description": "Create CSS file with basic page layout and canvas centering",
+      "steps": [
+        "Create styles.css file",
+        "Reset default margins and padding on body",
+        "Center canvas horizontally and vertically on page",
+        "Set a dark background color for the page",
+        "Add canvas border for visibility during development"
+      ],
+      "acceptance_criteria": [
+        "styles.css exists",
+        "Canvas is centered on the page",
+        "Page has no scrollbars with canvas visible"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F003",
+      "category": "setup",
+      "priority": 3,
+      "title": "Initialize Canvas Context",
+      "description": "Set up JavaScript file and get canvas 2D rendering context",
+      "steps": [
+        "Create game.js file",
+        "Get reference to canvas element by ID",
+        "Get 2D rendering context from canvas",
+        "Store canvas width and height in constants",
+        "Verify context by filling canvas with a test color"
+      ],
+      "acceptance_criteria": [
+        "game.js exists and loads without errors",
+        "Canvas displays a solid background color",
+        "No console errors on page load"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F004",
+      "category": "setup",
+      "priority": 4,
+      "title": "Implement Game Loop",
+      "description": "Create the core game loop using requestAnimationFrame",
+      "steps": [
+        "Create gameLoop function",
+        "Use requestAnimationFrame for smooth animation",
+        "Clear canvas at start of each frame",
+        "Add placeholder update() function call",
+        "Add placeholder render() function call",
+        "Start loop when page loads"
+      ],
+      "acceptance_criteria": [
+        "Game loop runs continuously",
+        "Canvas clears each frame",
+        "Loop maintains ~60fps"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F005",
+      "category": "functional",
+      "priority": 5,
+      "title": "Create Bird Object",
+      "description": "Define bird entity with position and size properties",
+      "steps": [
+        "Create bird object with x, y position",
+        "Set initial x position to 80px (left side of canvas)",
+        "Set initial y position to canvas height / 2 (vertical center)",
+        "Add width property (34px)",
+        "Add height property (24px)",
+        "Add velocity property initialized to 0"
+      ],
+      "acceptance_criteria": [
+        "Bird object exists with all required properties",
+        "Initial position is correct",
+        "Properties are accessible in game loop"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F006",
+      "category": "functional",
+      "priority": 6,
+      "title": "Render Bird",
+      "description": "Draw the bird on canvas as a simple shape",
+      "steps": [
+        "Create renderBird() function",
+        "Draw bird as a yellow filled rectangle",
+        "Use bird.x, bird.y for position",
+        "Use bird.width, bird.height for dimensions",
+        "Call renderBird() in main render function"
+      ],
+      "acceptance_criteria": [
+        "Bird appears as yellow rectangle on canvas",
+        "Bird is positioned at initial coordinates",
+        "Bird renders every frame"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F007",
+      "category": "functional",
+      "priority": 7,
+      "title": "Implement Gravity",
+      "description": "Add gravity constant that accelerates bird downward",
+      "steps": [
+        "Define GRAVITY constant (0.5)",
+        "Add gravity to bird velocity each frame",
+        "Add bird velocity to bird y position each frame",
+        "Create updateBird() function for physics",
+        "Call updateBird() in main update function"
+      ],
+      "acceptance_criteria": [
+        "Bird falls downward when game runs",
+        "Bird accelerates (falls faster over time)",
+        "Fall speed feels natural"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F008",
+      "category": "functional",
+      "priority": 8,
+      "title": "Add Keyboard Flap Input",
+      "description": "Make bird jump when spacebar is pressed",
+      "steps": [
+        "Define FLAP_STRENGTH constant (-8, negative for upward)",
+        "Add keydown event listener to document",
+        "Check if pressed key is spacebar (code 32 or 'Space')",
+        "Set bird velocity to FLAP_STRENGTH on spacebar press",
+        "Prevent default spacebar behavior (page scroll)"
+      ],
+      "acceptance_criteria": [
+        "Pressing spacebar makes bird move upward",
+        "Bird immediately starts falling after flap",
+        "Page does not scroll on spacebar press"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F009",
+      "category": "functional",
+      "priority": 9,
+      "title": "Add Mouse/Click Flap Input",
+      "description": "Make bird jump when canvas is clicked",
+      "steps": [
+        "Add click event listener to canvas element",
+        "Set bird velocity to FLAP_STRENGTH on click",
+        "Reuse same flap logic as keyboard"
+      ],
+      "acceptance_criteria": [
+        "Clicking canvas makes bird move upward",
+        "Click and spacebar have identical behavior",
+        "Multiple rapid clicks work correctly"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F010",
+      "category": "functional",
+      "priority": 10,
+      "title": "Add Velocity Cap",
+      "description": "Limit maximum upward and downward velocity",
+      "steps": [
+        "Define MAX_VELOCITY constant (10)",
+        "After applying gravity, cap velocity at MAX_VELOCITY",
+        "Ensure velocity doesn't exceed FLAP_STRENGTH going up",
+        "Apply capping in updateBird() function"
+      ],
+      "acceptance_criteria": [
+        "Bird cannot fall faster than MAX_VELOCITY",
+        "Bird cannot fly up faster than FLAP_STRENGTH",
+        "Velocity capping feels natural"
+      ],
+      "passes": false
+    },
+    {
+      "id": "C001",
+      "category": "checkpoint",
+      "priority": 11,
+      "title": "Browser Checkpoint: Bird Physics",
+      "description": "Verify all bird physics and basic setup work correctly in browser",
+      "steps": [
+        "Start local server with 'npx serve -p 3000'",
+        "Navigate to http://localhost:3000 using Puppeteer",
+        "Take screenshot to verify canvas renders with bird visible",
+        "Check browser console for any JavaScript errors",
+        "Click on canvas to test flap input works",
+        "Take another screenshot showing bird in different position",
+        "Verify bird falls due to gravity between screenshots",
+        "Document any issues found in progress.txt"
+      ],
+      "acceptance_criteria": [
+        "Canvas loads without errors",
+        "Bird is visible and rendered correctly",
+        "Click/keyboard input causes bird to flap upward",
+        "Gravity pulls bird downward",
+        "No console errors present"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F011",
+      "category": "functional",
+      "priority": 12,
+      "title": "Render Ground",
+      "description": "Draw ground area at bottom of canvas",
+      "steps": [
+        "Define GROUND_HEIGHT constant (80px)",
+        "Create renderGround() function",
+        "Draw filled rectangle for ground (brown/tan color)",
+        "Position ground at bottom of canvas",
+        "Call renderGround() in main render function"
+      ],
+      "acceptance_criteria": [
+        "Ground appears at bottom of canvas",
+        "Ground is visually distinct from sky",
+        "Ground height is 80px"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F012",
+      "category": "functional",
+      "priority": 13,
+      "title": "Implement Ground Collision",
+      "description": "Detect when bird hits the ground",
+      "steps": [
+        "Calculate ground y position (canvas height - GROUND_HEIGHT)",
+        "In updateBird(), check if bird bottom edge >= ground y",
+        "Create gameOver flag variable",
+        "Set gameOver to true when ground collision detected",
+        "Stop bird movement when gameOver is true"
+      ],
+      "acceptance_criteria": [
+        "Bird stops when hitting ground",
+        "gameOver flag is set on ground collision",
+        "Bird visually rests on ground surface"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F013",
+      "category": "functional",
+      "priority": 14,
+      "title": "Implement Ceiling Collision",
+      "description": "Detect when bird hits the ceiling",
+      "steps": [
+        "In updateBird(), check if bird top edge <= 0",
+        "Set gameOver to true when ceiling collision detected",
+        "Prevent bird from going above canvas top"
+      ],
+      "acceptance_criteria": [
+        "Bird cannot fly above canvas top",
+        "gameOver flag is set on ceiling collision",
+        "Ceiling collision feels fair"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F014",
+      "category": "functional",
+      "priority": 15,
+      "title": "Create Pipe Object Structure",
+      "description": "Define pipe data structure with top and bottom sections",
+      "steps": [
+        "Define PIPE_WIDTH constant (52px)",
+        "Define PIPE_GAP constant (120px) for space between pipes",
+        "Create pipes array to hold all active pipes",
+        "Define pipe object structure: {x, topHeight, bottomY}",
+        "Calculate bottomY from topHeight + PIPE_GAP"
+      ],
+      "acceptance_criteria": [
+        "Pipe constants are defined",
+        "Pipes array exists",
+        "Pipe structure can represent a gap"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F015",
+      "category": "functional",
+      "priority": 16,
+      "title": "Render Pipes",
+      "description": "Draw top and bottom pipe sections on canvas",
+      "steps": [
+        "Create renderPipes() function",
+        "Loop through pipes array",
+        "Draw top pipe from y=0 to topHeight (green rectangle)",
+        "Draw bottom pipe from bottomY to ground (green rectangle)",
+        "Call renderPipes() in main render function"
+      ],
+      "acceptance_criteria": [
+        "Top and bottom pipes render as green rectangles",
+        "Gap between pipes is visible",
+        "Multiple pipes can render simultaneously"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F016",
+      "category": "functional",
+      "priority": 17,
+      "title": "Implement Pipe Movement",
+      "description": "Move pipes from right to left each frame",
+      "steps": [
+        "Define PIPE_SPEED constant (2px per frame)",
+        "Create updatePipes() function",
+        "Subtract PIPE_SPEED from each pipe's x position",
+        "Call updatePipes() in main update function",
+        "Only update pipes when game is not over"
+      ],
+      "acceptance_criteria": [
+        "Pipes move smoothly from right to left",
+        "Pipe speed is consistent",
+        "Pipes stop moving on game over"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F017",
+      "category": "functional",
+      "priority": 18,
+      "title": "Spawn New Pipes",
+      "description": "Generate new pipes at regular intervals",
+      "steps": [
+        "Define PIPE_SPAWN_INTERVAL constant (90 frames)",
+        "Create frameCount variable to track frames",
+        "Create spawnPipe() function",
+        "Generate random topHeight between 50 and (groundY - PIPE_GAP - 50)",
+        "Add new pipe object to pipes array with x = canvas width",
+        "Spawn pipe when frameCount % PIPE_SPAWN_INTERVAL === 0"
+      ],
+      "acceptance_criteria": [
+        "New pipes appear from right side",
+        "Pipe gap position varies randomly",
+        "Pipes spawn at consistent intervals"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F018",
+      "category": "functional",
+      "priority": 19,
+      "title": "Remove Off-Screen Pipes",
+      "description": "Clean up pipes that have moved past the left edge",
+      "steps": [
+        "In updatePipes(), check each pipe's x position",
+        "If pipe x + PIPE_WIDTH < 0, remove from array",
+        "Use array filter or splice to remove pipes",
+        "Verify memory is properly managed"
+      ],
+      "acceptance_criteria": [
+        "Pipes are removed when fully off-screen left",
+        "Pipes array doesn't grow indefinitely",
+        "No visual glitches when removing pipes"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F019",
+      "category": "functional",
+      "priority": 20,
+      "title": "Create Collision Detection Function",
+      "description": "Implement rectangle intersection detection",
+      "steps": [
+        "Create checkCollision(rect1, rect2) function",
+        "rect1 and rect2 have {x, y, width, height}",
+        "Return true if rectangles overlap",
+        "Use AABB (Axis-Aligned Bounding Box) algorithm",
+        "Write unit tests for collision function"
+      ],
+      "acceptance_criteria": [
+        "Function correctly detects overlapping rectangles",
+        "Function returns false for non-overlapping rectangles",
+        "Edge cases handled (touching edges)"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F020",
+      "category": "functional",
+      "priority": 21,
+      "title": "Implement Bird-Pipe Collision",
+      "description": "Check if bird collides with any pipe",
+      "steps": [
+        "Create checkPipeCollisions() function",
+        "Loop through all pipes",
+        "Create hitbox for top pipe section",
+        "Create hitbox for bottom pipe section",
+        "Check bird against both hitboxes",
+        "Set gameOver to true if any collision detected"
+      ],
+      "acceptance_criteria": [
+        "Bird hitting top pipe triggers game over",
+        "Bird hitting bottom pipe triggers game over",
+        "Bird passing through gap is safe",
+        "Collision detection runs every frame"
+      ],
+      "passes": false
+    },
+    {
+      "id": "C002",
+      "category": "checkpoint",
+      "priority": 22,
+      "title": "Browser Checkpoint: Pipes and Collision",
+      "description": "Verify pipes spawn, move, and collisions work correctly",
+      "steps": [
+        "Start local server if not running",
+        "Navigate to http://localhost:3000 using Puppeteer",
+        "Take screenshot showing initial game state",
+        "Click to start bird moving, wait for pipes to appear",
+        "Take screenshot showing pipes on screen",
+        "Verify pipes are moving from right to left",
+        "Let bird collide with ground or pipe",
+        "Take screenshot showing game over state",
+        "Check console for any errors",
+        "Document any issues in progress.txt"
+      ],
+      "acceptance_criteria": [
+        "Pipes spawn and move correctly",
+        "Multiple pipes can appear on screen",
+        "Ground collision stops the game",
+        "Pipe collision stops the game",
+        "Bird can fly through pipe gaps safely",
+        "No console errors"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F021",
+      "category": "functional",
+      "priority": 23,
+      "title": "Add Score Variable and Display",
+      "description": "Create score tracking and render on screen",
+      "steps": [
+        "Create score variable initialized to 0",
+        "Create renderScore() function",
+        "Draw score as white text at top center of canvas",
+        "Use large font size (48px) for visibility",
+        "Call renderScore() in main render function"
+      ],
+      "acceptance_criteria": [
+        "Score displays at top center of screen",
+        "Score text is clearly visible",
+        "Score starts at 0"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F022",
+      "category": "functional",
+      "priority": 24,
+      "title": "Detect Pipe Passing",
+      "description": "Detect when bird successfully passes a pipe",
+      "steps": [
+        "Add 'passed' boolean property to each pipe object",
+        "In updatePipes(), check if bird x > pipe x + PIPE_WIDTH",
+        "Only check pipes where passed === false",
+        "Set pipe.passed = true when bird passes"
+      ],
+      "acceptance_criteria": [
+        "Each pipe tracks if it has been passed",
+        "Passing detection triggers once per pipe",
+        "Detection works at correct x position"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F023",
+      "category": "functional",
+      "priority": 25,
+      "title": "Increment Score on Pipe Pass",
+      "description": "Increase score when bird passes through pipes",
+      "steps": [
+        "When pipe.passed becomes true, increment score by 1",
+        "Ensure score only increments once per pipe",
+        "Score updates immediately on passing"
+      ],
+      "acceptance_criteria": [
+        "Score increases by 1 for each pipe passed",
+        "Same pipe cannot increase score twice",
+        "Score displays updated value immediately"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F024",
+      "category": "functional",
+      "priority": 26,
+      "title": "Create Game State Manager",
+      "description": "Implement state machine for game flow",
+      "steps": [
+        "Create gameState variable",
+        "Define states: 'start', 'playing', 'gameover'",
+        "Set initial state to 'start'",
+        "Create helper functions: isPlaying(), isGameOver(), isStart()"
+      ],
+      "acceptance_criteria": [
+        "gameState variable exists",
+        "All three states are defined",
+        "Helper functions return correct values"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F025",
+      "category": "functional",
+      "priority": 27,
+      "title": "Implement Start State Behavior",
+      "description": "Define what happens in start state",
+      "steps": [
+        "In update(), only run game logic if state is 'playing'",
+        "In start state, bird should not fall (no gravity)",
+        "Pipes should not spawn or move in start state",
+        "Bird should hover at starting position"
+      ],
+      "acceptance_criteria": [
+        "Bird stays stationary in start state",
+        "No pipes appear in start state",
+        "Game waits for player input"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F026",
+      "category": "functional",
+      "priority": 28,
+      "title": "Render Start Screen UI",
+      "description": "Display title and instructions on start",
+      "steps": [
+        "Create renderStartScreen() function",
+        "Draw 'Flappy Bird' title text (centered)",
+        "Draw 'Press Space or Click to Start' instruction",
+        "Call renderStartScreen() when state is 'start'",
+        "Render bird in starting position"
+      ],
+      "acceptance_criteria": [
+        "Title displays centered on screen",
+        "Instructions are clearly visible",
+        "Bird is visible on start screen"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F027",
+      "category": "functional",
+      "priority": 29,
+      "title": "Implement Start Game Transition",
+      "description": "Transition from start to playing state",
+      "steps": [
+        "Modify input handlers to check current state",
+        "If state is 'start', change to 'playing' on input",
+        "Also trigger first flap when starting game",
+        "Begin normal game loop behavior"
+      ],
+      "acceptance_criteria": [
+        "Space/click starts game from start screen",
+        "Bird immediately flaps on game start",
+        "Pipes begin spawning after start"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F028",
+      "category": "functional",
+      "priority": 30,
+      "title": "Implement Game Over State Behavior",
+      "description": "Define what happens in game over state",
+      "steps": [
+        "When collision detected, set state to 'gameover'",
+        "Stop bird physics updates in gameover state",
+        "Stop pipe movement in gameover state",
+        "Keep rendering current positions (frozen scene)"
+      ],
+      "acceptance_criteria": [
+        "Game freezes on collision",
+        "Bird and pipes stop moving",
+        "Scene remains visible"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F029",
+      "category": "functional",
+      "priority": 31,
+      "title": "Render Game Over UI",
+      "description": "Display game over message and final score",
+      "steps": [
+        "Create renderGameOverScreen() function",
+        "Draw 'Game Over' text (centered)",
+        "Draw 'Score: X' showing final score",
+        "Draw 'Press Space or Click to Restart' instruction",
+        "Call renderGameOverScreen() when state is 'gameover'"
+      ],
+      "acceptance_criteria": [
+        "Game Over text displays on collision",
+        "Final score is shown",
+        "Restart instructions are visible"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F030",
+      "category": "functional",
+      "priority": 32,
+      "title": "Implement Game Reset",
+      "description": "Reset all game variables for new game",
+      "steps": [
+        "Create resetGame() function",
+        "Reset bird position to initial values",
+        "Reset bird velocity to 0",
+        "Clear pipes array",
+        "Reset score to 0",
+        "Reset frameCount to 0"
+      ],
+      "acceptance_criteria": [
+        "All game variables reset to initial state",
+        "Bird returns to starting position",
+        "Score resets to 0",
+        "All pipes are cleared"
+      ],
+      "passes": false
+    },
+    {
+      "id": "C003",
+      "category": "checkpoint",
+      "priority": 33,
+      "title": "Browser Checkpoint: Game Flow",
+      "description": "Verify complete game flow: start, play, score, game over",
+      "steps": [
+        "Start local server if not running",
+        "Navigate to http://localhost:3000",
+        "Take screenshot of start screen with title and instructions",
+        "Click to start game, verify bird starts moving",
+        "Play game: flap to pass through 2-3 pipes",
+        "Take screenshot showing score incrementing",
+        "Let bird die (hit pipe or ground)",
+        "Take screenshot of game over screen with final score",
+        "Click to restart game",
+        "Verify game resets properly (bird position, score, no pipes)",
+        "Take screenshot of restarted game",
+        "Check console for errors throughout",
+        "Document any issues in progress.txt"
+      ],
+      "acceptance_criteria": [
+        "Start screen displays correctly",
+        "Game starts on click/space",
+        "Score increments when passing pipes",
+        "Game over screen shows final score",
+        "Restart works and resets all state",
+        "Multiple play sessions work correctly",
+        "No console errors"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F031",
+      "category": "functional",
+      "priority": 34,
+      "title": "Implement Restart Transition",
+      "description": "Allow restart from game over state",
+      "steps": [
+        "Modify input handlers to check for gameover state",
+        "If state is 'gameover', call resetGame() on input",
+        "Set state to 'playing' after reset",
+        "Trigger first flap on restart"
+      ],
+      "acceptance_criteria": [
+        "Space/click restarts game from game over",
+        "Game properly resets all state",
+        "New game plays correctly"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F032",
+      "category": "functional",
+      "priority": 35,
+      "title": "Load High Score from Storage",
+      "description": "Retrieve saved high score on game load",
+      "steps": [
+        "Create highScore variable",
+        "Create loadHighScore() function",
+        "Use localStorage.getItem('flappyHighScore')",
+        "Parse stored value as integer",
+        "Default to 0 if no stored value",
+        "Call loadHighScore() on game init"
+      ],
+      "acceptance_criteria": [
+        "High score loads from localStorage",
+        "Missing value defaults to 0",
+        "High score persists between page loads"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F033",
+      "category": "functional",
+      "priority": 36,
+      "title": "Save High Score to Storage",
+      "description": "Save new high score when beaten",
+      "steps": [
+        "Create saveHighScore() function",
+        "Compare current score with highScore",
+        "If current score > highScore, update highScore",
+        "Use localStorage.setItem('flappyHighScore', highScore)",
+        "Call saveHighScore() on game over"
+      ],
+      "acceptance_criteria": [
+        "High score saves when beaten",
+        "Storage updates correctly",
+        "Lower scores don't overwrite high score"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F034",
+      "category": "functional",
+      "priority": 37,
+      "title": "Display High Score",
+      "description": "Show high score on game over screen",
+      "steps": [
+        "Modify renderGameOverScreen()",
+        "Add 'Best: X' text below current score",
+        "If current score is new high score, show 'New Best!' message",
+        "Style high score text differently from current score"
+      ],
+      "acceptance_criteria": [
+        "High score displays on game over screen",
+        "New high score is indicated",
+        "High score formatting is clear"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F035",
+      "category": "functional",
+      "priority": 38,
+      "title": "Add Touch Event Listener",
+      "description": "Enable touch input for mobile devices",
+      "steps": [
+        "Add touchstart event listener to canvas",
+        "Call same flap logic as click handler",
+        "Prevent default touch behavior"
+      ],
+      "acceptance_criteria": [
+        "Touch triggers flap on mobile",
+        "Touch behavior matches click behavior",
+        "No default touch actions interfere"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F036",
+      "category": "functional",
+      "priority": 39,
+      "title": "Add Mobile Viewport Meta",
+      "description": "Configure viewport for mobile devices",
+      "steps": [
+        "Add viewport meta tag to HTML head",
+        "Set width=device-width",
+        "Set initial-scale=1.0",
+        "Set maximum-scale=1.0 to prevent zoom",
+        "Set user-scalable=no"
+      ],
+      "acceptance_criteria": [
+        "Page scales correctly on mobile",
+        "No pinch-to-zoom during gameplay",
+        "Canvas fits mobile screen"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F037",
+      "category": "functional",
+      "priority": 40,
+      "title": "Responsive Canvas Scaling",
+      "description": "Scale canvas for different screen sizes",
+      "steps": [
+        "Add CSS to scale canvas on smaller screens",
+        "Use max-width: 100% on canvas",
+        "Maintain aspect ratio during scaling",
+        "Test on various viewport sizes"
+      ],
+      "acceptance_criteria": [
+        "Canvas scales down on small screens",
+        "Aspect ratio is preserved",
+        "Game remains playable at different sizes"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F038",
+      "category": "visual",
+      "priority": 41,
+      "title": "Add Bird Rotation Based on Velocity",
+      "description": "Rotate bird sprite based on movement direction",
+      "steps": [
+        "Calculate rotation angle from bird velocity",
+        "Map velocity range to angle range (-30 to 90 degrees)",
+        "Use ctx.save() and ctx.restore() for rotation",
+        "Apply ctx.translate() to rotate around bird center",
+        "Apply ctx.rotate() with calculated angle"
+      ],
+      "acceptance_criteria": [
+        "Bird tilts up when flapping",
+        "Bird tilts down when falling",
+        "Rotation matches velocity smoothly"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F039",
+      "category": "visual",
+      "priority": 42,
+      "title": "Style Sky Background",
+      "description": "Add gradient sky background",
+      "steps": [
+        "Create linear gradient for sky",
+        "Use light blue at top, slightly darker at bottom",
+        "Apply gradient as canvas background fill",
+        "Render background first each frame"
+      ],
+      "acceptance_criteria": [
+        "Sky has gradient effect",
+        "Colors are pleasant and not distracting",
+        "Background renders behind all elements"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F040",
+      "category": "visual",
+      "priority": 43,
+      "title": "Style Bird Appearance",
+      "description": "Improve bird visual design",
+      "steps": [
+        "Change bird shape to circle or rounded rectangle",
+        "Use yellow/orange fill color",
+        "Add darker outline/stroke",
+        "Optionally add simple eye detail"
+      ],
+      "acceptance_criteria": [
+        "Bird has appealing appearance",
+        "Bird is clearly visible against background",
+        "Bird style matches game aesthetic"
+      ],
+      "passes": false
+    },
+    {
+      "id": "C004",
+      "category": "checkpoint",
+      "priority": 44,
+      "title": "Browser Checkpoint: High Score and Mobile",
+      "description": "Verify high score persistence and mobile support",
+      "steps": [
+        "Start local server if not running",
+        "Navigate to http://localhost:3000",
+        "Play game and achieve a score of at least 1",
+        "Verify high score displays on game over",
+        "Refresh the page",
+        "Play again and verify high score persisted",
+        "Beat the high score and verify 'New Best!' appears",
+        "Test with mobile viewport (375x667)",
+        "Take screenshot of mobile view",
+        "Verify canvas scales appropriately",
+        "Check console for errors",
+        "Document any issues in progress.txt"
+      ],
+      "acceptance_criteria": [
+        "High score saves to localStorage",
+        "High score persists after page refresh",
+        "New high score is indicated",
+        "Mobile viewport displays correctly",
+        "Canvas scales on smaller screens",
+        "No console errors"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F041",
+      "category": "visual",
+      "priority": 45,
+      "title": "Style Pipe Appearance",
+      "description": "Improve pipe visual design",
+      "steps": [
+        "Use green fill color for pipes",
+        "Add darker green outline/stroke",
+        "Add pipe cap (wider section at opening)",
+        "Ensure both top and bottom pipes have caps"
+      ],
+      "acceptance_criteria": [
+        "Pipes look like classic Flappy Bird pipes",
+        "Pipe caps are visible at gap edges",
+        "Pipes are clearly visible"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F042",
+      "category": "visual",
+      "priority": 46,
+      "title": "Style Ground Appearance",
+      "description": "Improve ground visual design",
+      "steps": [
+        "Use tan/brown color for ground",
+        "Add simple texture pattern (stripes or dots)",
+        "Add grass-colored strip at top of ground",
+        "Ensure ground contrasts with sky"
+      ],
+      "acceptance_criteria": [
+        "Ground has distinct appearance",
+        "Ground is clearly distinguishable from sky",
+        "Visual style matches game aesthetic"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F043",
+      "category": "visual",
+      "priority": 47,
+      "title": "Style Game Text",
+      "description": "Improve text appearance throughout game",
+      "steps": [
+        "Choose consistent font family (sans-serif)",
+        "Add text shadow/outline for readability",
+        "Use consistent colors for text",
+        "Ensure proper text sizing for all screens"
+      ],
+      "acceptance_criteria": [
+        "All text is easily readable",
+        "Text styling is consistent",
+        "Text visible against all backgrounds"
+      ],
+      "passes": false
+    },
+    {
+      "id": "C005",
+      "category": "checkpoint",
+      "priority": 48,
+      "title": "Browser Checkpoint: Final Visual Polish",
+      "description": "Final verification of all visual elements and complete game",
+      "steps": [
+        "Start local server if not running",
+        "Navigate to http://localhost:3000",
+        "Take screenshot of polished start screen",
+        "Verify sky gradient background looks good",
+        "Verify bird has improved appearance with rotation",
+        "Start game and take screenshot during gameplay",
+        "Verify pipes have caps and proper styling",
+        "Verify ground has grass strip and texture",
+        "Verify all text has shadows and is readable",
+        "Play complete game from start to game over",
+        "Take screenshot of final game over screen",
+        "Test restart to verify all visuals reset properly",
+        "Check console for any errors",
+        "Document final state in progress.txt"
+      ],
+      "acceptance_criteria": [
+        "All visual elements are polished",
+        "Bird rotates smoothly based on velocity",
+        "Sky gradient renders correctly",
+        "Pipes have caps at gap edges",
+        "Ground has grass and texture",
+        "All text is readable with shadows",
+        "Complete game flow works perfectly",
+        "No console errors",
+        "Game is ready for release"
+      ],
+      "passes": false
+    }
+  ],
+  "testing_requirements": {
+    "unit_tests": [
+      "Bird physics calculations (gravity, velocity)",
+      "Collision detection function (checkCollision)",
+      "Pipe generation bounds validation",
+      "Score increment logic",
+      "Game state transitions",
+      "High score save/load functionality",
+      "Game reset function"
+    ],
+    "integration_tests": [
+      "Complete game flow from start to game over",
+      "Restart functionality resets all state correctly",
+      "Input handling across keyboard, mouse, touch",
+      "Multiple game sessions in same page load"
+    ]
+  }
+}

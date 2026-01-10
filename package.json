@@ -1,0 +1,19 @@
+{
+  "name": "flappy-bird",
+  "version": "1.0.0",
+  "description": "Browser-based Flappy Bird game",
+  "main": "game.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "serve": "npx serve -p 3000",
+    "start": "npx serve -p 3000"
+  },
+  "keywords": ["game", "flappy-bird", "canvas"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "jest-environment-jsdom": "^27.5.1"
+  }
+}

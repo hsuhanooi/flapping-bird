@@ -1,0 +1,179 @@
+# Flappy Bird - Development Progress Log
+
+## Project Overview
+Browser-based Flappy Bird clone with simple graphics and full game mechanics.
+Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
+
+---
+
+## Progress Updates
+
+### [2026-01-09] - Project Initialization
+**Status:** PRD Created and Expanded
+
+**Completed:**
+- Created prd.json with 43 granular, atomic features
+- Established project structure and tech stack
+- Defined acceptance criteria for all features
+- Outlined testing requirements
+- Created plans/ralph.sh automation script for iterative development
+- Added Puppeteer MCP server config (.mcp.json) for browser testing
+- Set up npm project with Jest and jsdom for testing
+- Created jest.config.js for DOM testing support
+
+---
+
+## Feature List (48 Total: 43 Features + 5 Browser Checkpoints)
+
+### Setup + Bird Core (F001-F010, then C001)
+| ID | Title | Status | Tests |
+|----|-------|--------|-------|
+| F001 | Create HTML Structure | COMPLETE | 11 passing |
+| F002 | Create Base CSS Styling | COMPLETE | 16 passing |
+| F003 | Initialize Canvas Context | NOT STARTED | - |
+| F004 | Implement Game Loop | NOT STARTED | - |
+| F005 | Create Bird Object | NOT STARTED | - |
+| F006 | Render Bird | NOT STARTED | - |
+| F007 | Implement Gravity | NOT STARTED | - |
+| F008 | Add Keyboard Flap Input | NOT STARTED | - |
+| F009 | Add Mouse/Click Flap Input | NOT STARTED | - |
+| F010 | Add Velocity Cap | NOT STARTED | - |
+| **C001** | **Browser Checkpoint: Bird Physics** | NOT STARTED | Browser |
+
+### Boundaries + Pipes + Collision (F011-F020, then C002)
+| ID | Title | Status | Tests |
+|----|-------|--------|-------|
+| F011 | Render Ground | NOT STARTED | - |
+| F012 | Implement Ground Collision | NOT STARTED | - |
+| F013 | Implement Ceiling Collision | NOT STARTED | - |
+| F014 | Create Pipe Object Structure | NOT STARTED | - |
+| F015 | Render Pipes | NOT STARTED | - |
+| F016 | Implement Pipe Movement | NOT STARTED | - |
+| F017 | Spawn New Pipes | NOT STARTED | - |
+| F018 | Remove Off-Screen Pipes | NOT STARTED | - |
+| F019 | Create Collision Detection Function | NOT STARTED | - |
+| F020 | Implement Bird-Pipe Collision | NOT STARTED | - |
+| **C002** | **Browser Checkpoint: Pipes and Collision** | NOT STARTED | Browser |
+
+### Scoring + Game States (F021-F030, then C003)
+| ID | Title | Status | Tests |
+|----|-------|--------|-------|
+| F021 | Add Score Variable and Display | NOT STARTED | - |
+| F022 | Detect Pipe Passing | NOT STARTED | - |
+| F023 | Increment Score on Pipe Pass | NOT STARTED | - |
+| F024 | Create Game State Manager | NOT STARTED | - |
+| F025 | Implement Start State Behavior | NOT STARTED | - |
+| F026 | Render Start Screen UI | NOT STARTED | - |
+| F027 | Implement Start Game Transition | NOT STARTED | - |
+| F028 | Implement Game Over State Behavior | NOT STARTED | - |
+| F029 | Render Game Over UI | NOT STARTED | - |
+| F030 | Implement Game Reset | NOT STARTED | - |
+| **C003** | **Browser Checkpoint: Game Flow** | NOT STARTED | Browser |
+
+### Restart + High Score + Mobile + Visual Start (F031-F040, then C004)
+| ID | Title | Status | Tests |
+|----|-------|--------|-------|
+| F031 | Implement Restart Transition | NOT STARTED | - |
+| F032 | Load High Score from Storage | NOT STARTED | - |
+| F033 | Save High Score to Storage | NOT STARTED | - |
+| F034 | Display High Score | NOT STARTED | - |
+| F035 | Add Touch Event Listener | NOT STARTED | - |
+| F036 | Add Mobile Viewport Meta | NOT STARTED | - |
+| F037 | Responsive Canvas Scaling | NOT STARTED | - |
+| F038 | Add Bird Rotation Based on Velocity | NOT STARTED | - |
+| F039 | Style Sky Background | NOT STARTED | - |
+| F040 | Style Bird Appearance | NOT STARTED | - |
+| **C004** | **Browser Checkpoint: High Score and Mobile** | NOT STARTED | Browser |
+
+### Final Visual Polish (F041-F043, then C005)
+| ID | Title | Status | Tests |
+|----|-------|--------|-------|
+| F041 | Style Pipe Appearance | NOT STARTED | - |
+| F042 | Style Ground Appearance | NOT STARTED | - |
+| F043 | Style Game Text | NOT STARTED | - |
+| **C005** | **Browser Checkpoint: Final Visual Polish** | NOT STARTED | Browser |
+
+---
+
+## Browser Checkpoints Summary
+| Checkpoint | After | Verifies |
+|------------|-------|----------|
+| C001 | F010 | Bird physics, gravity, flap input |
+| C002 | F020 | Pipes, movement, collision detection |
+| C003 | F030 | Full game flow, scoring, game states |
+| C004 | F040 | High score persistence, mobile support |
+| C005 | F043 | All visual polish, final release check |
+
+---
+
+## Overall Progress
+**Total Items:** 2/48 (4%)
+**Features:** 2/43 (5%)
+**Checkpoints:** 0/5 (0%)
+
+---
+
+## Next Steps
+- Begin F003: Initialize Canvas Context
+
+---
+
+### [2026-01-09] - F001: Create HTML Structure
+**Status:** COMPLETE
+
+**Implemented:**
+- Created index.html with HTML5 doctype and structure
+- Added canvas element with id "gameCanvas" (400x600 dimensions)
+- Linked to styles.css and game.js files
+- Created placeholder styles.css and game.js files
+- Fixed Jest configuration for Node.js 12 compatibility (downgraded from v29 to v27)
+- Created 11 unit tests in tests/html-structure.test.js
+
+**Files Created:**
+- index.html - Main HTML structure with canvas
+- styles.css - Placeholder for CSS styling
+- game.js - Placeholder for game logic
+- tests/html-structure.test.js - Unit tests for HTML structure
+
+**Tests:** 11/11 passing
+
+**Notes for Next Developer:**
+- Jest v27 is required for Node.js 12 compatibility
+- The canvas element is 400x600 pixels as specified in PRD
+- styles.css and game.js are placeholders for F002 and F003 respectively
+
+---
+
+### [2026-01-09] - F002: Create Base CSS Styling
+**Status:** COMPLETE
+
+**Implemented:**
+- Reset default margins and padding using universal selector (*)
+- Set box-sizing: border-box for consistent sizing
+- Configured body with dark background (#1a1a2e)
+- Used flexbox to center canvas horizontally and vertically
+- Set min-height: 100vh for full viewport coverage
+- Added overflow: hidden to prevent scrollbars
+- Added border to canvas for visibility during development
+- Canvas displays as block element
+
+**Files Modified:**
+- styles.css - Complete CSS styling implementation
+
+**Files Created:**
+- tests/css-styling.test.js - 16 unit tests for CSS validation
+
+**Tests:** 16/16 passing (27 total across all test files)
+
+**Browser Verification:**
+- Verified canvas centered on page
+- Dark background color visible
+- Canvas border visible
+- No scrollbars present
+
+**Notes for Next Developer:**
+- F003 (Initialize Canvas Context) is next - modify game.js to get 2D context
+- The canvas styling is complete; next step is to actually draw on it
+- Browser testing confirmed all acceptance criteria met
+
+---
