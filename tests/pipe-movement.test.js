@@ -212,8 +212,8 @@ describe('F016: Implement Pipe Movement', () => {
                     braceCount--;
                     if (braceCount === 0) {
                         const body = gameJs.substring(bodyStart + 1, i);
-                        // Should have early return pattern: if (gameOver) { return; }
-                        expect(body).toMatch(/if\s*\(\s*gameOver\s*\)/);
+                        // Should have early return pattern: if (gameOver || !isPlaying()) { return; }
+                        expect(body).toMatch(/if\s*\(\s*gameOver\s*\|\|\s*!isPlaying\(\)\s*\)/);
                         expect(body).toMatch(/return/);
                         return;
                     }

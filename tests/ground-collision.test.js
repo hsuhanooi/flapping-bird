@@ -76,7 +76,7 @@ describe('F012: Implement Ground Collision', () => {
 
     describe('Bird movement stops on game over', () => {
         test('updateBird() returns early if gameOver is true', () => {
-            expect(gameJs).toMatch(/if\s*\(\s*gameOver\s*\)\s*\{/);
+            expect(gameJs).toMatch(/if\s*\(\s*gameOver\s*\|\|\s*!isPlaying\(\)\s*\)\s*\{/);
             expect(gameJs).toMatch(/return/);
         });
 
@@ -86,7 +86,7 @@ describe('F012: Implement Ground Collision', () => {
             expect(functionStart).toBeGreaterThanOrEqual(0);
             
             // Find the gameOver check and gravity application within the function
-            const gameOverCheckIndex = gameJs.indexOf('if (gameOver)', functionStart);
+            const gameOverCheckIndex = gameJs.indexOf('if (gameOver || !isPlaying())', functionStart);
             const gravityIndex = gameJs.indexOf('bird.velocity += GRAVITY', functionStart);
             
             expect(gameOverCheckIndex).toBeGreaterThanOrEqual(0);

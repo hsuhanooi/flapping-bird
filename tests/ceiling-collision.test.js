@@ -84,14 +84,14 @@ describe('F013: Implement Ceiling Collision', () => {
 
     describe('Bird movement stops on ceiling collision', () => {
         test('updateBird() returns early if gameOver is true', () => {
-            expect(gameJs).toMatch(/if\s*\(\s*gameOver\s*\)\s*\{/);
+            expect(gameJs).toMatch(/if\s*\(\s*gameOver\s*\|\|\s*!isPlaying\(\)\s*\)\s*\{/);
             expect(gameJs).toMatch(/return/);
         });
 
         test('Ceiling collision sets gameOver which stops movement', () => {
             // The early return check should prevent further updates
             const functionStart = gameJs.indexOf('function updateBird()');
-            const gameOverCheckIndex = gameJs.indexOf('if (gameOver)', functionStart);
+            const gameOverCheckIndex = gameJs.indexOf('if (gameOver || !isPlaying())', functionStart);
             const ceilingCheckIndex = gameJs.indexOf('bird.y <= 0', functionStart);
             
             expect(gameOverCheckIndex).toBeGreaterThanOrEqual(0);

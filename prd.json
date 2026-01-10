@@ -801,7 +801,7 @@
         "No pinch-to-zoom during gameplay",
         "Canvas fits mobile screen"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F037",

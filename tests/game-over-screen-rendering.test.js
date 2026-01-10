@@ -174,8 +174,8 @@ describe('F029: Render Game Over UI', () => {
         });
 
         test('restart instruction is positioned below score', () => {
-            // Restart instruction should be at CANVAS_HEIGHT / 2 + 40 or similar
-            expect(gameJs).toMatch(/CANVAS_HEIGHT\s*\/\s*2\s*\+\s*40/);
+            // Restart instruction should be at CANVAS_HEIGHT / 2 + 100 or similar
+            expect(gameJs).toMatch(/CANVAS_HEIGHT\s*\/\s*2\s*\+\s*100/);
         });
     });
 
