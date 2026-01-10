@@ -16,6 +16,7 @@ let animationFrameId = null;
 let gameOver = false;  // Flag to track if game is over
 let frameCount = 0;  // Frame counter for pipe spawning
 let score = 0;  // Player's current score
+let highScore = 0;  // Player's highest score (persisted in localStorage)
 
 // Game state machine
 // States: 'start', 'playing', 'gameover'
@@ -100,6 +101,22 @@ function resetGame() {
 
     // Reset gameOver flag
     gameOver = false;
+}
+
+// Load high score from localStorage
+function loadHighScore() {
+    // Retrieve high score from localStorage
+    const storedHighScore = localStorage.getItem('flappyHighScore');
+
+    // If a value exists, parse it as an integer
+    if (storedHighScore !== null) {
+        const parsedScore = parseInt(storedHighScore, 10);
+        // Ensure parsed value is a valid number, default to 0 if not
+        highScore = isNaN(parsedScore) ? 0 : parsedScore;
+    } else {
+        // Default to 0 if no stored value exists
+        highScore = 0;
+    }
 }
 
 // Collision detection function using AABB (Axis-Aligned Bounding Box) algorithm
@@ -526,6 +543,7 @@ function stopGameLoop() {
 
 // Initialize and start the game
 function init() {
+    loadHighScore();  // Load high score from localStorage
     initBird();
     startGameLoop();
 }

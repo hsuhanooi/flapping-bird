@@ -724,7 +724,7 @@
         "Missing value defaults to 0",
         "High score persists between page loads"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F033",

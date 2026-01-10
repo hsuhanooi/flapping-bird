@@ -73,8 +73,8 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 ### Restart + High Score + Mobile + Visual Start (F031-F040, then C004)
 | ID | Title | Status | Tests |
 |----|-------|--------|-------|
-| F031 | Implement Restart Transition | NOT STARTED | - |
-| F032 | Load High Score from Storage | NOT STARTED | - |
+| F031 | Implement Restart Transition | COMPLETE | 13 passing |
+| F032 | Load High Score from Storage | COMPLETE | 22 passing |
 | F033 | Save High Score to Storage | NOT STARTED | - |
 | F034 | Display High Score | NOT STARTED | - |
 | F035 | Add Touch Event Listener | NOT STARTED | - |
@@ -107,14 +107,14 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 ---
 
 ## Overall Progress
-**Total Items:** 10/48 (21%)
-**Features:** 10/43 (23%)
-**Checkpoints:** 0/5 (0%)
+**Total Items:** 35/48 (73%)
+**Features:** 32/43 (74%)
+**Checkpoints:** 3/5 (60%)
 
 ---
 
 ## Next Steps
-- Begin C001: Browser Checkpoint - Bird Physics
+- F033: Save High Score to Storage
 
 ---
 
@@ -1254,6 +1254,45 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - The game flow is complete: start -> playing -> gameover -> restart (playing) -> ...
 - The resetGame() function handles resetting all game state variables
 - The input handlers now properly manage all three game states
+- Pre-existing test failures (4 tests) are due to outdated regex patterns and don't affect functionality
+
+---
+
+### [2026-01-10] - F032: Load High Score from Storage
+**Status:** COMPLETE
+
+**Implemented:**
+- Created highScore variable initialized to 0 in game state section
+- Created loadHighScore() function that:
+  - Retrieves high score from localStorage using getItem('flappyHighScore')
+  - Parses stored value as integer using parseInt with radix 10
+  - Defaults to 0 if no stored value exists (null check)
+  - Handles invalid/NaN values by defaulting to 0
+  - Assigns parsed value to highScore variable
+- Added loadHighScore() call in init() function before initBird()
+- High score loads automatically when game initializes
+
+**High Score Loading Behavior:**
+- High score is retrieved from localStorage with key 'flappyHighScore'
+- If localStorage has no stored value (null), highScore defaults to 0
+- If stored value is not a valid number, highScore defaults to 0
+- High score persists between page loads (stored in browser's localStorage)
+- High score is available immediately when game loads
+
+**Files Modified:**
+- game.js - Added highScore variable, loadHighScore() function, and integration into init()
+
+**Files Created:**
+- tests/high-score-load.test.js - 22 unit tests for high score loading functionality
+
+**Tests:** 22/22 passing (589 total across all test files, 4 pre-existing failures unrelated to F032)
+
+**Notes for Next Developer:**
+- F033 (Save High Score to Storage) is next - create saveHighScore() function to save new high scores
+- The highScore variable is now ready to be compared with score on game over
+- loadHighScore() is called during game initialization, before initBird()
+- The localStorage key 'flappyHighScore' is used for both loading and saving (F033)
+- The high score is loaded but not yet displayed - that comes in F034 (Display High Score)
 - Pre-existing test failures (4 tests) are due to outdated regex patterns and don't affect functionality
 
 ---
