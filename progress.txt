@@ -424,14 +424,49 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 
 **Files Created:**
 - tests/velocity-cap.test.js - 20 unit tests for velocity cap functionality
-
 **Tests:** 20/20 passing (203 total across all test files)
 
 **Notes for Next Developer:**
-- C001 (Browser Checkpoint: Bird Physics) is next - verify all bird physics work in browser
+- F011 is next - Render ground
 - The velocity cap prevents the bird from falling infinitely fast or flying impossibly high
 - updateBird() order: gravity -> cap velocity -> update position
 - Ground/ceiling collision comes in F012/F013 - currently bird can still go off-screen
 - All 10 bird core features (F001-F010) are now complete
+
+---
+
+### [2026-01-10] - F011: Render Ground
+**Status:** COMPLETE
+
+**Implemented:**
+- Defined GROUND_HEIGHT constant with value 80 (pixels)
+- Created renderGround() function that draws ground as a tan/brown filled rectangle
+- Ground color set to #deb887 (tan/brown color)
+- Ground positioned at bottom of canvas (y = CANVAS_HEIGHT - GROUND_HEIGHT)
+- Ground spans full width of canvas (width = CANVAS_WIDTH)
+- Added renderGround() call in render() function after renderBird()
+- Ground renders every frame at the bottom of the canvas
+
+**Visual Behavior:**
+- Ground appears as a 80px tall rectangle at the bottom of the 600px canvas
+- Ground starts at y position 520 (600 - 80)
+- Ground color (#deb887) is visually distinct from sky background (#70c5ce)
+- Ground color is also distinct from bird color (#f7dc6f)
+
+**Files Modified:**
+- game.js - Added GROUND_HEIGHT constant and renderGround() function, integrated into render()
+
+**Files Created:**
+- tests/ground-rendering.test.js - 24 unit tests for ground rendering functionality
+
+**Tests:** 24/24 passing (227 total across all test files)
+
+**Notes for Next Developer:**
+- F012 (Implement Ground Collision) is next - detect when bird hits the ground
+- The ground is now visible at the bottom of the canvas
+- Ground y position is CANVAS_HEIGHT - GROUND_HEIGHT = 600 - 80 = 520
+- Bird will currently fall through the ground - collision detection needed in F012
+- The renderGround() function is called every frame in the render() function
+- Ground rendering order: background -> bird -> ground (ground on top, which is correct)
 
 ---

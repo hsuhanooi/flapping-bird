@@ -229,7 +229,7 @@
         "Gravity pulls bird downward",
         "No console errors present"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F011",
@@ -249,7 +249,7 @@
         "Ground is visually distinct from sky",
         "Ground height is 80px"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F012",

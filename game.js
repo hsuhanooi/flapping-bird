@@ -17,6 +17,9 @@ const GRAVITY = 0.5;  // Acceleration due to gravity (pixels per frame squared)
 const FLAP_STRENGTH = -8;  // Velocity applied when bird flaps (negative = upward)
 const MAX_VELOCITY = 10;  // Maximum downward velocity (terminal velocity)
 
+// Ground constant
+const GROUND_HEIGHT = 80;  // Height of ground area at bottom of canvas (pixels)
+
 // Bird object
 const bird = {
     x: 80,                          // Initial x position (left side of canvas)
@@ -102,6 +105,13 @@ function renderBird() {
     ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
 }
 
+// Render ground at bottom of canvas
+function renderGround() {
+    ctx.fillStyle = '#deb887';  // Tan/brown color
+    const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
+    ctx.fillRect(0, groundY, CANVAS_WIDTH, GROUND_HEIGHT);
+}
+
 // Update function - contains game logic
 function update() {
     // Update bird physics (gravity and movement)
@@ -118,6 +128,9 @@ function render() {
 
     // Draw game elements
     renderBird();
+
+    // Draw ground
+    renderGround();
 }
 
 // Main game loop using requestAnimationFrame
