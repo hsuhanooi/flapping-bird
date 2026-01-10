@@ -92,8 +92,8 @@ describe('F003: Initialize Canvas Context', () => {
     });
 
     describe('Canvas initialization', () => {
-        test('initCanvas function is defined', () => {
-            expect(gameJs).toMatch(/function\s+initCanvas\s*\(\s*\)/);
+        test('init function is defined', () => {
+            expect(gameJs).toMatch(/function\s+init\s*\(\s*\)/);
         });
 
         test('fillRect is called for background fill', () => {
@@ -104,8 +104,8 @@ describe('F003: Initialize Canvas Context', () => {
             expect(gameJs).toMatch(/fillStyle\s*=/);
         });
 
-        test('initCanvas is called', () => {
-            expect(gameJs).toMatch(/initCanvas\s*\(\s*\)/);
+        test('init is called to start the game', () => {
+            expect(gameJs).toMatch(/init\s*\(\s*\)/);
         });
     });
 

@@ -543,3 +543,39 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - All boundary collisions (ceiling and ground) are now complete
 
 ---
+
+### [2026-01-10] - F014: Create Pipe Object Structure
+**Status:** COMPLETE
+
+**Implemented:**
+- Defined PIPE_WIDTH constant with value 52 (pixels)
+- Defined PIPE_GAP constant with value 120 (pixels) for space between top and bottom pipes
+- Created pipes array initialized as empty array to hold all active pipes
+- Defined pipe object structure with properties:
+  - x: horizontal position of the pipe (left edge)
+  - topHeight: height of the top pipe section (from top of canvas)
+  - bottomY: y position where the bottom pipe starts (calculated as topHeight + PIPE_GAP)
+- Added documentation comments explaining the pipe structure
+
+**Pipe Structure:**
+- Each pipe object represents a pair of pipes (top and bottom) with a gap between them
+- The gap is defined by PIPE_GAP (120px) between topHeight and bottomY
+- Pipes array will hold multiple pipe objects as they spawn and move across the screen
+- Pipe structure allows for easy collision detection and rendering in future features
+
+**Files Modified:**
+- game.js - Added PIPE_WIDTH, PIPE_GAP constants, pipes array, and pipe structure documentation
+
+**Files Created:**
+- tests/pipe-object-structure.test.js - 12 unit tests for pipe object structure
+
+**Tests:** 12/12 passing (266 total across all test files)
+
+**Notes for Next Developer:**
+- F015 (Render Pipes) is next - draw top and bottom pipe sections on canvas
+- The pipes array is ready to hold pipe objects as they are created
+- Pipe structure: {x, topHeight, bottomY} where bottomY = topHeight + PIPE_GAP
+- PIPE_WIDTH (52px) and PIPE_GAP (120px) are constants ready for use in rendering and collision detection
+- The pipes array is currently empty - pipe spawning will be implemented in F017
+
+---

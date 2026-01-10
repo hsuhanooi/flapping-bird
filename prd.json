@@ -307,7 +307,7 @@
         "Pipes array exists",
         "Pipe structure can represent a gap"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F015",

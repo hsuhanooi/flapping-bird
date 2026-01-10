@@ -23,6 +23,18 @@ const MAX_VELOCITY = 10;  // Maximum downward velocity (terminal velocity)
 // Ground constant
 const GROUND_HEIGHT = 80;  // Height of ground area at bottom of canvas (pixels)
 
+// Pipe constants
+const PIPE_WIDTH = 52;  // Width of each pipe in pixels
+const PIPE_GAP = 120;  // Vertical gap between top and bottom pipes in pixels
+
+// Pipes array to hold all active pipes
+const pipes = [];
+
+// Pipe object structure: {x, topHeight, bottomY}
+// - x: horizontal position of the pipe (left edge)
+// - topHeight: height of the top pipe section (from top of canvas)
+// - bottomY: y position where the bottom pipe starts (topHeight + PIPE_GAP)
+
 // Bird object
 const bird = {
     x: 80,                          // Initial x position (left side of canvas)
