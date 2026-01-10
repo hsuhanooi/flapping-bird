@@ -1062,3 +1062,37 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - When transitioning to playing state, the first flap should be triggered automatically
 
 ---
+
+### [2026-01-10] - F027: Implement Start Game Transition
+**Status:** COMPLETE
+
+**Implemented:**
+- Modified handleKeyDown() function to check for start state before processing input
+- Modified handleClick() function to check for start state before processing input
+- When state is 'start', both input handlers transition gameState to 'playing' on input
+- First flap is triggered automatically when starting game (flap() is called after state transition)
+- Game logic begins running after transition (bird physics, pipe spawning, etc.)
+
+**Transition Behavior:**
+- Spacebar or click on start screen transitions gameState from 'start' to 'playing'
+- Bird immediately flaps when game starts (velocity set to FLAP_STRENGTH)
+- Pipes begin spawning after transition (game logic runs when state is 'playing')
+- Input handlers work correctly in both start and playing states
+- Transition happens before flap is called (correct order of operations)
+
+**Files Modified:**
+- game.js - Modified handleKeyDown() and handleClick() to check for start state and transition to playing
+
+**Files Created:**
+- tests/start-game-transition.test.js - 15 unit tests for start game transition functionality
+
+**Tests:** 15/15 passing (496 total across all test files)
+
+**Notes for Next Developer:**
+- F028 (Implement Game Over State Behavior) is next - define what happens in game over state
+- The input handlers now properly handle state transitions from start to playing
+- When game starts, bird immediately flaps and game logic begins running
+- The transition logic ensures smooth game flow from start screen to gameplay
+- Game state machine is now functional for start -> playing transition
+
+---

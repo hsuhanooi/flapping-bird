@@ -271,6 +271,12 @@ function handleKeyDown(event) {
     if (event.code === 'Space' || event.keyCode === 32) {
         // Prevent default spacebar behavior (page scroll)
         event.preventDefault();
+        
+        // If in start state, transition to playing state
+        if (isStart()) {
+            gameState = 'playing';
+        }
+        
         // Make bird flap
         flap();
     }
@@ -278,6 +284,11 @@ function handleKeyDown(event) {
 
 // Handle mouse click on canvas
 function handleClick(event) {
+    // If in start state, transition to playing state
+    if (isStart()) {
+        gameState = 'playing';
+    }
+    
     // Make bird flap when canvas is clicked
     flap();
 }
