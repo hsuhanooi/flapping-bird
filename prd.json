@@ -572,7 +572,7 @@
         "Instructions are clearly visible",
         "Bird is visible on start screen"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F027",

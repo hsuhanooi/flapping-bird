@@ -338,6 +338,23 @@ function renderScore() {
     ctx.fillText(score.toString(), CANVAS_WIDTH / 2, 20);  // Draw score at top center
 }
 
+// Render start screen UI (title and instructions)
+function renderStartScreen() {
+    // Draw 'Flappy Bird' title text (centered)
+    ctx.fillStyle = '#ffffff';  // White color
+    ctx.font = 'bold 64px sans-serif';  // Large, bold font for title
+    ctx.textAlign = 'center';  // Center text horizontally
+    ctx.textBaseline = 'middle';  // Align text from center
+    ctx.fillText('Flappy Bird', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 80);  // Draw title centered, slightly above center
+    
+    // Draw 'Press Space or Click to Start' instruction
+    ctx.fillStyle = '#ffffff';  // White color
+    ctx.font = '24px sans-serif';  // Smaller font for instructions
+    ctx.textAlign = 'center';  // Center text horizontally
+    ctx.textBaseline = 'middle';  // Align text from center
+    ctx.fillText('Press Space or Click to Start', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 20);  // Draw instructions below title
+}
+
 // Update function - contains game logic
 function update() {
     // Only run game logic if state is 'playing'
@@ -366,7 +383,18 @@ function render() {
     // Draw background
     drawBackground();
 
-    // Draw game elements
+    // If in start state, render start screen UI
+    if (isStart()) {
+        // Draw game elements that should be visible on start screen
+        renderBird();  // Render bird in starting position
+        renderGround();  // Render ground
+        
+        // Draw start screen UI (title and instructions)
+        renderStartScreen();
+        return;  // Don't render pipes, score, etc. on start screen
+    }
+
+    // Draw game elements (only when playing or gameover)
     renderPipes();  // Draw pipes before bird so they appear behind
     renderBird();
 

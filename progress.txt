@@ -1023,3 +1023,42 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Game state machine is now functional - start state prevents all game logic from running
 
 ---
+
+### [2026-01-10] - F026: Render Start Screen UI
+**Status:** COMPLETE
+
+**Implemented:**
+- Created renderStartScreen() function that displays title and instructions
+- Draws 'Flappy Bird' title text centered on screen (64px bold font)
+- Draws 'Press Space or Click to Start' instruction text below title (24px font)
+- Modified render() function to call renderStartScreen() when state is 'start'
+- Bird and ground are rendered on start screen (pipes and score are not)
+- Start screen UI uses white text for visibility against sky background
+- Title is positioned at CANVAS_HEIGHT / 2 - 80 (slightly above center)
+- Instructions are positioned at CANVAS_HEIGHT / 2 - 20 (below title)
+
+**Visual Behavior:**
+- Start screen displays when gameState is 'start'
+- Title "Flappy Bird" is clearly visible and centered
+- Instructions are clearly visible below the title
+- Bird is visible in starting position on start screen
+- Ground is visible at bottom of canvas
+- Pipes and score are not rendered on start screen (early return prevents them)
+
+**Files Modified:**
+- game.js - Added renderStartScreen() function and integrated into render()
+- tests/pipe-rendering.test.js - Updated tests to handle new render() structure with start state check
+
+**Files Created:**
+- tests/start-screen-rendering.test.js - 20 unit tests for start screen rendering functionality
+
+**Tests:** 20/20 passing (481 total across all test files)
+
+**Notes for Next Developer:**
+- F027 (Implement Start Game Transition) is next - modify input handlers to transition from start to playing state
+- The renderStartScreen() function is called when isStart() returns true
+- Start screen shows title and instructions, with bird and ground visible
+- Input handlers (handleKeyDown and handleClick) need to be modified in F027 to check for start state and transition to playing
+- When transitioning to playing state, the first flap should be triggered automatically
+
+---
