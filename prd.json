@@ -744,7 +744,7 @@
         "Storage updates correctly",
         "Lower scores don't overwrite high score"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F034",

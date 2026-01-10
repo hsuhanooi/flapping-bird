@@ -75,7 +75,7 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 |----|-------|--------|-------|
 | F031 | Implement Restart Transition | COMPLETE | 13 passing |
 | F032 | Load High Score from Storage | COMPLETE | 22 passing |
-| F033 | Save High Score to Storage | NOT STARTED | - |
+| F033 | Save High Score to Storage | COMPLETE | 21 passing |
 | F034 | Display High Score | NOT STARTED | - |
 | F035 | Add Touch Event Listener | NOT STARTED | - |
 | F036 | Add Mobile Viewport Meta | NOT STARTED | - |
@@ -107,14 +107,14 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 ---
 
 ## Overall Progress
-**Total Items:** 35/48 (73%)
-**Features:** 32/43 (74%)
+**Total Items:** 36/48 (75%)
+**Features:** 33/43 (77%)
 **Checkpoints:** 3/5 (60%)
 
 ---
 
 ## Next Steps
-- F033: Save High Score to Storage
+- F034: Display High Score
 
 ---
 
@@ -1293,6 +1293,45 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - loadHighScore() is called during game initialization, before initBird()
 - The localStorage key 'flappyHighScore' is used for both loading and saving (F033)
 - The high score is loaded but not yet displayed - that comes in F034 (Display High Score)
+- Pre-existing test failures (4 tests) are due to outdated regex patterns and don't affect functionality
+
+---
+
+### [2026-01-10] - F033: Save High Score to Storage
+**Status:** COMPLETE
+
+**Implemented:**
+- Created saveHighScore() function that:
+  - Compares current score with highScore
+  - Updates highScore variable when score > highScore
+  - Saves to localStorage using setItem('flappyHighScore', highScore.toString())
+- Added saveHighScore() call on all game over conditions:
+  - Ground collision in updateBird()
+  - Ceiling collision in updateBird()
+  - Top pipe collision in checkPipeCollisions()
+  - Bottom pipe collision in checkPipeCollisions()
+- High score is only saved when current score is strictly greater (not equal)
+
+**Save High Score Behavior:**
+- When game over occurs (any collision), saveHighScore() is called
+- If current score beats high score, the new value is saved to localStorage
+- Lower or equal scores do not overwrite the existing high score
+- High score persists across page reloads via localStorage
+
+**Files Modified:**
+- game.js - Added saveHighScore() function and calls on all collision events
+
+**Files Created:**
+- tests/high-score-save.test.js - 21 unit tests for save high score functionality
+
+**Tests:** 21/21 passing (610 total across all test files, 4 pre-existing failures unrelated to F033)
+
+**Notes for Next Developer:**
+- F034 (Display High Score) is next - show high score on game over screen
+- The saveHighScore() function is called on all collision types (ground, ceiling, pipe)
+- saveHighScore() only updates when score > highScore (strictly greater)
+- The localStorage key 'flappyHighScore' is shared with loadHighScore()
+- High score is now being saved but not displayed yet - F034 will add display
 - Pre-existing test failures (4 tests) are due to outdated regex patterns and don't affect functionality
 
 ---

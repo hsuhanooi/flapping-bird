@@ -119,6 +119,17 @@ function loadHighScore() {
     }
 }
 
+// Save high score to localStorage
+function saveHighScore() {
+    // Compare current score with highScore
+    if (score > highScore) {
+        // Update highScore variable
+        highScore = score;
+        // Save to localStorage
+        localStorage.setItem('flappyHighScore', highScore.toString());
+    }
+}
+
 // Collision detection function using AABB (Axis-Aligned Bounding Box) algorithm
 // rect1 and rect2 are objects with {x, y, width, height} properties
 // Returns true if rectangles overlap or touch, false otherwise
@@ -172,6 +183,7 @@ function updateBird() {
         // Bird has hit the ceiling
         gameOver = true;
         gameState = 'gameover';  // Set game state to gameover
+        saveHighScore();  // Save high score on game over
         // Position bird exactly at top of canvas
         bird.y = 0;
     }
@@ -184,6 +196,7 @@ function updateBird() {
         // Bird has hit the ground
         gameOver = true;
         gameState = 'gameover';  // Set game state to gameover
+        saveHighScore();  // Save high score on game over
         // Position bird exactly on ground surface
         bird.y = groundY - bird.height;
     }
@@ -253,6 +266,7 @@ function checkPipeCollisions() {
         if (checkCollision(birdHitbox, topPipeHitbox)) {
             gameOver = true;
             gameState = 'gameover';  // Set game state to gameover
+            saveHighScore();  // Save high score on game over
             return;  // Exit early once collision is detected
         }
 
@@ -260,6 +274,7 @@ function checkPipeCollisions() {
         if (checkCollision(birdHitbox, bottomPipeHitbox)) {
             gameOver = true;
             gameState = 'gameover';  // Set game state to gameover
+            saveHighScore();  // Save high score on game over
             return;  // Exit early once collision is detected
         }
     }
