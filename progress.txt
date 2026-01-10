@@ -31,7 +31,7 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 | F001 | Create HTML Structure | COMPLETE | 11 passing |
 | F002 | Create Base CSS Styling | COMPLETE | 16 passing |
 | F003 | Initialize Canvas Context | COMPLETE | 19 passing |
-| F004 | Implement Game Loop | NOT STARTED | - |
+| F004 | Implement Game Loop | COMPLETE | 35 passing |
 | F005 | Create Bird Object | NOT STARTED | - |
 | F006 | Render Bird | NOT STARTED | - |
 | F007 | Implement Gravity | NOT STARTED | - |
@@ -107,14 +107,14 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 ---
 
 ## Overall Progress
-**Total Items:** 3/48 (6%)
-**Features:** 3/43 (7%)
+**Total Items:** 4/48 (8%)
+**Features:** 4/43 (9%)
 **Checkpoints:** 0/5 (0%)
 
 ---
 
 ## Next Steps
-- Begin F004: Implement Game Loop
+- Begin F005: Create Bird Object
 
 ---
 
@@ -207,5 +207,36 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - The canvas context (ctx) and dimension constants are ready for drawing
 - initCanvas() can be modified or replaced by the game loop's render function
 - Sky blue color (#70c5ce) is a placeholder that will become the sky background
+
+---
+
+### [2026-01-10] - F004: Implement Game Loop
+**Status:** COMPLETE
+
+**Implemented:**
+- Created gameLoop() function using requestAnimationFrame for smooth ~60fps animation
+- Created update() placeholder function for game logic (to be expanded in later features)
+- Created render() function that clears canvas and draws background each frame
+- Created clearCanvas() function using ctx.clearRect()
+- Created drawBackground() function that fills canvas with sky blue (#70c5ce)
+- Created startGameLoop() function with guard to prevent multiple loops
+- Created stopGameLoop() function with proper cleanup via cancelAnimationFrame
+- Created init() function that starts the game loop on page load
+- Added isGameLoopRunning and animationFrameId state variables for loop control
+
+**Files Modified:**
+- game.js - Complete game loop implementation
+
+**Files Created:**
+- tests/game-loop.test.js - 35 unit tests for game loop functionality
+
+**Tests:** 35/35 passing (81 total across all test files)
+
+**Notes for Next Developer:**
+- F005 (Create Bird Object) is next - define bird with position, size, and velocity
+- The update() function is a placeholder - add bird physics here
+- The render() function calls clearCanvas() then drawBackground() - add bird rendering after background
+- stopGameLoop() exists for pausing/cleanup but isn't used yet
+- Game loop runs automatically when page loads via init()
 
 ---

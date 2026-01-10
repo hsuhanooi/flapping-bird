@@ -86,7 +86,7 @@
         "Canvas clears each frame",
         "Loop maintains ~60fps"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F005",
