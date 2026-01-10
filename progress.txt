@@ -1442,3 +1442,39 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Browser testing with mobile viewport can be done using Puppeteer with mobile device emulation
 
 ---
+
+### [2026-01-10] - F037: Responsive Canvas Scaling
+**Status:** COMPLETE
+
+**Implemented:**
+- Added max-width: 100% to canvas for horizontal scaling on smaller screens
+- Added max-height: 100vh to canvas for vertical scaling on smaller viewports
+- Added width: 100% to allow canvas to scale down proportionally
+- Added height: auto to maintain aspect ratio
+- Added aspect-ratio: 400 / 600 to preserve the 2:3 canvas aspect ratio during scaling
+- Added media query to limit canvas to 400px width on screens larger than 400px
+- Canvas internal resolution (400x600) remains unchanged - only visual display scales
+
+**Responsive Behavior:**
+- Canvas scales down on screens smaller than 400px width
+- Canvas scales down on viewports smaller than 600px height
+- Aspect ratio (2:3) is preserved during scaling
+- Canvas maintains its natural 400x600 size on larger screens
+- Game remains fully playable at all screen sizes
+
+**Files Modified:**
+- styles.css - Added responsive scaling CSS properties to #gameCanvas selector
+
+**Files Created:**
+- tests/responsive-canvas-scaling.test.js - 23 unit tests for responsive canvas scaling functionality
+
+**Tests:** 23/23 passing (678 total across all test files)
+
+**Notes for Next Developer:**
+- F038 (Add Bird Rotation Based on Velocity) is next - rotate bird sprite based on movement direction
+- The canvas now scales responsively while maintaining its internal 400x600 resolution
+- Game logic uses the internal canvas dimensions (400x600), so scaling doesn't affect gameplay
+- The aspect-ratio property ensures the canvas maintains its 2:3 ratio at all screen sizes
+- CSS scaling only affects visual display, not the canvas internal coordinate system
+
+---

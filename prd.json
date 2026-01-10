@@ -820,7 +820,7 @@
         "Aspect ratio is preserved",
         "Game remains playable at different sizes"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F038",
