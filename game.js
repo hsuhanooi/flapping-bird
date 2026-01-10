@@ -37,12 +37,12 @@ function initBird() {
     bird.x = 80;
     bird.y = CANVAS_HEIGHT / 2;
     bird.velocity = 0;
+    gameOver = false;  // Reset game over state
 }
 
 // Reset bird to initial state
 function resetBird() {
     initBird();
-    gameOver = false;
 }
 
 // Update bird physics (gravity and velocity)
@@ -51,6 +51,9 @@ function updateBird() {
     if (gameOver) {
         return;
     }
+
+    // Calculate ground y position (where ground starts)
+    const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
 
     // Apply gravity to velocity (accelerate downward)
     bird.velocity += GRAVITY;
@@ -68,14 +71,12 @@ function updateBird() {
     // Apply velocity to position (move the bird)
     bird.y += bird.velocity;
 
-    // Check for ground collision
-    const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
+    // Check for ground collision (bird bottom edge >= ground y)
     const birdBottom = bird.y + bird.height;
-    
     if (birdBottom >= groundY) {
-        // Bird has hit the ground
+        // Bird hit the ground
         gameOver = true;
-        // Position bird exactly on ground surface
+        // Position bird so it visually rests on ground surface
         bird.y = groundY - bird.height;
         bird.velocity = 0;
     }

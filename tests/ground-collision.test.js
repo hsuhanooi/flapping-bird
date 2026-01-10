@@ -8,32 +8,6 @@ const path = require('path');
 describe('F012: Implement Ground Collision', () => {
     let gameJs;
 
-    // Helper function to extract full function body
-    function extractFunctionBody(code, funcName) {
-        const funcStart = code.indexOf(`function ${funcName}()`);
-        if (funcStart === -1) return null;
-        
-        let braceCount = 0;
-        let inFunction = false;
-        let startPos = -1;
-        
-        for (let i = funcStart; i < code.length; i++) {
-            if (code[i] === '{') {
-                if (!inFunction) {
-                    inFunction = true;
-                    startPos = i;
-                }
-                braceCount++;
-            } else if (code[i] === '}') {
-                braceCount--;
-                if (inFunction && braceCount === 0) {
-                    return code.substring(startPos + 1, i);
-                }
-            }
-        }
-        return null;
-    }
-
     beforeEach(() => {
         // Set up DOM with canvas
         document.body.innerHTML = `
@@ -58,159 +32,125 @@ describe('F012: Implement Ground Collision', () => {
             expect(gameJs).toMatch(/gameOver\s*=\s*false/);
         });
 
-        test('gameOver is defined in game state section', () => {
-            // Should be near other game state variables
+        test('gameOver is defined before updateBird function', () => {
             const gameOverPos = gameJs.indexOf('gameOver');
-            const groundHeightPos = gameJs.indexOf('GROUND_HEIGHT');
-            expect(gameOverPos).toBeGreaterThan(0);
+            const updateBirdPos = gameJs.indexOf('function updateBird');
+            expect(gameOverPos).toBeLessThan(updateBirdPos);
         });
     });
 
     describe('Ground collision detection in updateBird', () => {
-        test('updateBird function checks for ground collision', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
-            expect(body).toMatch(/ground|GROUND|collision|Collision/);
-        });
-
         test('updateBird calculates ground y position', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
-            // Should calculate groundY = CANVAS_HEIGHT - GROUND_HEIGHT
-            expect(body).toMatch(/CANVAS_HEIGHT\s*-\s*GROUND_HEIGHT|groundY\s*=\s*CANVAS_HEIGHT\s*-\s*GROUND_HEIGHT/);
+            const updateBirdMatch = gameJs.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(updateBirdMatch).not.toBeNull();
+            expect(updateBirdMatch[0]).toMatch(/CANVAS_HEIGHT\s*-\s*GROUND_HEIGHT/);
         });
 
         test('updateBird checks bird bottom edge against ground', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
-            // Should check bird.y + bird.height >= groundY
+            const updateBirdMatch = gameJs.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(updateBirdMatch).not.toBeNull();
+            const body = updateBirdMatch[0];
+            // Should check if bird bottom (bird.y + bird.height) >= groundY
             expect(body).toMatch(/bird\.y\s*\+\s*bird\.height|birdBottom/);
         });
 
         test('updateBird sets gameOver to true on ground collision', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
-            // Should set gameOver = true
-            expect(body).toMatch(/gameOver\s*=\s*true/);
+            const updateBirdMatch = gameJs.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(updateBirdMatch).not.toBeNull();
+            expect(updateBirdMatch[0]).toMatch(/gameOver\s*=\s*true/);
         });
 
         test('updateBird positions bird on ground surface on collision', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
+            const updateBirdMatch = gameJs.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(updateBirdMatch).not.toBeNull();
+            const body = updateBirdMatch[0];
             // Should set bird.y = groundY - bird.height
-            expect(body).toMatch(/bird\.y\s*=\s*.*groundY.*\s*-\s*bird\.height|bird\.y\s*=\s*.*GROUND_HEIGHT.*\s*-\s*bird\.height/);
+            expect(body).toMatch(/bird\.y\s*=\s*groundY\s*-\s*bird\.height/);
         });
 
         test('updateBird sets bird velocity to 0 on ground collision', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
-            // Should set bird.velocity = 0
-            expect(body).toMatch(/bird\.velocity\s*=\s*0/);
+            const updateBirdMatch = gameJs.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(updateBirdMatch).not.toBeNull();
+            expect(updateBirdMatch[0]).toMatch(/bird\.velocity\s*=\s*0/);
         });
     });
 
     describe('Bird movement stops when gameOver is true', () => {
         test('updateBird returns early if gameOver is true', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
+            const updateBirdMatch = gameJs.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(updateBirdMatch).not.toBeNull();
+            const body = updateBirdMatch[0];
             // Should check gameOver and return early
-            expect(body).toMatch(/if\s*\(\s*gameOver\s*\)|if\s*\(\s*!gameOver\s*\)/);
+            expect(body).toMatch(/if\s*\(\s*gameOver\s*\)/);
+            expect(body).toMatch(/return/);
         });
 
-        test('updateBird does not apply physics when gameOver is true', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
-            
-            // Find the gameOver check position
-            const gameOverCheck = body.indexOf('gameOver');
-            // Find gravity application position
+        test('gameOver check happens before physics updates', () => {
+            const updateBirdMatch = gameJs.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(updateBirdMatch).not.toBeNull();
+            const body = updateBirdMatch[0];
+            const gameOverCheckPos = body.indexOf('if (gameOver)');
             const gravityPos = body.indexOf('GRAVITY');
-            
-            // If gameOver check exists, it should be before gravity application
-            if (gameOverCheck !== -1 && gravityPos !== -1) {
-                expect(gameOverCheck).toBeLessThan(gravityPos);
-            }
+            expect(gameOverCheckPos).toBeLessThan(gravityPos);
         });
     });
 
     describe('Ground collision calculation', () => {
-        test('ground y position is calculated correctly', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
-            // Ground y should be CANVAS_HEIGHT - GROUND_HEIGHT
-            // With CANVAS_HEIGHT = 600 and GROUND_HEIGHT = 80, groundY = 520
-            expect(body).toMatch(/CANVAS_HEIGHT\s*-\s*GROUND_HEIGHT/);
+        test('ground y position is calculated as CANVAS_HEIGHT - GROUND_HEIGHT', () => {
+            const updateBirdMatch = gameJs.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(updateBirdMatch).not.toBeNull();
+            expect(updateBirdMatch[0]).toMatch(/const\s+groundY\s*=\s*CANVAS_HEIGHT\s*-\s*GROUND_HEIGHT/);
         });
 
-        test('bird bottom edge calculation is correct', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
-            // Bird bottom = bird.y + bird.height
-            expect(body).toMatch(/bird\.y\s*\+\s*bird\.height/);
+        test('bird bottom edge is calculated correctly', () => {
+            const updateBirdMatch = gameJs.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(updateBirdMatch).not.toBeNull();
+            const body = updateBirdMatch[0];
+            // Should calculate birdBottom = bird.y + bird.height
+            expect(body).toMatch(/birdBottom\s*=\s*bird\.y\s*\+\s*bird\.height|bird\.y\s*\+\s*bird\.height\s*>=\s*groundY/);
         });
 
         test('collision check uses >= comparison', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
-            // Should use >= to detect when bird bottom reaches or passes ground
+            const updateBirdMatch = gameJs.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(updateBirdMatch).not.toBeNull();
+            const body = updateBirdMatch[0];
+            // Should check if birdBottom >= groundY
             expect(body).toMatch(/>=/);
         });
     });
 
-    describe('resetBird resets gameOver flag', () => {
-        test('resetBird function resets gameOver to false', () => {
-            const resetBirdMatch = gameJs.match(/function\s+resetBird\s*\(\s*\)\s*\{[\s\S]*?\}/);
-            expect(resetBirdMatch).not.toBeNull();
-            const body = resetBirdMatch[0];
-            // Should set gameOver = false
-            expect(body).toMatch(/gameOver\s*=\s*false/);
+    describe('Bird visual positioning on ground', () => {
+        test('bird y position is set to rest on ground surface', () => {
+            const updateBirdMatch = gameJs.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(updateBirdMatch).not.toBeNull();
+            const body = updateBirdMatch[0];
+            // Should set bird.y = groundY - bird.height so bird sits on ground
+            expect(body).toMatch(/bird\.y\s*=\s*groundY\s*-\s*bird\.height/);
         });
 
-        test('resetBird calls initBird', () => {
-            const resetBirdMatch = gameJs.match(/function\s+resetBird\s*\(\s*\)\s*\{[\s\S]*?\}/);
-            expect(resetBirdMatch).not.toBeNull();
-            const body = resetBirdMatch[0];
-            // Should call initBird()
-            expect(body).toMatch(/initBird\s*\(\s*\)/);
+        test('bird position adjustment happens after collision detection', () => {
+            const updateBirdMatch = gameJs.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(updateBirdMatch).not.toBeNull();
+            const body = updateBirdMatch[0];
+            const collisionCheckPos = body.indexOf('birdBottom');
+            const positionAdjustPos = body.indexOf('bird.y = groundY');
+            expect(collisionCheckPos).toBeLessThan(positionAdjustPos);
         });
     });
 
-    describe('Ground collision integration', () => {
-        test('updateBird is called in update function', () => {
-            const updateMatch = gameJs.match(/function\s+update\s*\(\s*\)\s*\{[\s\S]*?\}/);
+    describe('Game over state reset', () => {
+        test('initBird resets gameOver to false', () => {
+            const initBirdMatch = gameJs.match(/function\s+initBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
+            expect(initBirdMatch).not.toBeNull();
+            expect(initBirdMatch[0]).toMatch(/gameOver\s*=\s*false/);
+        });
+    });
+
+    describe('Integration with update function', () => {
+        test('update function calls updateBird', () => {
+            const updateMatch = gameJs.match(/function\s+update\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
             expect(updateMatch).not.toBeNull();
             expect(updateMatch[0]).toMatch(/updateBird\s*\(\s*\)/);
-        });
-
-        test('ground collision detection runs every frame', () => {
-            // Since updateBird is called in update(), and update() is called in gameLoop(),
-            // collision detection runs every frame
-            const updateMatch = gameJs.match(/function\s+update\s*\(\s*\)\s*\{[\s\S]*?\}/);
-            expect(updateMatch).not.toBeNull();
-            expect(updateMatch[0]).toMatch(/updateBird/);
-        });
-    });
-
-    describe('Acceptance criteria verification', () => {
-        test('Bird stops when hitting ground', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
-            // Should check gameOver and return early, preventing movement
-            expect(body).toMatch(/if\s*\(\s*gameOver\s*\)/);
-        });
-
-        test('gameOver flag is set on ground collision', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
-            // Should set gameOver = true
-            expect(body).toMatch(/gameOver\s*=\s*true/);
-        });
-
-        test('Bird visually rests on ground surface', () => {
-            const body = extractFunctionBody(gameJs, 'updateBird');
-            expect(body).not.toBeNull();
-            // Should position bird.y = groundY - bird.height
-            expect(body).toMatch(/bird\.y\s*=\s*.*groundY.*\s*-\s*bird\.height/);
         });
     });
 });

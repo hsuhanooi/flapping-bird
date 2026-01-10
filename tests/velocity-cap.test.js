@@ -193,7 +193,7 @@ describe('F010: Add Velocity Cap', () => {
     describe('Code structure', () => {
         test('velocity capping is inside updateBird function', () => {
             // Find updateBird function and check it contains velocity capping
-            const updateBirdMatch = gameJsContent.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?(?=function\s+\w+\s*\(|const\s+\w+\s*=|$)/);
+            const updateBirdMatch = gameJsContent.match(/function\s+updateBird\s*\(\s*\)\s*\{[\s\S]*?\n\}/);
             expect(updateBirdMatch).not.toBeNull();
 
             const updateBirdContent = updateBirdMatch[0];
