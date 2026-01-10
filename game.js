@@ -297,14 +297,26 @@ function handleKeyDown(event) {
     if (event.code === 'Space' || event.keyCode === 32) {
         // Prevent default spacebar behavior (page scroll)
         event.preventDefault();
-        
+
         // If in start state, transition to playing state
         if (isStart()) {
             gameState = 'playing';
+            flap();  // Trigger first flap on game start
+            return;
         }
-        
-        // Make bird flap
-        flap();
+
+        // If in gameover state, restart the game
+        if (isGameOver()) {
+            resetGame();
+            gameState = 'playing';
+            flap();  // Trigger first flap on restart
+            return;
+        }
+
+        // If in playing state, make bird flap
+        if (isPlaying()) {
+            flap();
+        }
     }
 }
 
@@ -313,10 +325,22 @@ function handleClick(event) {
     // If in start state, transition to playing state
     if (isStart()) {
         gameState = 'playing';
+        flap();  // Trigger first flap on game start
+        return;
     }
-    
-    // Make bird flap when canvas is clicked
-    flap();
+
+    // If in gameover state, restart the game
+    if (isGameOver()) {
+        resetGame();
+        gameState = 'playing';
+        flap();  // Trigger first flap on restart
+        return;
+    }
+
+    // If in playing state, make bird flap
+    if (isPlaying()) {
+        flap();
+    }
 }
 
 // Set up keyboard event listener

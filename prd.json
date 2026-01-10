@@ -684,7 +684,7 @@
         "Multiple play sessions work correctly",
         "No console errors"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F031",
@@ -703,7 +703,7 @@
         "Game properly resets all state",
         "New game plays correctly"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F032",

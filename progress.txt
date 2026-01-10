@@ -1209,3 +1209,51 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Note: Some older tests (ground-collision, ceiling-collision, pipe-movement, start-game-transition) have failing regex patterns due to code evolution, but these are pre-existing issues not related to F030
 
 ---
+
+### [2026-01-10] - C003: Browser Checkpoint: Game Flow + F031: Implement Restart Transition
+**Status:** COMPLETE
+
+**Note:** C003 checkpoint required F031 (Restart Transition) to be implemented first since the checkpoint tests restart functionality. Both features are completed together.
+
+**F031 Implementation:**
+- Modified handleKeyDown() function to check for gameover state
+- Modified handleClick() function to check for gameover state
+- Both handlers now call resetGame() when isGameOver() returns true
+- Both handlers set gameState to 'playing' after reset
+- Both handlers trigger first flap on restart
+- Restructured input handlers to have explicit state checks for start, gameover, and playing states
+
+**C003 Browser Verification:**
+- Started local server on port 3000
+- Navigated to http://localhost:3000 using Puppeteer
+- Took screenshot of start screen - title "Flappy Bird" and instructions displayed correctly
+- Clicked to start game - bird started moving, game transitioned to playing state
+- Verified game over screen displays with "Game Over", "Score: X", and restart instructions
+- Tested restart functionality - clicking in gameover state calls resetGame() and transitions to playing
+- Verified game resets properly: bird returns to starting position (y=300), score resets to 0, pipes cleared
+- Multiple play sessions work correctly
+- No console errors detected
+
+**Input Handler Behavior:**
+- Start state: Click/Space transitions to 'playing' and triggers first flap
+- Playing state: Click/Space triggers flap() only
+- Gameover state: Click/Space calls resetGame(), transitions to 'playing', and triggers first flap
+- Early returns prevent unexpected state interactions
+
+**Files Modified:**
+- game.js - Modified handleKeyDown() and handleClick() to handle gameover state and restart
+
+**Files Created:**
+- tests/restart-transition.test.js - 13 unit tests for restart transition functionality
+
+**Tests:** 13/13 passing (567 total across all test files, 4 pre-existing failures unrelated to C003/F031)
+
+**Notes for Next Developer:**
+- F032 (Load High Score from Storage) is next
+- The restart transition is now fully functional via both keyboard and mouse input
+- The game flow is complete: start -> playing -> gameover -> restart (playing) -> ...
+- The resetGame() function handles resetting all game state variables
+- The input handlers now properly manage all three game states
+- Pre-existing test failures (4 tests) are due to outdated regex patterns and don't affect functionality
+
+---
