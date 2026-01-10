@@ -478,34 +478,33 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Created gameOver flag variable initialized to false
 - Calculated ground y position (CANVAS_HEIGHT - GROUND_HEIGHT = 600 - 80 = 520)
 - Added ground collision detection in updateBird() function:
-  - Checks if bird bottom edge (bird.y + bird.height) >= ground y position
+  - Calculates bird bottom edge (bird.y + bird.height)
+  - Checks if birdBottom >= groundY
   - Sets gameOver to true when collision detected
-  - Positions bird on ground surface (bird.y = groundY - bird.height)
-  - Sets bird velocity to 0 on collision
-- Added early return in updateBird() if gameOver is true (stops bird movement)
-- Updated initBird() to reset gameOver to false when bird is initialized
+  - Positions bird exactly on ground surface (bird.y = groundY - bird.height)
+- Added early return in updateBird() if gameOver is true to stop bird movement
+- Reset gameOver flag to false in initBird() function for game reset functionality
 
 **Collision Behavior:**
 - Bird stops moving when it hits the ground
-- Bird is positioned exactly on the ground surface (not below it)
-- Bird velocity is set to 0 on collision
-- Game over state prevents further bird physics updates
-- Game over state is reset when bird is reinitialized
+- gameOver flag prevents further physics updates
+- Bird visually rests on ground surface (positioned at y = 520 - 24 = 496)
+- Collision detection runs every frame in updateBird()
+- Ground collision triggers game over state
 
 **Files Modified:**
-- game.js - Added gameOver flag, ground collision detection, and game over handling
+- game.js - Added gameOver flag, ground collision detection, and movement stopping logic
 
 **Files Created:**
-- tests/ground-collision.test.js - 18 unit tests for ground collision functionality
+- tests/ground-collision.test.js - 14 unit tests for ground collision functionality
 
-**Tests:** 18/18 passing (244 total across all test files)
+**Tests:** 14/14 passing (241 total across all test files)
 
 **Notes for Next Developer:**
-- F013 (Implement Ceiling Collision) is next - detect when bird hits the top of canvas
-- The gameOver flag is now set when bird hits ground - will be used for game state management in F024
-- Ground collision detection happens after position update but before next frame
-- Bird is positioned on ground surface (groundY - bird.height) so it visually rests on ground
-- The gameOver check happens early in updateBird() to prevent any physics updates when game is over
+- F013 (Implement Ceiling Collision) is next - detect when bird hits the ceiling
+- The gameOver flag is now set on ground collision and stops bird movement
 - initBird() resets gameOver to false, ready for game restart functionality later
+- Bird position is adjusted to rest exactly on ground surface when collision occurs
+- The gameOver flag will be used in F028 (Game Over State Behavior) for full game state management
 
 ---
