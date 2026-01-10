@@ -15,6 +15,7 @@ let animationFrameId = null;
 // Physics constants
 const GRAVITY = 0.5;  // Acceleration due to gravity (pixels per frame squared)
 const FLAP_STRENGTH = -8;  // Velocity applied when bird flaps (negative = upward)
+const MAX_VELOCITY = 10;  // Maximum downward velocity (terminal velocity)
 
 // Bird object
 const bird = {
@@ -41,6 +42,16 @@ function resetBird() {
 function updateBird() {
     // Apply gravity to velocity (accelerate downward)
     bird.velocity += GRAVITY;
+
+    // Cap velocity to prevent falling too fast (terminal velocity)
+    if (bird.velocity > MAX_VELOCITY) {
+        bird.velocity = MAX_VELOCITY;
+    }
+
+    // Cap upward velocity to prevent flying too fast
+    if (bird.velocity < FLAP_STRENGTH) {
+        bird.velocity = FLAP_STRENGTH;
+    }
 
     // Apply velocity to position (move the bird)
     bird.y += bird.velocity;

@@ -37,7 +37,7 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 | F007 | Implement Gravity | COMPLETE | 19 passing |
 | F008 | Add Keyboard Flap Input | COMPLETE | 28 passing |
 | F009 | Add Mouse/Click Flap Input | COMPLETE | 14 passing |
-| F010 | Add Velocity Cap | NOT STARTED | - |
+| F010 | Add Velocity Cap | COMPLETE | 20 passing |
 | **C001** | **Browser Checkpoint: Bird Physics** | NOT STARTED | Browser |
 
 ### Boundaries + Pipes + Collision (F011-F020, then C002)
@@ -107,14 +107,14 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 ---
 
 ## Overall Progress
-**Total Items:** 9/48 (19%)
-**Features:** 9/43 (21%)
+**Total Items:** 10/48 (21%)
+**Features:** 10/43 (23%)
 **Checkpoints:** 0/5 (0%)
 
 ---
 
 ## Next Steps
-- Begin F010: Add Velocity Cap
+- Begin C001: Browser Checkpoint - Bird Physics
 
 ---
 
@@ -399,5 +399,39 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Touch input for mobile comes in F035 (Add Touch Event Listener)
 - The click handler is attached to the canvas element specifically to allow clicking anywhere on the game area
 - Click events work in conjunction with spacebar - both methods are available
+
+---
+
+### [2026-01-10] - F010: Add Velocity Cap
+**Status:** COMPLETE
+
+**Implemented:**
+- Defined MAX_VELOCITY constant with value 10 (terminal velocity for falling)
+- Added velocity capping in updateBird() function:
+  - After applying gravity, caps downward velocity at MAX_VELOCITY
+  - Caps upward velocity at FLAP_STRENGTH (-8) to prevent unrealistic upward speed
+- Velocity capping happens after gravity is applied but before position update
+
+**Physics Behavior:**
+- Bird cannot fall faster than 10 pixels/frame (terminal velocity)
+- Bird cannot fly upward faster than -8 pixels/frame (FLAP_STRENGTH)
+- Normal gameplay is unaffected - caps only prevent extreme velocities
+- Capping provides a consistent, predictable gameplay feel
+- The relationship between MAX_VELOCITY (10) and |FLAP_STRENGTH| (8) ensures balanced gameplay
+
+**Files Modified:**
+- game.js - Added MAX_VELOCITY constant and velocity capping in updateBird()
+
+**Files Created:**
+- tests/velocity-cap.test.js - 20 unit tests for velocity cap functionality
+
+**Tests:** 20/20 passing (203 total across all test files)
+
+**Notes for Next Developer:**
+- C001 (Browser Checkpoint: Bird Physics) is next - verify all bird physics work in browser
+- The velocity cap prevents the bird from falling infinitely fast or flying impossibly high
+- updateBird() order: gravity -> cap velocity -> update position
+- Ground/ceiling collision comes in F012/F013 - currently bird can still go off-screen
+- All 10 bird core features (F001-F010) are now complete
 
 ---

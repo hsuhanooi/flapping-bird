@@ -204,7 +204,7 @@
         "Bird cannot fly up faster than FLAP_STRENGTH",
         "Velocity capping feels natural"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "C001",
