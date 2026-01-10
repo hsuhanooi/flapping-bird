@@ -917,3 +917,36 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Score increment logic will use pipe.passed === true to determine when to add points
 
 ---
+
+### [2026-01-10] - F023: Increment Score on Pipe Pass
+**Status:** COMPLETE
+
+**Implemented:**
+- Added score increment logic in updatePipes() function
+- Score increments by 1 when pipe.passed becomes true (when bird passes a pipe)
+- Score increment happens immediately in the same code block as pipe.passed = true
+- Score increment is conditional on pipe not being passed yet (!pipe.passed check)
+- Each pipe can only increment score once (when passed changes from false to true)
+
+**Score Increment Behavior:**
+- Score increases by 1 for each pipe passed
+- Same pipe cannot increase score twice (protected by !pipe.passed check)
+- Score updates immediately when bird passes pipe (in same frame)
+- Score increment happens in updatePipes() function after pipe movement but before pipe removal
+
+**Files Modified:**
+- game.js - Added score++ in updatePipes() when pipe.passed becomes true
+
+**Files Created:**
+- tests/score-increment.test.js - 10 unit tests for score increment functionality
+
+**Tests:** 10/10 passing (428 total across all test files)
+
+**Notes for Next Developer:**
+- F024 (Create Game State Manager) is next - implement state machine for game flow (start, playing, gameover)
+- The score now increments automatically when bird passes pipes
+- Score is reset to 0 in initBird() function, ready for game restart functionality
+- The score increment logic ensures each pipe can only be scored once
+- Score display (renderScore) already exists and will show the updated score immediately
+
+---

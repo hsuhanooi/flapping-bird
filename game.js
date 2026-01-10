@@ -224,6 +224,8 @@ function updatePipes() {
         const pipe = pipes[i];
         if (!pipe.passed && bird.x > pipe.x + PIPE_WIDTH) {
             pipe.passed = true;
+            // Increment score when bird passes a pipe
+            score++;
         }
     }
     

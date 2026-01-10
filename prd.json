@@ -514,7 +514,7 @@
         "Same pipe cannot increase score twice",
         "Score displays updated value immediately"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F024",
