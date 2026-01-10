@@ -496,7 +496,7 @@
         "Passing detection triggers once per pipe",
         "Detection works at correct x position"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F023",

@@ -147,7 +147,8 @@ function spawnPipe() {
     const newPipe = {
         x: CANVAS_WIDTH,  // Start at right edge of canvas
         topHeight: topHeight,
-        bottomY: bottomY
+        bottomY: bottomY,
+        passed: false  // Track if bird has passed this pipe
     };
     
     pipes.push(newPipe);
@@ -214,6 +215,16 @@ function updatePipes() {
     // Move each pipe to the left by PIPE_SPEED
     for (let i = 0; i < pipes.length; i++) {
         pipes[i].x -= PIPE_SPEED;
+    }
+    
+    // Detect when bird passes a pipe
+    // Bird passes a pipe when bird's x position is greater than pipe's right edge (x + PIPE_WIDTH)
+    // Only check pipes that haven't been passed yet (passed === false)
+    for (let i = 0; i < pipes.length; i++) {
+        const pipe = pipes[i];
+        if (!pipe.passed && bird.x > pipe.x + PIPE_WIDTH) {
+            pipe.passed = true;
+        }
     }
     
     // Remove pipes that have moved completely off-screen to the left

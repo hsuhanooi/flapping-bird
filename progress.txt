@@ -882,3 +882,38 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Browser checkpoint confirms all features F011-F020 are working as expected
 
 ---
+
+### [2026-01-10] - F022: Detect Pipe Passing
+**Status:** COMPLETE
+
+**Implemented:**
+- Added 'passed' boolean property to pipe objects when spawning (initialized to false)
+- Implemented pipe passing detection logic in updatePipes() function:
+  - Checks if bird.x > pipe.x + PIPE_WIDTH (bird has passed pipe's right edge)
+  - Only checks pipes where passed === false (prevents multiple detections)
+  - Sets pipe.passed = true when bird successfully passes a pipe
+- Pipe passing detection happens after pipe movement but before pipe removal
+- Each pipe tracks whether it has been passed by the bird
+
+**Pipe Passing Behavior:**
+- Bird passes a pipe when its x position is greater than the pipe's right edge (x + PIPE_WIDTH)
+- Passing detection triggers exactly once per pipe (when passed changes from false to true)
+- Detection works at the correct x position (bird.x > pipe.x + PIPE_WIDTH)
+- Pipes that have already been passed (passed === true) are not checked again
+
+**Files Modified:**
+- game.js - Added 'passed' property to pipe objects and pipe passing detection logic
+
+**Files Created:**
+- tests/pipe-passing-detection.test.js - 15 unit tests for pipe passing detection functionality
+
+**Tests:** 15/15 passing (419 total across all test files)
+
+**Notes for Next Developer:**
+- F023 (Increment Score on Pipe Pass) is next - increment score when pipe.passed becomes true
+- The pipe.passed property is now tracked for each pipe object
+- Pipe passing detection happens every frame in updatePipes() function
+- The detection logic ensures each pipe can only be passed once
+- Score increment logic will use pipe.passed === true to determine when to add points
+
+---
