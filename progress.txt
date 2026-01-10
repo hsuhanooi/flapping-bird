@@ -1170,3 +1170,42 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - The game over screen UI is complete and ready for restart functionality
 
 ---
+
+### [2026-01-10] - F030: Implement Game Reset
+**Status:** COMPLETE
+
+**Implemented:**
+- Created resetGame() function that resets all game variables for a new game
+- Resets bird.x to 80 (initial x position on left side of canvas)
+- Resets bird.y to CANVAS_HEIGHT / 2 (vertical center of canvas)
+- Resets bird.velocity to 0 (stationary)
+- Clears pipes array using pipes.length = 0 (preserves array reference)
+- Resets score to 0
+- Resets frameCount to 0
+- Resets gameOver flag to false
+
+**Reset Behavior:**
+- resetGame() is a standalone function that can be called from anywhere
+- All game state variables are reset to their initial values
+- Bird returns to starting position (x: 80, y: 300)
+- Pipes array is cleared but array reference is preserved
+- Score and frame counter are reset for fresh gameplay
+- gameOver flag is reset to allow game logic to run again
+
+**Files Modified:**
+- game.js - Added resetGame() function after resetBird() function
+
+**Files Created:**
+- tests/game-reset.test.js - 21 unit tests for game reset functionality
+
+**Tests:** 21/21 passing (550 total across all test files)
+
+**Notes for Next Developer:**
+- F031 (Implement Restart Transition) is next - allow restart from game over state
+- The resetGame() function is ready to be called when restarting the game
+- Input handlers (handleKeyDown and handleClick) need to be modified in F031 to check for gameover state and call resetGame()
+- After calling resetGame(), gameState should be set to 'playing' to start a new game
+- The resetGame() function does NOT reset gameState - that will be handled by the restart transition logic
+- Note: Some older tests (ground-collision, ceiling-collision, pipe-movement, start-game-transition) have failing regex patterns due to code evolution, but these are pre-existing issues not related to F030
+
+---

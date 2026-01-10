@@ -80,6 +80,28 @@ function resetBird() {
     initBird();
 }
 
+// Reset all game variables for a new game
+function resetGame() {
+    // Reset bird position to initial values
+    bird.x = 80;
+    bird.y = CANVAS_HEIGHT / 2;
+
+    // Reset bird velocity to 0
+    bird.velocity = 0;
+
+    // Clear pipes array
+    pipes.length = 0;
+
+    // Reset score to 0
+    score = 0;
+
+    // Reset frameCount to 0
+    frameCount = 0;
+
+    // Reset gameOver flag
+    gameOver = false;
+}
+
 // Collision detection function using AABB (Axis-Aligned Bounding Box) algorithm
 // rect1 and rect2 are objects with {x, y, width, height} properties
 // Returns true if rectangles overlap or touch, false otherwise

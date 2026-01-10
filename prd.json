@@ -652,7 +652,7 @@
         "Score resets to 0",
         "All pipes are cleared"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "C003",
