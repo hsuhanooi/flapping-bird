@@ -32,7 +32,7 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 | F002 | Create Base CSS Styling | COMPLETE | 16 passing |
 | F003 | Initialize Canvas Context | COMPLETE | 19 passing |
 | F004 | Implement Game Loop | COMPLETE | 35 passing |
-| F005 | Create Bird Object | NOT STARTED | - |
+| F005 | Create Bird Object | COMPLETE | 23 passing |
 | F006 | Render Bird | NOT STARTED | - |
 | F007 | Implement Gravity | NOT STARTED | - |
 | F008 | Add Keyboard Flap Input | NOT STARTED | - |
@@ -107,14 +107,14 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 ---
 
 ## Overall Progress
-**Total Items:** 4/48 (8%)
-**Features:** 4/43 (9%)
+**Total Items:** 5/48 (10%)
+**Features:** 5/43 (12%)
 **Checkpoints:** 0/5 (0%)
 
 ---
 
 ## Next Steps
-- Begin F005: Create Bird Object
+- Begin F006: Render Bird
 
 ---
 
@@ -238,5 +238,36 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - The render() function calls clearCanvas() then drawBackground() - add bird rendering after background
 - stopGameLoop() exists for pausing/cleanup but isn't used yet
 - Game loop runs automatically when page loads via init()
+
+---
+
+### [2026-01-10] - F005: Create Bird Object
+**Status:** COMPLETE
+
+**Implemented:**
+- Created bird object with all required properties:
+  - x: 80 (left side of canvas)
+  - y: 300 (placeholder, set to CANVAS_HEIGHT / 2 via initBird())
+  - width: 34px
+  - height: 24px
+  - velocity: 0
+- Created initBird() function to set bird's initial position (y = CANVAS_HEIGHT / 2)
+- Created resetBird() function that calls initBird() for game reset functionality
+- initBird() is called in init() to properly initialize bird position
+
+**Files Modified:**
+- game.js - Added bird object, initBird(), and resetBird() functions
+
+**Files Created:**
+- tests/bird-object.test.js - 23 unit tests for bird object
+
+**Tests:** 23/23 passing (104 total across all test files)
+
+**Notes for Next Developer:**
+- F006 (Render Bird) is next - draw the bird as a yellow rectangle on canvas
+- The bird object is ready to use in render functions
+- Use bird.x, bird.y for position and bird.width, bird.height for dimensions
+- bird.velocity will be used in F007 (Implement Gravity) for physics
+- resetBird() function is ready for game restart functionality later
 
 ---

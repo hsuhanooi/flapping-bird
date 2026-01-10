@@ -12,6 +12,27 @@ const CANVAS_HEIGHT = canvas.height;
 let isGameLoopRunning = false;
 let animationFrameId = null;
 
+// Bird object
+const bird = {
+    x: 80,                          // Initial x position (left side of canvas)
+    y: 300,                         // Initial y position (will be set to canvas height / 2)
+    width: 34,                      // Bird width in pixels
+    height: 24,                     // Bird height in pixels
+    velocity: 0                     // Vertical velocity (positive = falling, negative = rising)
+};
+
+// Initialize bird position (set y to vertical center)
+function initBird() {
+    bird.x = 80;
+    bird.y = CANVAS_HEIGHT / 2;
+    bird.velocity = 0;
+}
+
+// Reset bird to initial state
+function resetBird() {
+    initBird();
+}
+
 // Clear canvas
 function clearCanvas() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -69,6 +90,7 @@ function stopGameLoop() {
 
 // Initialize and start the game
 function init() {
+    initBird();
     startGameLoop();
 }
 

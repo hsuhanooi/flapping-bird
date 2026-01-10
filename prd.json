@@ -107,7 +107,7 @@
         "Initial position is correct",
         "Properties are accessible in game loop"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F006",
