@@ -52,7 +52,7 @@ function updateBird() {
         return;
     }
 
-    // Calculate ground y position (where ground starts)
+    // Calculate ground y position (top of ground area)
     const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
 
     // Apply gravity to velocity (accelerate downward)
@@ -74,9 +74,8 @@ function updateBird() {
     // Check for ground collision (bird bottom edge >= ground y)
     const birdBottom = bird.y + bird.height;
     if (birdBottom >= groundY) {
-        // Bird hit the ground
         gameOver = true;
-        // Position bird so it visually rests on ground surface
+        // Position bird on ground surface
         bird.y = groundY - bird.height;
         bird.velocity = 0;
     }
