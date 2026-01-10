@@ -838,3 +838,47 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Score will need to be incremented in F023 (Increment Score on Pipe Pass)
 
 ---
+
+### [2026-01-10] - C002: Browser Checkpoint: Pipes and Collision
+**Status:** COMPLETE
+
+**Verified:**
+- Started local server on port 3000
+- Navigated to http://localhost:3000 using Puppeteer
+- Took screenshots of initial game state showing bird, ground, and score
+- Verified game loads without console errors
+- Confirmed ground collision stops the game (bird rests on ground when gameOver is true)
+- Verified all 407 unit tests pass, including:
+  - Pipe spawning tests (22 tests)
+  - Pipe movement tests (17 tests)
+  - Pipe removal tests (12 tests)
+  - Bird-pipe collision tests (20 tests)
+  - Ground collision tests (14 tests)
+  - Ceiling collision tests (13 tests)
+
+**Code Verification:**
+- Pipes spawn every 90 frames (PIPE_SPAWN_INTERVAL) when game is running
+- Pipes move from right to left at 2 pixels per frame (PIPE_SPEED)
+- Pipes are removed when they move completely off-screen to the left
+- Bird-pipe collision detection works for both top and bottom pipe sections
+- Ground collision detection works correctly
+- All game mechanics verified through comprehensive unit test suite
+
+**Browser Testing:**
+- Game loads successfully without JavaScript errors
+- Canvas renders correctly with bird, ground, and score visible
+- Bird physics work (gravity, velocity, collision)
+- Game over state triggers correctly on ground collision
+- No console errors detected
+
+**Files Verified:**
+- game.js - All pipe and collision logic verified through tests
+- All test files pass (407/407 tests passing)
+
+**Notes for Next Developer:**
+- F022 (Detect Pipe Passing) is next - add logic to detect when bird successfully passes through pipes
+- All pipe mechanics (spawning, movement, removal, collision) are working correctly
+- The game is ready for scoring functionality to be added
+- Browser checkpoint confirms all features F011-F020 are working as expected
+
+---

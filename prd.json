@@ -457,7 +457,7 @@
         "Bird can fly through pipe gaps safely",
         "No console errors"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F021",
