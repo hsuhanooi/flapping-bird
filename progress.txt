@@ -1132,3 +1132,41 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Game over state is now fully functional - ready for UI rendering in F029
 
 ---
+
+### [2026-01-10] - F029: Render Game Over UI
+**Status:** COMPLETE
+
+**Implemented:**
+- Created renderGameOverScreen() function that displays game over message and final score
+- Draws 'Game Over' text centered on screen (64px bold font)
+- Draws 'Score: X' showing final score below title (48px font)
+- Draws 'Press Space or Click to Restart' instruction below score (24px font)
+- Modified render() function to call renderGameOverScreen() when state is 'gameover'
+- Game over screen displays after all game elements (pipes, bird, ground, score)
+- All text uses white color (#ffffff) for visibility against sky background
+- Text is centered horizontally and uses middle baseline alignment
+
+**Visual Behavior:**
+- Game over screen displays when gameState is 'gameover'
+- "Game Over" title is clearly visible and centered
+- Final score is displayed below the title
+- Restart instructions are clearly visible below the score
+- Game elements (bird, pipes, ground) remain visible behind the game over screen
+- Score display shows the final score achieved before game over
+
+**Files Modified:**
+- game.js - Added renderGameOverScreen() function and integrated into render()
+
+**Files Created:**
+- tests/game-over-screen-rendering.test.js - 26 unit tests for game over screen rendering functionality
+
+**Tests:** 26/26 passing (529 total across all test files)
+
+**Notes for Next Developer:**
+- F030 (Implement Game Reset) is next - create resetGame() function to reset all game variables for new game
+- The renderGameOverScreen() function is called when isGameOver() returns true
+- Game over screen shows the final score using the current score variable value
+- Restart functionality will be implemented in F031 (Implement Restart Transition)
+- The game over screen UI is complete and ready for restart functionality
+
+---

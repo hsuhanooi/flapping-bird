@@ -370,6 +370,30 @@ function renderStartScreen() {
     ctx.fillText('Press Space or Click to Start', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 20);  // Draw instructions below title
 }
 
+// Render game over screen UI (game over message and final score)
+function renderGameOverScreen() {
+    // Draw 'Game Over' text (centered)
+    ctx.fillStyle = '#ffffff';  // White color
+    ctx.font = 'bold 64px sans-serif';  // Large, bold font for title
+    ctx.textAlign = 'center';  // Center text horizontally
+    ctx.textBaseline = 'middle';  // Align text from center
+    ctx.fillText('Game Over', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 80);  // Draw title centered, slightly above center
+    
+    // Draw 'Score: X' showing final score
+    ctx.fillStyle = '#ffffff';  // White color
+    ctx.font = '48px sans-serif';  // Large font for score
+    ctx.textAlign = 'center';  // Center text horizontally
+    ctx.textBaseline = 'middle';  // Align text from center
+    ctx.fillText('Score: ' + score.toString(), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 20);  // Draw score below title
+    
+    // Draw 'Press Space or Click to Restart' instruction
+    ctx.fillStyle = '#ffffff';  // White color
+    ctx.font = '24px sans-serif';  // Smaller font for instructions
+    ctx.textAlign = 'center';  // Center text horizontally
+    ctx.textBaseline = 'middle';  // Align text from center
+    ctx.fillText('Press Space or Click to Restart', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 40);  // Draw instructions below score
+}
+
 // Update function - contains game logic
 function update() {
     // Only run game logic if state is 'playing'
@@ -418,6 +442,12 @@ function render() {
 
     // Draw score
     renderScore();
+
+    // If in gameover state, render game over screen UI
+    if (isGameOver()) {
+        // Draw game over screen UI (game over message and final score)
+        renderGameOverScreen();
+    }
 }
 
 // Main game loop using requestAnimationFrame

@@ -630,7 +630,7 @@
         "Final score is shown",
         "Restart instructions are visible"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F030",
