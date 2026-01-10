@@ -26,6 +26,7 @@ const GROUND_HEIGHT = 80;  // Height of ground area at bottom of canvas (pixels)
 // Pipe constants
 const PIPE_WIDTH = 52;  // Width of each pipe in pixels
 const PIPE_GAP = 120;  // Vertical gap between top and bottom pipes in pixels
+const PIPE_SPEED = 2;  // Horizontal speed of pipes (pixels per frame)
 
 // Pipes array to hold all active pipes
 const pipes = [];
@@ -97,6 +98,19 @@ function updateBird() {
         gameOver = true;
         // Position bird exactly on ground surface
         bird.y = groundY - bird.height;
+    }
+}
+
+// Update pipe positions (move pipes from right to left)
+function updatePipes() {
+    // Don't update pipes if game is over
+    if (gameOver) {
+        return;
+    }
+
+    // Move each pipe to the left by PIPE_SPEED
+    for (let i = 0; i < pipes.length; i++) {
+        pipes[i].x -= PIPE_SPEED;
     }
 }
 
@@ -173,6 +187,9 @@ function renderGround() {
 function update() {
     // Update bird physics (gravity and movement)
     updateBird();
+    
+    // Update pipe positions (move pipes from right to left)
+    updatePipes();
 }
 
 // Render function - draws all game elements

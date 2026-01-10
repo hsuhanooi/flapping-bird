@@ -347,7 +347,7 @@
         "Pipe speed is consistent",
         "Pipes stop moving on game over"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F017",

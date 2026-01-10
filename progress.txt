@@ -615,3 +615,39 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - The green color (#228B22) is a classic Flappy Bird pipe color
 
 ---
+
+### [2026-01-10] - F016: Implement Pipe Movement
+**Status:** COMPLETE
+
+**Implemented:**
+- Defined PIPE_SPEED constant with value 2 (pixels per frame)
+- Created updatePipes() function that moves pipes from right to left:
+  - Loops through all pipes in the pipes array
+  - Subtracts PIPE_SPEED from each pipe's x position each frame
+  - Returns early if gameOver is true (pipes stop moving on game over)
+- Added updatePipes() call in update() function after updateBird()
+- Pipes now move smoothly from right to left when pipes are added to the array
+
+**Movement Behavior:**
+- Pipes move at constant speed of 2 pixels per frame
+- At 60fps, pipes move 120 pixels per second
+- Movement is consistent and smooth
+- Pipes stop moving when gameOver flag is set to true
+- Multiple pipes can move simultaneously
+
+**Files Modified:**
+- game.js - Added PIPE_SPEED constant and updatePipes() function, integrated into update()
+
+**Files Created:**
+- tests/pipe-movement.test.js - 17 unit tests for pipe movement functionality
+
+**Tests:** 17/17 passing (311 total across all test files)
+
+**Notes for Next Developer:**
+- F017 (Spawn New Pipes) is next - generate new pipes at regular intervals
+- The updatePipes() function is ready and will move any pipes in the pipes array
+- Currently pipes array is empty - pipes need to be spawned (F017) to be visible and moving
+- Pipes will move from right to left automatically once they are added to the pipes array
+- The PIPE_SPEED constant (2px/frame) provides smooth, consistent movement
+
+---
