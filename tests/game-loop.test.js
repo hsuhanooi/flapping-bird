@@ -113,8 +113,12 @@ describe('F004: Game Loop', () => {
     });
 
     describe('Background Rendering', () => {
-        test('drawBackground should set fillStyle', () => {
-            expect(gameJs).toMatch(/ctx\.fillStyle\s*=\s*['"]#70c5ce['"]/);
+        test('drawBackground should use createLinearGradient', () => {
+            expect(gameJs).toMatch(/createLinearGradient/);
+        });
+
+        test('drawBackground should set fillStyle to gradient', () => {
+            expect(gameJs).toMatch(/ctx\.fillStyle\s*=\s*gradient/);
         });
 
         test('drawBackground should use fillRect', () => {
@@ -223,6 +227,9 @@ describe('F004: Game Loop - Runtime Behavior', () => {
 
     test('canvas context methods are called during initialization', () => {
         const canvas = document.getElementById('gameCanvas');
+        const mockGradient = {
+            addColorStop: jest.fn(),
+        };
         const mockCtx = {
             fillStyle: '',
             fillRect: jest.fn(),
@@ -235,6 +242,7 @@ describe('F004: Game Loop - Runtime Behavior', () => {
             restore: jest.fn(),
             translate: jest.fn(),
             rotate: jest.fn(),
+            createLinearGradient: jest.fn(() => mockGradient),
         };
         jest.spyOn(canvas, 'getContext').mockReturnValue(mockCtx);
 

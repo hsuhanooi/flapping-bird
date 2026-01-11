@@ -170,11 +170,12 @@ describe('F011: Render Ground', () => {
 
     describe('Ground visual distinctness', () => {
         test('ground uses a different color from sky background', () => {
-            // Background is #70c5ce (sky blue)
+            // Background uses gradient (light blue #87ceeb to darker blue #70c5ce)
             // Ground should be brown/tan (#deb887 or similar)
             const groundColorPattern = /#deb887|#[dD][eE][bB]887/i;
 
-            expect(gameJs).toMatch(/fillStyle\s*=\s*['"]#70c5ce['"]/);
+            // Background now uses gradient, so check for gradient instead of solid color
+            expect(gameJs).toMatch(/createLinearGradient/);
             expect(gameJs).toMatch(groundColorPattern);
         });
 

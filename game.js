@@ -416,9 +416,19 @@ function clearCanvas() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
-// Draw background (sky blue)
+// Draw background (sky gradient - light blue at top, slightly darker at bottom)
 function drawBackground() {
-    ctx.fillStyle = '#70c5ce';
+    // Create linear gradient from top to bottom
+    const gradient = ctx.createLinearGradient(0, 0, 0, CANVAS_HEIGHT);
+    
+    // Light blue at top (#87ceeb - sky blue)
+    gradient.addColorStop(0, '#87ceeb');
+    
+    // Slightly darker blue at bottom (#70c5ce - original sky blue)
+    gradient.addColorStop(1, '#70c5ce');
+    
+    // Apply gradient as fill style
+    ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 

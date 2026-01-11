@@ -25,6 +25,9 @@ describe('F028: Game Over State Behavior', () => {
         `;
 
         // Mock canvas context
+        const mockGradient = {
+            addColorStop: jest.fn(),
+        };
         const mockContext = {
             fillStyle: '',
             fillRect: jest.fn(),
@@ -39,6 +42,7 @@ describe('F028: Game Over State Behavior', () => {
             textAlign: '',
             textBaseline: '',
             fillText: jest.fn(),
+            createLinearGradient: jest.fn(() => mockGradient),
         };
 
         HTMLCanvasElement.prototype.getContext = jest.fn(() => mockContext);
@@ -307,6 +311,9 @@ describe('F028: Game Over State Behavior', () => {
 
     describe('Scene remains visible in gameover state', () => {
         test('should render game elements when gameState is gameover', () => {
+            const mockGradient = {
+                addColorStop: jest.fn(),
+            };
             const mockContext = {
                 fillStyle: '',
                 fillRect: jest.fn(),
@@ -325,6 +332,7 @@ describe('F028: Game Over State Behavior', () => {
                 restore: jest.fn(),
                 translate: jest.fn(),
                 rotate: jest.fn(),
+                createLinearGradient: jest.fn(() => mockGradient),
             };
 
             HTMLCanvasElement.prototype.getContext = jest.fn(() => mockContext);
@@ -367,6 +375,9 @@ describe('F028: Game Over State Behavior', () => {
         });
 
         test('should render pipes when gameState is gameover', () => {
+            const mockGradient = {
+                addColorStop: jest.fn(),
+            };
             const mockContext = {
                 fillStyle: '',
                 fillRect: jest.fn(),
@@ -385,6 +396,7 @@ describe('F028: Game Over State Behavior', () => {
                 restore: jest.fn(),
                 translate: jest.fn(),
                 rotate: jest.fn(),
+                createLinearGradient: jest.fn(() => mockGradient),
             };
 
             HTMLCanvasElement.prototype.getContext = jest.fn(() => mockContext);
@@ -418,6 +430,9 @@ describe('F028: Game Over State Behavior', () => {
         });
 
         test('should render score when gameState is gameover', () => {
+            const mockGradient = {
+                addColorStop: jest.fn(),
+            };
             const mockContext = {
                 fillStyle: '',
                 fillRect: jest.fn(),
@@ -436,6 +451,7 @@ describe('F028: Game Over State Behavior', () => {
                 restore: jest.fn(),
                 translate: jest.fn(),
                 rotate: jest.fn(),
+                createLinearGradient: jest.fn(() => mockGradient),
             };
 
             HTMLCanvasElement.prototype.getContext = jest.fn(() => mockContext);

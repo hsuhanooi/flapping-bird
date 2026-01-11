@@ -859,7 +859,7 @@
         "Colors are pleasant and not distracting",
         "Background renders behind all elements"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F040",

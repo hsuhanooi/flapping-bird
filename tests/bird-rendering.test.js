@@ -154,11 +154,12 @@ describe('F006: Render Bird', () => {
         });
 
         test('bird uses a distinct color from background', () => {
-            // Background is #70c5ce (sky blue)
+            // Background uses gradient (light blue #87ceeb to darker blue #70c5ce)
             // Bird should be yellow (#f7dc6f or similar)
             const birdColorPattern = /#f7dc6f|#[fF][0-9a-fA-F]d[cC]6[fF]/i;
 
-            expect(gameJs).toMatch(/fillStyle\s*=\s*['"]#70c5ce['"]/);
+            // Background now uses gradient, so check for gradient instead of solid color
+            expect(gameJs).toMatch(/createLinearGradient/);
             expect(gameJs).toMatch(birdColorPattern);
         });
     });
