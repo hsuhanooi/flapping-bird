@@ -1478,3 +1478,43 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - CSS scaling only affects visual display, not the canvas internal coordinate system
 
 ---
+
+### [2026-01-10] - F038: Add Bird Rotation Based on Velocity
+**Status:** COMPLETE
+
+**Implemented:**
+- Modified renderBird() function to calculate rotation angle from bird velocity
+- Mapped velocity range (FLAP_STRENGTH -8 to MAX_VELOCITY 10) to angle range (-30 to 90 degrees)
+- Used linear interpolation to smoothly map velocity to rotation angle
+- Implemented canvas transformation using ctx.save(), ctx.translate(), ctx.rotate(), and ctx.restore()
+- Bird rotates around its center point (x + width/2, y + height/2)
+- Bird tilts up when flapping (negative velocity maps to -30 degrees)
+- Bird tilts down when falling (positive velocity maps to 90 degrees)
+- Rotation angle is converted from degrees to radians for ctx.rotate()
+
+**Rotation Behavior:**
+- When bird flaps (velocity = -8), rotation angle is -30 degrees (tilted up)
+- When bird falls at terminal velocity (velocity = 10), rotation angle is 90 degrees (tilted down)
+- Velocity is clamped to valid range [FLAP_STRENGTH, MAX_VELOCITY] before angle calculation
+- Rotation smoothly transitions as velocity changes
+- Canvas state is saved before transformation and restored after rendering
+
+**Files Modified:**
+- game.js - Modified renderBird() function to add rotation based on velocity
+- tests/bird-rendering.test.js - Updated test to check for new fillRect pattern after rotation
+- tests/game-over-state-behavior.test.js - Added save(), restore(), translate(), rotate() to mock context
+- tests/game-loop.test.js - Added save(), restore(), translate(), rotate() to mock context
+
+**Files Created:**
+- tests/bird-rotation.test.js - 20 unit tests for bird rotation functionality
+
+**Tests:** 20/20 passing (698 total across all test files)
+
+**Notes for Next Developer:**
+- F039 (Style Sky Background) is next - add gradient sky background
+- The bird now rotates smoothly based on velocity, providing visual feedback for movement direction
+- Rotation uses canvas transformations (save/translate/rotate/restore) to rotate around bird center
+- The rotation angle calculation uses linear interpolation between -30 and 90 degrees
+- All existing tests have been updated to work with the new rotation implementation
+
+---

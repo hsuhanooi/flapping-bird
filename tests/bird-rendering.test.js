@@ -110,14 +110,15 @@ describe('F006: Render Bird', () => {
     });
 
     describe('Bird rendering fillRect call', () => {
-        test('renderBird calls fillRect with bird.x, bird.y, bird.width, bird.height', () => {
-            // Verify the fillRect call in renderBird uses all bird properties
+        test('renderBird calls fillRect with bird dimensions (after translation/rotation)', () => {
+            // Verify the fillRect call in renderBird uses bird dimensions
+            // After F038, bird is drawn centered at origin after translation, so fillRect uses -width/2, -height/2
             const renderBirdMatch = gameJs.match(/function\s+renderBird\s*\(\s*\)\s*\{[\s\S]*?\}/);
             expect(renderBirdMatch).not.toBeNull();
             const body = renderBirdMatch[0];
 
-            // Should have fillRect with bird properties
-            expect(body).toMatch(/fillRect\s*\(\s*bird\.x\s*,\s*bird\.y\s*,\s*bird\.width\s*,\s*bird\.height\s*\)/);
+            // Should have fillRect with bird dimensions (may be after translation/rotation)
+            expect(body).toMatch(/fillRect.*bird\.width.*bird\.height/);
         });
 
         test('renderBird sets fillStyle before fillRect', () => {

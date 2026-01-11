@@ -422,10 +422,47 @@ function drawBackground() {
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
-// Render bird as a yellow filled rectangle
+// Render bird as a yellow filled rectangle with rotation based on velocity
 function renderBird() {
+    // Calculate rotation angle from bird velocity
+    // Map velocity range (FLAP_STRENGTH to MAX_VELOCITY) to angle range (-30 to 90 degrees)
+    // FLAP_STRENGTH (-8) maps to -30 degrees (tilted up)
+    // MAX_VELOCITY (10) maps to 90 degrees (tilted down)
+    const minVelocity = FLAP_STRENGTH;  // -8
+    const maxVelocity = MAX_VELOCITY;   // 10
+    const minAngle = -30;  // degrees (tilted up)
+    const maxAngle = 90;   // degrees (tilted down)
+    
+    // Clamp velocity to range [minVelocity, maxVelocity]
+    const clampedVelocity = Math.max(minVelocity, Math.min(maxVelocity, bird.velocity));
+    
+    // Map velocity to angle using linear interpolation
+    // angle = minAngle + (velocity - minVelocity) * (maxAngle - minAngle) / (maxVelocity - minVelocity)
+    const velocityRange = maxVelocity - minVelocity;  // 10 - (-8) = 18
+    const angleRange = maxAngle - minAngle;  // 90 - (-30) = 120
+    const normalizedVelocity = clampedVelocity - minVelocity;  // 0 to 18
+    const rotationAngle = minAngle + (normalizedVelocity / velocityRange) * angleRange;
+    
+    // Convert angle from degrees to radians for ctx.rotate()
+    const rotationRadians = (rotationAngle * Math.PI) / 180;
+    
+    // Save the current canvas state
+    ctx.save();
+    
+    // Translate to bird center (x + width/2, y + height/2)
+    const birdCenterX = bird.x + bird.width / 2;
+    const birdCenterY = bird.y + bird.height / 2;
+    ctx.translate(birdCenterX, birdCenterY);
+    
+    // Rotate around bird center
+    ctx.rotate(rotationRadians);
+    
+    // Draw bird centered at origin (since we translated to center)
     ctx.fillStyle = '#f7dc6f';  // Yellow color
-    ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
+    ctx.fillRect(-bird.width / 2, -bird.height / 2, bird.width, bird.height);
+    
+    // Restore the canvas state
+    ctx.restore();
 }
 
 // Render pipes (top and bottom sections)

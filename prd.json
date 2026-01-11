@@ -840,7 +840,7 @@
         "Bird tilts down when falling",
         "Rotation matches velocity smoothly"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F039",

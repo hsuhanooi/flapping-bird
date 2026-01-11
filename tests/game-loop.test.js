@@ -231,6 +231,10 @@ describe('F004: Game Loop - Runtime Behavior', () => {
             textAlign: '',
             textBaseline: '',
             fillText: jest.fn(),
+            save: jest.fn(),
+            restore: jest.fn(),
+            translate: jest.fn(),
+            rotate: jest.fn(),
         };
         jest.spyOn(canvas, 'getContext').mockReturnValue(mockCtx);
 

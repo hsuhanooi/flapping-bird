@@ -321,6 +321,10 @@ describe('F028: Game Over State Behavior', () => {
                 textAlign: '',
                 textBaseline: '',
                 fillText: jest.fn(),
+                save: jest.fn(),
+                restore: jest.fn(),
+                translate: jest.fn(),
+                rotate: jest.fn(),
             };
 
             HTMLCanvasElement.prototype.getContext = jest.fn(() => mockContext);
@@ -377,6 +381,10 @@ describe('F028: Game Over State Behavior', () => {
                 textAlign: '',
                 textBaseline: '',
                 fillText: jest.fn(),
+                save: jest.fn(),
+                restore: jest.fn(),
+                translate: jest.fn(),
+                rotate: jest.fn(),
             };
 
             HTMLCanvasElement.prototype.getContext = jest.fn(() => mockContext);
@@ -424,6 +432,10 @@ describe('F028: Game Over State Behavior', () => {
                 textAlign: '',
                 textBaseline: '',
                 fillText: jest.fn(),
+                save: jest.fn(),
+                restore: jest.fn(),
+                translate: jest.fn(),
+                rotate: jest.fn(),
             };
 
             HTMLCanvasElement.prototype.getContext = jest.fn(() => mockContext);
