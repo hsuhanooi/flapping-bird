@@ -319,6 +319,7 @@ describe('F028: Game Over State Behavior', () => {
                 strokeStyle: '',
                 lineWidth: 0,
                 fillRect: jest.fn(),
+                strokeRect: jest.fn(),
                 clearRect: jest.fn(),
                 beginPath: jest.fn(),
                 closePath: jest.fn(),
@@ -348,7 +349,7 @@ describe('F028: Game Over State Behavior', () => {
                 gameOver = true;
                 initBird();
                 pipes.length = 0;
-                
+
                 // Create a pipe
                 pipes.push({
                     x: 200,
@@ -356,25 +357,25 @@ describe('F028: Game Over State Behavior', () => {
                     bottomY: 220,
                     passed: false
                 });
-                
+
                 // Position bird
                 bird.x = 80;
                 bird.y = 300;
-                
+
                 // Call render
                 render();
-                
+
                 return {
                     fillRectCalled: true,
                     clearRectCalled: true
                 };
             `);
-            
+
             script();
-            
+
             // Should clear canvas
             expect(mockContext.clearRect).toHaveBeenCalled();
-            
+
             // Should render background and other elements (fillRect called)
             expect(mockContext.fillRect).toHaveBeenCalled();
         });
@@ -388,6 +389,7 @@ describe('F028: Game Over State Behavior', () => {
                 strokeStyle: '',
                 lineWidth: 0,
                 fillRect: jest.fn(),
+                strokeRect: jest.fn(),
                 clearRect: jest.fn(),
                 beginPath: jest.fn(),
                 closePath: jest.fn(),
@@ -417,7 +419,7 @@ describe('F028: Game Over State Behavior', () => {
                 gameOver = true;
                 initBird();
                 pipes.length = 0;
-                
+
                 // Create a pipe
                 pipes.push({
                     x: 200,
@@ -425,17 +427,18 @@ describe('F028: Game Over State Behavior', () => {
                     bottomY: 220,
                     passed: false
                 });
-                
+
                 // Call render
                 render();
             `);
-            
+
             script();
-            
+
             // Should render pipes (fillRect called for pipes)
-            // Check that fillRect was called with pipe x position
+            // Check that fillRect was called with pipe x position or cap x position
             const fillRectCalls = mockContext.fillRect.mock.calls;
-            const pipeRendered = fillRectCalls.some(call => call[0] === 200);
+            // Pipe cap x = pipe.x - PIPE_CAP_OVERHANG (200 - 4 = 196)
+            const pipeRendered = fillRectCalls.some(call => call[0] === 200 || call[0] === 196);
             expect(pipeRendered).toBe(true);
         });
 

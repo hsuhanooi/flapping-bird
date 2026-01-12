@@ -528,20 +528,74 @@ function renderBird() {
     ctx.restore();
 }
 
-// Render pipes (top and bottom sections)
+// Pipe cap constants for styled appearance
+const PIPE_CAP_HEIGHT = 26;  // Height of the pipe cap at gap edges
+const PIPE_CAP_OVERHANG = 4;  // How much the cap extends past the pipe body on each side
+
+// Render pipes with styled appearance (caps at gap edges, outlines)
 function renderPipes() {
-    ctx.fillStyle = '#228B22';  // Green color for pipes
     const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
-    
+
     // Loop through all pipes in the array
     for (let i = 0; i < pipes.length; i++) {
         const pipe = pipes[i];
-        
-        // Draw top pipe section (from top of canvas to topHeight)
-        ctx.fillRect(pipe.x, 0, PIPE_WIDTH, pipe.topHeight);
-        
-        // Draw bottom pipe section (from bottomY to ground)
-        ctx.fillRect(pipe.x, pipe.bottomY, PIPE_WIDTH, groundY - pipe.bottomY);
+
+        // Calculate cap dimensions
+        const capX = pipe.x - PIPE_CAP_OVERHANG;  // Cap extends past pipe body
+        const capWidth = PIPE_WIDTH + (PIPE_CAP_OVERHANG * 2);  // Cap is wider than pipe body
+
+        // ===== TOP PIPE =====
+        // Draw top pipe body (from top of canvas to topHeight - cap height)
+        const topPipeBodyHeight = pipe.topHeight - PIPE_CAP_HEIGHT;
+        if (topPipeBodyHeight > 0) {
+            // Pipe body fill (green)
+            ctx.fillStyle = '#228B22';  // Forest green for pipe body
+            ctx.fillRect(pipe.x, 0, PIPE_WIDTH, topPipeBodyHeight);
+
+            // Pipe body outline (darker green)
+            ctx.strokeStyle = '#1a6b1a';  // Darker green outline
+            ctx.lineWidth = 2;
+            ctx.strokeRect(pipe.x, 0, PIPE_WIDTH, topPipeBodyHeight);
+        }
+
+        // Draw top pipe cap (wider section at the bottom of top pipe, at gap edge)
+        const topCapY = pipe.topHeight - PIPE_CAP_HEIGHT;
+
+        // Cap fill (green)
+        ctx.fillStyle = '#228B22';  // Forest green for cap
+        ctx.fillRect(capX, topCapY, capWidth, PIPE_CAP_HEIGHT);
+
+        // Cap outline (darker green)
+        ctx.strokeStyle = '#1a6b1a';  // Darker green outline
+        ctx.lineWidth = 2;
+        ctx.strokeRect(capX, topCapY, capWidth, PIPE_CAP_HEIGHT);
+
+        // ===== BOTTOM PIPE =====
+        // Draw bottom pipe cap (wider section at the top of bottom pipe, at gap edge)
+        const bottomCapY = pipe.bottomY;
+
+        // Cap fill (green)
+        ctx.fillStyle = '#228B22';  // Forest green for cap
+        ctx.fillRect(capX, bottomCapY, capWidth, PIPE_CAP_HEIGHT);
+
+        // Cap outline (darker green)
+        ctx.strokeStyle = '#1a6b1a';  // Darker green outline
+        ctx.lineWidth = 2;
+        ctx.strokeRect(capX, bottomCapY, capWidth, PIPE_CAP_HEIGHT);
+
+        // Draw bottom pipe body (from cap bottom to ground)
+        const bottomPipeBodyY = pipe.bottomY + PIPE_CAP_HEIGHT;
+        const bottomPipeBodyHeight = groundY - bottomPipeBodyY;
+        if (bottomPipeBodyHeight > 0) {
+            // Pipe body fill (green)
+            ctx.fillStyle = '#228B22';  // Forest green for pipe body
+            ctx.fillRect(pipe.x, bottomPipeBodyY, PIPE_WIDTH, bottomPipeBodyHeight);
+
+            // Pipe body outline (darker green)
+            ctx.strokeStyle = '#1a6b1a';  // Darker green outline
+            ctx.lineWidth = 2;
+            ctx.strokeRect(pipe.x, bottomPipeBodyY, PIPE_WIDTH, bottomPipeBodyHeight);
+        }
     }
 }
 

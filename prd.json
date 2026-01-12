@@ -908,7 +908,7 @@
         "Canvas scales on smaller screens",
         "No console errors"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F041",
@@ -927,7 +927,7 @@
         "Pipe caps are visible at gap edges",
         "Pipes are clearly visible"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F042",

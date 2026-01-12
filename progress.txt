@@ -1601,3 +1601,45 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - Previous fillRect-based tests have been updated to check for ellipse instead
 
 ---
+
+### [2026-01-12] - F041: Style Pipe Appearance
+**Status:** COMPLETE
+
+**Implemented:**
+- Added PIPE_CAP_HEIGHT constant (26px) for the height of pipe caps at gap edges
+- Added PIPE_CAP_OVERHANG constant (4px) for how much caps extend past pipe body
+- Modified renderPipes() function to draw styled pipes with caps and outlines:
+  - Top pipe body drawn from y=0 to topHeight - PIPE_CAP_HEIGHT
+  - Top pipe cap drawn at bottom of top pipe (wider section at gap edge)
+  - Bottom pipe cap drawn at top of bottom pipe (wider section at gap edge)
+  - Bottom pipe body drawn from cap bottom to ground
+- Used forest green fill color (#228B22) for all pipe sections
+- Added darker green outline (#1a6b1a) with 2px line width for all sections
+- Cap width is PIPE_WIDTH + (PIPE_CAP_OVERHANG * 2) = 60px (52 + 8)
+- Cap X position is pipe.x - PIPE_CAP_OVERHANG to center cap over pipe body
+- Added checks for topPipeBodyHeight > 0 and bottomPipeBodyHeight > 0 to handle edge cases
+
+**Visual Appearance:**
+- Pipes now look like classic Flappy Bird pipes with wider caps at gap edges
+- Caps provide visual indication of where the gap opening is
+- Darker green outlines give pipes definition and depth
+- Both top and bottom pipes have identical styling (symmetric design)
+
+**Files Modified:**
+- game.js - Added PIPE_CAP_HEIGHT, PIPE_CAP_OVERHANG constants and rewrote renderPipes()
+- tests/pipe-rendering.test.js - Updated tests to handle nested braces in renderPipes function
+- tests/game-over-state-behavior.test.js - Added strokeRect to mock contexts
+
+**Files Created:**
+- tests/pipe-styling.test.js - 31 unit tests for pipe styling functionality
+
+**Tests:** 31/31 passing (781 total across all test files)
+
+**Notes for Next Developer:**
+- F042 (Style Ground Appearance) is next - improve ground visual design with grass strip and texture
+- The pipe caps are 26px tall and extend 4px past the pipe body on each side
+- Outlines use strokeRect with lineWidth=2 for consistent appearance
+- All pipe sections (body and cap) use the same colors for visual consistency
+
+---
+
