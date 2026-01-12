@@ -316,6 +316,8 @@ describe('F028: Game Over State Behavior', () => {
             };
             const mockContext = {
                 fillStyle: '',
+                strokeStyle: '',
+                lineWidth: 0,
                 fillRect: jest.fn(),
                 clearRect: jest.fn(),
                 beginPath: jest.fn(),
@@ -324,6 +326,9 @@ describe('F028: Game Over State Behavior', () => {
                 stroke: jest.fn(),
                 arc: jest.fn(),
                 rect: jest.fn(),
+                ellipse: jest.fn(),
+                moveTo: jest.fn(),
+                lineTo: jest.fn(),
                 font: '',
                 textAlign: '',
                 textBaseline: '',
@@ -380,6 +385,8 @@ describe('F028: Game Over State Behavior', () => {
             };
             const mockContext = {
                 fillStyle: '',
+                strokeStyle: '',
+                lineWidth: 0,
                 fillRect: jest.fn(),
                 clearRect: jest.fn(),
                 beginPath: jest.fn(),
@@ -388,6 +395,9 @@ describe('F028: Game Over State Behavior', () => {
                 stroke: jest.fn(),
                 arc: jest.fn(),
                 rect: jest.fn(),
+                ellipse: jest.fn(),
+                moveTo: jest.fn(),
+                lineTo: jest.fn(),
                 font: '',
                 textAlign: '',
                 textBaseline: '',
@@ -435,6 +445,8 @@ describe('F028: Game Over State Behavior', () => {
             };
             const mockContext = {
                 fillStyle: '',
+                strokeStyle: '',
+                lineWidth: 0,
                 fillRect: jest.fn(),
                 clearRect: jest.fn(),
                 beginPath: jest.fn(),
@@ -443,6 +455,9 @@ describe('F028: Game Over State Behavior', () => {
                 stroke: jest.fn(),
                 arc: jest.fn(),
                 rect: jest.fn(),
+                ellipse: jest.fn(),
+                moveTo: jest.fn(),
+                lineTo: jest.fn(),
                 font: '',
                 textAlign: '',
                 textBaseline: '',

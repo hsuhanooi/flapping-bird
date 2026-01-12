@@ -76,13 +76,13 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 | F031 | Implement Restart Transition | COMPLETE | 13 passing |
 | F032 | Load High Score from Storage | COMPLETE | 22 passing |
 | F033 | Save High Score to Storage | COMPLETE | 21 passing |
-| F034 | Display High Score | NOT STARTED | - |
-| F035 | Add Touch Event Listener | NOT STARTED | - |
-| F036 | Add Mobile Viewport Meta | NOT STARTED | - |
-| F037 | Responsive Canvas Scaling | NOT STARTED | - |
-| F038 | Add Bird Rotation Based on Velocity | NOT STARTED | - |
-| F039 | Style Sky Background | NOT STARTED | - |
-| F040 | Style Bird Appearance | NOT STARTED | - |
+| F034 | Display High Score | COMPLETE | 17 passing |
+| F035 | Add Touch Event Listener | COMPLETE | 15 passing |
+| F036 | Add Mobile Viewport Meta | COMPLETE | 13 passing |
+| F037 | Responsive Canvas Scaling | COMPLETE | 23 passing |
+| F038 | Add Bird Rotation Based on Velocity | COMPLETE | 20 passing |
+| F039 | Style Sky Background | COMPLETE | 17 passing |
+| F040 | Style Bird Appearance | COMPLETE | 31 passing |
 | **C004** | **Browser Checkpoint: High Score and Mobile** | NOT STARTED | Browser |
 
 ### Final Visual Polish (F041-F043, then C005)
@@ -107,14 +107,14 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 ---
 
 ## Overall Progress
-**Total Items:** 36/48 (75%)
-**Features:** 33/43 (77%)
+**Total Items:** 37/48 (77%)
+**Features:** 34/43 (79%)
 **Checkpoints:** 3/5 (60%)
 
 ---
 
 ## Next Steps
-- F034: Display High Score
+- C004: Browser Checkpoint: High Score and Mobile
 
 ---
 
@@ -1553,5 +1553,51 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 - The sky gradient uses pleasant blue tones that match classic Flappy Bird aesthetic
 - Gradient is vertical (top to bottom) which creates natural sky appearance
 - All existing tests have been updated to work with the new gradient implementation
+
+---
+
+### [2026-01-12] - F040: Style Bird Appearance
+**Status:** COMPLETE
+
+**Implemented:**
+- Modified renderBird() function to use ellipse shape instead of rectangle
+- Changed bird body from yellow rectangle to ellipse with:
+  - Yellow/gold fill color (#f7dc6f) for the body
+  - Darker gold outline (#d4ac0d) with 2px line width
+- Added eye detail:
+  - White circle (#ffffff) with dark outline (#333333)
+  - Black pupil (#000000) positioned slightly to the right
+- Added beak detail:
+  - Orange triangle (#ff6b35) on the right side of bird
+  - Darker orange outline (#cc5500)
+- All visual elements use canvas transformations (save/translate/rotate/restore)
+- Bird rotation based on velocity (from F038) still works with new ellipse shape
+
+**Visual Appearance:**
+- Bird body is an ellipse with bodyRadiusX = bird.width/2 (17px) and bodyRadiusY = bird.height/2 (12px)
+- Eye positioned at (bodyRadiusX * 0.3, -bodyRadiusY * 0.2) with 5px radius
+- Pupil positioned slightly right of eye center with 2px radius
+- Beak is a triangle extending from right side of body
+- All elements have outlines for visibility and style
+
+**Files Modified:**
+- game.js - Complete rewrite of renderBird() function for styled bird appearance
+- tests/bird-rendering.test.js - Updated tests for ellipse-based rendering
+- tests/bird-rotation.test.js - Updated test for ellipse instead of fillRect
+- tests/game-over-state-behavior.test.js - Added ellipse, moveTo, lineTo mocks
+- tests/game-loop.test.js - Added ellipse, moveTo, lineTo mocks
+
+**Files Created:**
+- tests/bird-styling.test.js - 31 unit tests for bird styling functionality
+
+**Tests:** 31/31 passing (747 total across all test files)
+
+**Notes for Next Developer:**
+- C004 (Browser Checkpoint: High Score and Mobile) is next
+- The bird now has a much more appealing appearance with ellipse body, eye, and beak
+- Bird is clearly visible against sky background due to warm colors (yellow/orange vs blue)
+- All visual elements have outlines for additional visibility
+- The rotation still works correctly - bird tilts based on velocity
+- Previous fillRect-based tests have been updated to check for ellipse instead
 
 ---

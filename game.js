@@ -432,7 +432,7 @@ function drawBackground() {
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
-// Render bird as a yellow filled rectangle with rotation based on velocity
+// Render bird with improved visual design (rounded body with eye)
 function renderBird() {
     // Calculate rotation angle from bird velocity
     // Map velocity range (FLAP_STRENGTH to MAX_VELOCITY) to angle range (-30 to 90 degrees)
@@ -442,35 +442,88 @@ function renderBird() {
     const maxVelocity = MAX_VELOCITY;   // 10
     const minAngle = -30;  // degrees (tilted up)
     const maxAngle = 90;   // degrees (tilted down)
-    
+
     // Clamp velocity to range [minVelocity, maxVelocity]
     const clampedVelocity = Math.max(minVelocity, Math.min(maxVelocity, bird.velocity));
-    
+
     // Map velocity to angle using linear interpolation
     // angle = minAngle + (velocity - minVelocity) * (maxAngle - minAngle) / (maxVelocity - minVelocity)
     const velocityRange = maxVelocity - minVelocity;  // 10 - (-8) = 18
     const angleRange = maxAngle - minAngle;  // 90 - (-30) = 120
     const normalizedVelocity = clampedVelocity - minVelocity;  // 0 to 18
     const rotationAngle = minAngle + (normalizedVelocity / velocityRange) * angleRange;
-    
+
     // Convert angle from degrees to radians for ctx.rotate()
     const rotationRadians = (rotationAngle * Math.PI) / 180;
-    
+
     // Save the current canvas state
     ctx.save();
-    
+
     // Translate to bird center (x + width/2, y + height/2)
     const birdCenterX = bird.x + bird.width / 2;
     const birdCenterY = bird.y + bird.height / 2;
     ctx.translate(birdCenterX, birdCenterY);
-    
+
     // Rotate around bird center
     ctx.rotate(rotationRadians);
-    
-    // Draw bird centered at origin (since we translated to center)
-    ctx.fillStyle = '#f7dc6f';  // Yellow color
-    ctx.fillRect(-bird.width / 2, -bird.height / 2, bird.width, bird.height);
-    
+
+    // Bird body dimensions (ellipse/rounded shape)
+    const bodyRadiusX = bird.width / 2;  // 17px horizontal radius
+    const bodyRadiusY = bird.height / 2;  // 12px vertical radius
+
+    // Draw bird body as an ellipse with yellow/orange fill
+    ctx.beginPath();
+    ctx.ellipse(0, 0, bodyRadiusX, bodyRadiusY, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#f7dc6f';  // Yellow/gold color for body
+    ctx.fill();
+
+    // Add darker outline/stroke
+    ctx.strokeStyle = '#d4ac0d';  // Darker gold/orange outline
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Draw eye (simple white circle with black pupil)
+    // Position eye slightly to the right and up from center
+    const eyeX = bodyRadiusX * 0.3;  // ~5px right of center
+    const eyeY = -bodyRadiusY * 0.2;  // ~2px above center
+    const eyeRadius = 5;
+
+    // Eye white
+    ctx.beginPath();
+    ctx.arc(eyeX, eyeY, eyeRadius, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff';  // White
+    ctx.fill();
+    ctx.strokeStyle = '#333333';  // Dark outline
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Eye pupil (black dot)
+    const pupilX = eyeX + 1;  // Slightly to the right (looking forward)
+    const pupilY = eyeY;
+    const pupilRadius = 2;
+
+    ctx.beginPath();
+    ctx.arc(pupilX, pupilY, pupilRadius, 0, Math.PI * 2);
+    ctx.fillStyle = '#000000';  // Black
+    ctx.fill();
+
+    // Draw beak (small orange triangle on the right side)
+    const beakStartX = bodyRadiusX * 0.7;  // Start from right side of body
+    const beakEndX = bodyRadiusX + 6;  // Extend past body
+    const beakY = bodyRadiusY * 0.2;  // Slightly below center
+    const beakHeight = 4;
+
+    ctx.beginPath();
+    ctx.moveTo(beakStartX, beakY - beakHeight);  // Top of beak
+    ctx.lineTo(beakEndX, beakY);  // Tip of beak
+    ctx.lineTo(beakStartX, beakY + beakHeight);  // Bottom of beak
+    ctx.closePath();
+    ctx.fillStyle = '#ff6b35';  // Orange color for beak
+    ctx.fill();
+    ctx.strokeStyle = '#cc5500';  // Darker orange outline
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
     // Restore the canvas state
     ctx.restore();
 }

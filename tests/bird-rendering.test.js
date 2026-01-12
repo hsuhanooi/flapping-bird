@@ -109,34 +109,39 @@ describe('F006: Render Bird', () => {
         });
     });
 
-    describe('Bird rendering fillRect call', () => {
-        test('renderBird calls fillRect with bird dimensions (after translation/rotation)', () => {
-            // Verify the fillRect call in renderBird uses bird dimensions
-            // After F038, bird is drawn centered at origin after translation, so fillRect uses -width/2, -height/2
+    describe('Bird rendering with ellipse (F040 styled bird)', () => {
+        test('renderBird uses ellipse for bird body shape', () => {
+            // After F040, bird body is drawn using ellipse instead of fillRect
             const renderBirdMatch = gameJs.match(/function\s+renderBird\s*\(\s*\)\s*\{[\s\S]*?\}/);
             expect(renderBirdMatch).not.toBeNull();
             const body = renderBirdMatch[0];
 
-            // Should have fillRect with bird dimensions (may be after translation/rotation)
-            expect(body).toMatch(/fillRect.*bird\.width.*bird\.height/);
+            // Should have ellipse call for bird body
+            expect(body).toMatch(/ctx\.ellipse/);
         });
 
-        test('renderBird sets fillStyle before fillRect', () => {
+        test('renderBird sets fillStyle before calling fill() for ellipse body', () => {
             const renderBirdMatch = gameJs.match(/function\s+renderBird\s*\(\s*\)\s*\{[\s\S]*?\}/);
             expect(renderBirdMatch).not.toBeNull();
             const body = renderBirdMatch[0];
 
+            // In the new ellipse-based rendering, the order is:
+            // 1. beginPath()
+            // 2. ellipse()
+            // 3. fillStyle = color
+            // 4. fill()
+            // So we check that fillStyle comes before fill() (the method that actually draws)
             const fillStylePos = body.indexOf('fillStyle');
-            const fillRectPos = body.indexOf('fillRect');
+            const fillPos = body.indexOf('.fill(');
 
-            expect(fillStylePos).toBeLessThan(fillRectPos);
+            expect(fillStylePos).toBeLessThan(fillPos);
         });
 
-        test('renderBird uses correct parameters in fillRect', () => {
+        test('renderBird uses correct parameters (bird dimensions)', () => {
             const renderBirdMatch = gameJs.match(/function\s+renderBird\s*\(\s*\)\s*\{[\s\S]*?\}/);
             expect(renderBirdMatch).not.toBeNull();
 
-            // Check that all four bird properties are used in fillRect
+            // Check that bird properties are used
             expect(renderBirdMatch[0]).toContain('bird.x');
             expect(renderBirdMatch[0]).toContain('bird.y');
             expect(renderBirdMatch[0]).toContain('bird.width');

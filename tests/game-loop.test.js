@@ -232,8 +232,18 @@ describe('F004: Game Loop - Runtime Behavior', () => {
         };
         const mockCtx = {
             fillStyle: '',
+            strokeStyle: '',
+            lineWidth: 0,
             fillRect: jest.fn(),
             clearRect: jest.fn(),
+            beginPath: jest.fn(),
+            closePath: jest.fn(),
+            fill: jest.fn(),
+            stroke: jest.fn(),
+            arc: jest.fn(),
+            ellipse: jest.fn(),
+            moveTo: jest.fn(),
+            lineTo: jest.fn(),
             font: '',
             textAlign: '',
             textBaseline: '',

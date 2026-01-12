@@ -878,7 +878,7 @@
         "Bird is clearly visible against background",
         "Bird style matches game aesthetic"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "C004",

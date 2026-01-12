@@ -60,10 +60,10 @@ describe('F038: Add Bird Rotation Based on Velocity', () => {
     });
 
     describe('Bird rendering with rotation', () => {
-        test('bird is drawn centered at origin after translation', () => {
-            // After translate to center, bird should be drawn at (-width/2, -height/2)
-            expect(gameCode).toMatch(/fillRect.*-.*bird\.width.*2/i);
-            expect(gameCode).toMatch(/fillRect.*-.*bird\.height.*2/i);
+        test('bird is drawn centered at origin after translation using ellipse', () => {
+            // After F040, bird body is drawn using ellipse instead of fillRect
+            // Ellipse is drawn at origin (0, 0) after translation to bird center
+            expect(gameCode).toMatch(/ctx\.ellipse\s*\(\s*0\s*,\s*0/);
         });
 
         test('renderBird still sets fillStyle to yellow', () => {
