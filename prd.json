@@ -1000,7 +1000,7 @@
         "No console errors",
         "Game is ready for release"
       ],
-      "passes": false
+      "passes": true
     }
   ],
   "testing_requirements": {
