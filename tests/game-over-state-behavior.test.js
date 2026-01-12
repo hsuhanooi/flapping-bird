@@ -30,6 +30,8 @@ describe('F028: Game Over State Behavior', () => {
         };
         const mockContext = {
             fillStyle: '',
+            strokeStyle: '',
+            lineWidth: 0,
             fillRect: jest.fn(),
             clearRect: jest.fn(),
             beginPath: jest.fn(),
@@ -42,6 +44,7 @@ describe('F028: Game Over State Behavior', () => {
             textAlign: '',
             textBaseline: '',
             fillText: jest.fn(),
+            strokeText: jest.fn(),
             createLinearGradient: jest.fn(() => mockGradient),
         };
 
@@ -334,6 +337,7 @@ describe('F028: Game Over State Behavior', () => {
                 textAlign: '',
                 textBaseline: '',
                 fillText: jest.fn(),
+                strokeText: jest.fn(),
                 save: jest.fn(),
                 restore: jest.fn(),
                 translate: jest.fn(),
@@ -404,6 +408,7 @@ describe('F028: Game Over State Behavior', () => {
                 textAlign: '',
                 textBaseline: '',
                 fillText: jest.fn(),
+                strokeText: jest.fn(),
                 save: jest.fn(),
                 restore: jest.fn(),
                 translate: jest.fn(),
@@ -465,6 +470,7 @@ describe('F028: Game Over State Behavior', () => {
                 textAlign: '',
                 textBaseline: '',
                 fillText: jest.fn(),
+                strokeText: jest.fn(),
                 save: jest.fn(),
                 restore: jest.fn(),
                 translate: jest.fn(),

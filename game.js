@@ -599,77 +599,170 @@ function renderPipes() {
     }
 }
 
-// Render ground at bottom of canvas
+// Ground styling constants
+const GRASS_HEIGHT = 12;  // Height of the grass strip at top of ground
+
+// Render ground at bottom of canvas with grass strip and texture
 function renderGround() {
-    ctx.fillStyle = '#deb887';  // Tan/brown color
     const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
-    ctx.fillRect(0, groundY, CANVAS_WIDTH, GROUND_HEIGHT);
+
+    // ===== GRASS STRIP =====
+    // Draw grass-colored strip at top of ground (where it meets sky/playable area)
+    ctx.fillStyle = '#7cba3d';  // Bright grass green color
+    ctx.fillRect(0, groundY, CANVAS_WIDTH, GRASS_HEIGHT);
+
+    // Add slightly darker grass line at very top for definition
+    ctx.fillStyle = '#5a9a2b';  // Darker green for grass edge
+    ctx.fillRect(0, groundY, CANVAS_WIDTH, 2);
+
+    // ===== DIRT/GROUND BASE =====
+    // Draw tan/brown dirt below grass strip
+    const dirtY = groundY + GRASS_HEIGHT;
+    const dirtHeight = GROUND_HEIGHT - GRASS_HEIGHT;
+    ctx.fillStyle = '#deb887';  // Tan/brown color for dirt
+    ctx.fillRect(0, dirtY, CANVAS_WIDTH, dirtHeight);
+
+    // ===== TEXTURE PATTERN (horizontal stripes) =====
+    // Add simple stripe texture to ground for visual interest
+    ctx.fillStyle = '#c9a76c';  // Slightly darker tan for stripes
+    const stripeHeight = 4;
+    const stripeSpacing = 16;  // Distance between stripes
+
+    // Draw horizontal stripes across the dirt area
+    for (let y = dirtY + 8; y < CANVAS_HEIGHT; y += stripeSpacing) {
+        ctx.fillRect(0, y, CANVAS_WIDTH, stripeHeight);
+    }
+
+    // ===== GROUND OUTLINE =====
+    // Add dark outline at the very bottom of grass strip for definition
+    ctx.strokeStyle = '#4a8a1b';  // Dark green outline
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, groundY + GRASS_HEIGHT);
+    ctx.lineTo(CANVAS_WIDTH, groundY + GRASS_HEIGHT);
+    ctx.stroke();
 }
 
 // Render score at top center of canvas
 function renderScore() {
-    ctx.fillStyle = '#ffffff';  // White color
     ctx.font = '48px sans-serif';  // Large font size for visibility
     ctx.textAlign = 'center';  // Center text horizontally
     ctx.textBaseline = 'top';  // Align text from top
+    
+    // Add dark outline for readability
+    ctx.strokeStyle = '#000000';  // Black outline
+    ctx.lineWidth = 3;  // Outline width
+    ctx.strokeText(score.toString(), CANVAS_WIDTH / 2, 20);  // Draw outline first
+    
+    // Draw text fill
+    ctx.fillStyle = '#ffffff';  // White color
     ctx.fillText(score.toString(), CANVAS_WIDTH / 2, 20);  // Draw score at top center
 }
 
 // Render start screen UI (title and instructions)
 function renderStartScreen() {
     // Draw 'Flappy Bird' title text (centered)
-    ctx.fillStyle = '#ffffff';  // White color
     ctx.font = 'bold 64px sans-serif';  // Large, bold font for title
     ctx.textAlign = 'center';  // Center text horizontally
     ctx.textBaseline = 'middle';  // Align text from center
+    
+    // Add dark outline for readability
+    ctx.strokeStyle = '#000000';  // Black outline
+    ctx.lineWidth = 4;  // Outline width for title
+    ctx.strokeText('Flappy Bird', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 80);  // Draw outline first
+    
+    // Draw text fill
+    ctx.fillStyle = '#ffffff';  // White color
     ctx.fillText('Flappy Bird', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 80);  // Draw title centered, slightly above center
     
     // Draw 'Press Space or Click to Start' instruction
-    ctx.fillStyle = '#ffffff';  // White color
     ctx.font = '24px sans-serif';  // Smaller font for instructions
     ctx.textAlign = 'center';  // Center text horizontally
     ctx.textBaseline = 'middle';  // Align text from center
+    
+    // Add dark outline for readability
+    ctx.strokeStyle = '#000000';  // Black outline
+    ctx.lineWidth = 2;  // Outline width for instructions
+    ctx.strokeText('Press Space or Click to Start', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 20);  // Draw outline first
+    
+    // Draw text fill
+    ctx.fillStyle = '#ffffff';  // White color
     ctx.fillText('Press Space or Click to Start', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 20);  // Draw instructions below title
 }
 
 // Render game over screen UI (game over message and final score)
 function renderGameOverScreen() {
     // Draw 'Game Over' text (centered)
-    ctx.fillStyle = '#ffffff';  // White color
     ctx.font = 'bold 64px sans-serif';  // Large, bold font for title
     ctx.textAlign = 'center';  // Center text horizontally
     ctx.textBaseline = 'middle';  // Align text from center
+    
+    // Add dark outline for readability
+    ctx.strokeStyle = '#000000';  // Black outline
+    ctx.lineWidth = 4;  // Outline width for title
+    ctx.strokeText('Game Over', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 100);  // Draw outline first
+    
+    // Draw text fill
+    ctx.fillStyle = '#ffffff';  // White color
     ctx.fillText('Game Over', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 100);  // Draw title centered, slightly above center
 
     // Draw 'Score: X' showing final score
-    ctx.fillStyle = '#ffffff';  // White color
     ctx.font = '48px sans-serif';  // Large font for score
     ctx.textAlign = 'center';  // Center text horizontally
     ctx.textBaseline = 'middle';  // Align text from center
+    
+    // Add dark outline for readability
+    ctx.strokeStyle = '#000000';  // Black outline
+    ctx.lineWidth = 3;  // Outline width for score
+    ctx.strokeText('Score: ' + score.toString(), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 40);  // Draw outline first
+    
+    // Draw text fill
+    ctx.fillStyle = '#ffffff';  // White color
     ctx.fillText('Score: ' + score.toString(), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 40);  // Draw score below title
 
     // Draw 'Best: X' showing high score (styled differently - slightly smaller font, different color)
-    ctx.fillStyle = '#ffd700';  // Gold color for high score
     ctx.font = '36px sans-serif';  // Slightly smaller font than current score
     ctx.textAlign = 'center';  // Center text horizontally
     ctx.textBaseline = 'middle';  // Align text from center
+    
+    // Add dark outline for readability
+    ctx.strokeStyle = '#000000';  // Black outline
+    ctx.lineWidth = 3;  // Outline width for high score
+    ctx.strokeText('Best: ' + highScore.toString(), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 10);  // Draw outline first
+    
+    // Draw text fill
+    ctx.fillStyle = '#ffd700';  // Gold color for high score
     ctx.fillText('Best: ' + highScore.toString(), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 10);  // Draw high score below current score
 
     // Show 'New Best!' message if current score equals high score and score > 0
     // (score equals highScore after saveHighScore() was called, meaning we beat the previous high score)
     if (score === highScore && score > 0) {
-        ctx.fillStyle = '#ff6b6b';  // Red/coral color for emphasis
         ctx.font = 'bold 28px sans-serif';  // Bold, noticeable font
         ctx.textAlign = 'center';  // Center text horizontally
         ctx.textBaseline = 'middle';  // Align text from center
+        
+        // Add dark outline for readability
+        ctx.strokeStyle = '#000000';  // Black outline
+        ctx.lineWidth = 2;  // Outline width for "New Best!"
+        ctx.strokeText('New Best!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 50);  // Draw outline first
+        
+        // Draw text fill
+        ctx.fillStyle = '#ff6b6b';  // Red/coral color for emphasis
         ctx.fillText('New Best!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 50);  // Draw below high score
     }
 
     // Draw 'Press Space or Click to Restart' instruction
-    ctx.fillStyle = '#ffffff';  // White color
     ctx.font = '24px sans-serif';  // Smaller font for instructions
     ctx.textAlign = 'center';  // Center text horizontally
     ctx.textBaseline = 'middle';  // Align text from center
+    
+    // Add dark outline for readability
+    ctx.strokeStyle = '#000000';  // Black outline
+    ctx.lineWidth = 2;  // Outline width for instructions
+    ctx.strokeText('Press Space or Click to Restart', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 100);  // Draw outline first
+    
+    // Draw text fill
+    ctx.fillStyle = '#ffffff';  // White color
     ctx.fillText('Press Space or Click to Restart', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 100);  // Draw instructions below high score
 }
 

@@ -88,8 +88,8 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 ### Final Visual Polish (F041-F043, then C005)
 | ID | Title | Status | Tests |
 |----|-------|--------|-------|
-| F041 | Style Pipe Appearance | NOT STARTED | - |
-| F042 | Style Ground Appearance | NOT STARTED | - |
+| F041 | Style Pipe Appearance | COMPLETE | 31 passing |
+| F042 | Style Ground Appearance | COMPLETE | 28 passing |
 | F043 | Style Game Text | NOT STARTED | - |
 | **C005** | **Browser Checkpoint: Final Visual Polish** | NOT STARTED | Browser |
 
@@ -107,14 +107,14 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 ---
 
 ## Overall Progress
-**Total Items:** 37/48 (77%)
-**Features:** 34/43 (79%)
+**Total Items:** 38/48 (79%)
+**Features:** 35/43 (81%)
 **Checkpoints:** 3/5 (60%)
 
 ---
 
 ## Next Steps
-- C004: Browser Checkpoint: High Score and Mobile
+- F043: Style Game Text
 
 ---
 
@@ -1643,3 +1643,88 @@ Tech Stack: HTML5 Canvas, Vanilla JavaScript, CSS, Jest for testing
 
 ---
 
+
+### [2026-01-12] - F042: Style Ground Appearance
+**Status:** COMPLETE
+
+**Implemented:**
+- Added GRASS_HEIGHT constant (12px) for the height of the grass strip at top of ground
+- Modified renderGround() function to draw styled ground with multiple layers:
+  - Grass strip at top of ground (#7cba3d - bright grass green)
+  - Darker grass line at very top for definition (#5a9a2b)
+  - Tan/brown dirt area below grass (#deb887)
+  - Horizontal stripe texture pattern across dirt (#c9a76c - darker tan)
+  - Dark green outline at grass/dirt boundary (#4a8a1b)
+- Ground layers are drawn in correct order: grass first, then dirt, then stripes
+- Stripes are 4px tall with 16px spacing for visual texture
+- Ground now has distinct grass strip that contrasts with sky background
+- All colors chosen to provide warm earth tones contrasting with cool sky blues
+
+**Visual Appearance:**
+- Bright green grass strip (12px) at top of ground provides clear boundary with playable area
+- Tan/brown dirt below grass with stripe texture for visual interest
+- Dark outline at grass/dirt boundary provides definition
+- Warm earth tone colors contrast well with cool blue sky gradient
+- Visual style matches classic game aesthetic
+
+**Files Modified:**
+- game.js - Added GRASS_HEIGHT constant and rewrote renderGround() for styled appearance
+
+**Files Created:**
+- tests/ground-styling.test.js - 28 unit tests for ground styling functionality
+
+**Tests:** 28/28 passing (809 total across all test files)
+
+**Notes for Next Developer:**
+- F043 (Style Game Text) is next - improve text appearance throughout game
+- Ground now has grass strip, dirt area, and stripe texture
+- GRASS_HEIGHT (12px) defines the grass strip size at top of ground
+- All ground rendering happens in renderGround() function
+- Stripe pattern uses a for loop to draw horizontal lines at regular intervals
+- Ground contrasts well with sky gradient and provides clear visual boundary
+
+---
+
+
+### [2026-01-12] - F043: Style Game Text
+**Status:** COMPLETE
+
+**Implemented:**
+- Added text shadow/outline for readability using strokeText with black outline
+- All text rendering functions (renderScore, renderStartScreen, renderGameOverScreen) now use strokeText before fillText
+- Outline color set to black (#000000) for maximum visibility against all backgrounds
+- Outline width varies by text size:
+  - Title text (64px): 4px outline
+  - Score text (48px): 3px outline
+  - High score text (36px): 3px outline
+  - "New Best!" text (28px): 2px outline
+  - Instruction text (24px): 2px outline
+- Consistent font family (sans-serif) already implemented across all text
+- Consistent text colors maintained:
+  - White (#ffffff) for most text
+  - Gold (#ffd700) for high score
+  - Red/coral (#ff6b6b) for "New Best!" message
+- Proper text sizing already implemented for all screens
+
+**Text Styling Behavior:**
+- All text now has dark outline drawn before fill text for readability
+- Text is easily readable against sky background, ground, pipes, and all game elements
+- Outline provides contrast ensuring text visibility in all scenarios
+- Text styling is consistent across all game screens (start, playing, game over)
+
+**Files Modified:**
+- game.js - Added strokeText calls with black outline to all text rendering functions
+- tests/game-text-styling.test.js - Created 30 unit tests for text styling functionality
+- tests/game-over-state-behavior.test.js - Added strokeText to mock contexts
+- tests/game-loop.test.js - Added strokeText to mock context
+
+**Tests:** 30/30 passing (839 total across all test files)
+
+**Notes for Next Developer:**
+- C005 (Browser Checkpoint: Final Visual Polish) is next
+- All text now has dark outlines for maximum readability
+- Text is visible against all backgrounds (sky, ground, pipes, etc.)
+- The strokeText/fillText pattern ensures text is readable in all scenarios
+- All existing tests have been updated to work with the new text styling
+
+---

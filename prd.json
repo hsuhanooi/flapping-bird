@@ -946,7 +946,7 @@
         "Ground is clearly distinguishable from sky",
         "Visual style matches game aesthetic"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "F043",
@@ -965,7 +965,7 @@
         "Text styling is consistent",
         "Text visible against all backgrounds"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "C005",

@@ -248,6 +248,7 @@ describe('F004: Game Loop - Runtime Behavior', () => {
             textAlign: '',
             textBaseline: '',
             fillText: jest.fn(),
+            strokeText: jest.fn(),
             save: jest.fn(),
             restore: jest.fn(),
             translate: jest.fn(),
