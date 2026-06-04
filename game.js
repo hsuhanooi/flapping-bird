@@ -57,6 +57,10 @@ const PIPE_WIDTH = 52;  // Width of each pipe in pixels
 const PIPE_GAP = 120;  // Vertical gap between top and bottom pipes in pixels
 const PIPE_SPEED = 2;  // Horizontal speed of pipes (pixels per frame)
 const PIPE_SPAWN_INTERVAL = 90;  // Frames between spawning new pipes
+// Sky theme: buildings sit flush against each other (no horizontal gap).
+// Spacing between obstacles = PIPE_SPEED * interval, so PIPE_WIDTH / PIPE_SPEED
+// makes each building's right edge meet the next building's left edge exactly.
+const SKY_BUILDING_INTERVAL = PIPE_WIDTH / PIPE_SPEED;  // 26 frames
 
 // Pipes array to hold all active pipes
 const pipes = [];
@@ -218,8 +222,18 @@ function spawnPipe() {
     // This ensures there's always at least 50px space at top and bottom
     const minTopHeight = 50;
     const maxTopHeight = groundY - PIPE_GAP - 50;
-    const topHeight = Math.floor(Math.random() * (maxTopHeight - minTopHeight + 1)) + minTopHeight;
-    
+    let topHeight = Math.floor(Math.random() * (maxTopHeight - minTopHeight + 1)) + minTopHeight;
+
+    // Sky theme: buildings are flush, so a fully random gap height would make
+    // the skyline impossible to thread. Nudge each gap only a little from the
+    // previous building's gap to keep a continuous, navigable cityscape.
+    if (isSkyTheme && pipes.length > 0) {
+        const prevTop = pipes[pipes.length - 1].topHeight;
+        const maxStep = 26;  // max vertical change between adjacent buildings
+        const delta = Math.max(-maxStep, Math.min(maxStep, topHeight - prevTop));
+        topHeight = Math.max(minTopHeight, Math.min(maxTopHeight, prevTop + delta));
+    }
+
     // Calculate bottomY from topHeight + PIPE_GAP
     const bottomY = topHeight + PIPE_GAP;
     
@@ -321,8 +335,10 @@ function updatePipes() {
         }
     }
     
-    // Spawn new pipe at regular intervals
-    if (frameCount % PIPE_SPAWN_INTERVAL === 0) {
+    // Spawn new pipe at regular intervals.
+    // Sky theme spawns buildings flush side-by-side at a much tighter cadence.
+    if ((!isSkyTheme && frameCount % PIPE_SPAWN_INTERVAL === 0) ||
+        (isSkyTheme && frameCount % SKY_BUILDING_INTERVAL === 0)) {
         spawnPipe();
     }
 }
@@ -739,8 +755,73 @@ function renderBird() {
 const PIPE_CAP_HEIGHT = 26;  // Height of the pipe cap at gap edges
 const PIPE_CAP_OVERHANG = 4;  // How much the cap extends past the pipe body on each side
 
+// Dusk building palette for the sky theme cityscape obstacles
+const SKY_BUILDING_COLORS = ['#3b4a63', '#46506b', '#2f3c55', '#525a73', '#3a4560'];
+
+// Draw a single skyscraper obstacle (windows + roof) for the sky theme.
+// facingDown = top obstacle that hangs from the ceiling; otherwise it rises
+// from the ground. seed keeps window/colour choices stable per building.
+function drawSkyBuilding(x, y, height, facingDown, seed) {
+    if (height <= 0) return;
+
+    const colorIndex = Math.floor(seed / 11) % SKY_BUILDING_COLORS.length;
+    const body = SKY_BUILDING_COLORS[(colorIndex + SKY_BUILDING_COLORS.length) % SKY_BUILDING_COLORS.length];
+
+    // Building body
+    ctx.fillStyle = body;
+    ctx.fillRect(x, y, PIPE_WIDTH, height);
+
+    // Outline for definition against the dusk sky
+    ctx.strokeStyle = '#1b2336';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, PIPE_WIDTH, height);
+
+    // Roof / parapet band on the gap-facing edge (lighter, catches the light)
+    const capHeight = 5;
+    const capY = facingDown ? (y + height - capHeight) : y;
+    ctx.fillStyle = '#6b7799';
+    ctx.fillRect(x - 1, capY, PIPE_WIDTH + 2, capHeight);
+    ctx.strokeStyle = '#1b2336';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x - 1, capY, PIPE_WIDTH + 2, capHeight);
+
+    // Lit / dark windows in a regular grid
+    const marginX = 7;
+    const marginY = 8;
+    const winW = 5;
+    const winH = 7;
+    const stepX = 11;
+    const stepY = 13;
+    for (let row = 0; ; row++) {
+        const wy = y + marginY + row * stepY;
+        if (wy + winH > y + height - marginY) break;
+        for (let col = 0; ; col++) {
+            const wx = x + marginX + col * stepX;
+            if (wx + winW > x + PIPE_WIDTH - marginX) break;
+            const lit = ((col * 2 + row * 3 + seed) % 4) === 0;
+            ctx.fillStyle = lit ? 'rgba(245,200,120,0.92)' : '#26324a';
+            ctx.fillRect(wx, wy, winW, winH);
+        }
+    }
+}
+
+// Render the obstacles as a flush row of city buildings (sky theme)
+function renderSkyBuildings() {
+    const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
+    for (let i = 0; i < pipes.length; i++) {
+        const pipe = pipes[i];
+        // Top obstacle: skyscraper hanging from the top edge
+        drawSkyBuilding(pipe.x, 0, pipe.topHeight, true, pipe.topHeight);
+        // Bottom obstacle: skyscraper rising from the shoreline
+        drawSkyBuilding(pipe.x, pipe.bottomY, groundY - pipe.bottomY, false, pipe.topHeight + 5);
+    }
+}
+
 // Render pipes with styled appearance (caps at gap edges, outlines)
 function renderPipes() {
+    // Travel-themed skin: obstacles are little buildings forming a cityscape
+    if (isSkyTheme) return renderSkyBuildings();
+
     const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
 
     // Loop through all pipes in the array
