@@ -8,6 +8,15 @@ const ctx = canvas.getContext('2d');
 const CANVAS_WIDTH = canvas.width;
 const CANVAS_HEIGHT = canvas.height;
 
+// Theme support (e.g. ?theme=sky for a travel-focused skin)
+let THEME = 'default';
+try {
+    THEME = new URLSearchParams(window.location.search).get('theme') || 'default';
+} catch (e) {
+    THEME = 'default';
+}
+const isSkyTheme = THEME === 'sky';
+
 // Game loop state
 let isGameLoopRunning = false;
 let animationFrameId = null;
@@ -416,8 +425,157 @@ function clearCanvas() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
+// Draw the travel-themed background (mountains, city skyline, lake, evergreens)
+// Inspired by a dusk view of a coastal mountain city.
+function drawSkyBackground() {
+    const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
+    const horizonY = 300;       // where mountains/skyline meet the sky
+    const waterY = 380;         // top of the lake
+
+    // ===== SKY GRADIENT (deep dusk blue fading to warm horizon) =====
+    const sky = ctx.createLinearGradient(0, 0, 0, horizonY);
+    sky.addColorStop(0, '#16273f');    // deep dusk blue at top
+    sky.addColorStop(0.55, '#274a6e');
+    sky.addColorStop(0.85, '#7a7e8f');
+    sky.addColorStop(1, '#e3a877');    // warm sunset glow at horizon
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, CANVAS_WIDTH, horizonY);
+
+    // Warm sunset band hugging the horizon
+    const glow = ctx.createLinearGradient(0, horizonY - 40, 0, horizonY + 20);
+    glow.addColorStop(0, 'rgba(240,170,110,0)');
+    glow.addColorStop(1, 'rgba(245,190,130,0.65)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, horizonY - 40, CANVAS_WIDTH, 60);
+
+    // ===== FAR MOUNTAIN RANGE (hazy blue) =====
+    ctx.fillStyle = '#3f5872';
+    ctx.beginPath();
+    ctx.moveTo(0, horizonY);
+    ctx.lineTo(0, 250);
+    ctx.lineTo(70, 215);
+    ctx.lineTo(150, 245);
+    ctx.lineTo(240, 200);
+    ctx.lineTo(330, 240);
+    ctx.lineTo(400, 220);
+    ctx.lineTo(400, horizonY);
+    ctx.closePath();
+    ctx.fill();
+
+    // ===== MAIN MOUNTAIN MASSIF (darker, with snow caps) =====
+    const peaks = [
+        [0, horizonY], [0, 240], [55, 250], [110, 205],
+        [165, 150], [210, 185], [260, 160], [320, 205],
+        [365, 185], [400, 215], [400, horizonY]
+    ];
+    ctx.fillStyle = '#22384a';
+    ctx.beginPath();
+    ctx.moveTo(peaks[0][0], peaks[0][1]);
+    for (let i = 1; i < peaks.length; i++) {
+        ctx.lineTo(peaks[i][0], peaks[i][1]);
+    }
+    ctx.closePath();
+    ctx.fill();
+
+    // Snow caps on the tallest summits
+    ctx.fillStyle = '#dbe9f2';
+    ctx.beginPath();
+    ctx.moveTo(165, 150);
+    ctx.lineTo(150, 178);
+    ctx.lineTo(178, 172);
+    ctx.lineTo(188, 182);
+    ctx.lineTo(200, 174);
+    ctx.lineTo(210, 185);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(260, 160);
+    ctx.lineTo(248, 186);
+    ctx.lineTo(272, 180);
+    ctx.lineTo(282, 192);
+    ctx.lineTo(295, 185);
+    ctx.closePath();
+    ctx.fill();
+
+    // Forested lower slopes (deep green) sitting in front of the rock
+    ctx.fillStyle = '#1c3327';
+    ctx.beginPath();
+    ctx.moveTo(0, horizonY);
+    ctx.lineTo(0, 282);
+    ctx.lineTo(80, 268);
+    ctx.lineTo(170, 278);
+    ctx.lineTo(250, 262);
+    ctx.lineTo(340, 280);
+    ctx.lineTo(400, 270);
+    ctx.lineTo(400, horizonY);
+    ctx.closePath();
+    ctx.fill();
+
+    // ===== CITY SKYLINE (silhouetted buildings with a few lit windows) =====
+    const buildings = [
+        [120, 348, 22], [144, 338, 18], [164, 356, 16], [182, 330, 20],
+        [204, 350, 24], [230, 360, 18], [250, 326, 22], [274, 352, 20],
+        [296, 312, 26], [324, 344, 20], [346, 356, 18], [366, 334, 22]
+    ];
+    for (let i = 0; i < buildings.length; i++) {
+        const [bx, by, bw] = buildings[i];
+        ctx.fillStyle = i % 2 === 0 ? '#564f5b' : '#48434f';
+        ctx.fillRect(bx, by, bw, waterY - by);
+        // Lit windows (warm dusk light)
+        ctx.fillStyle = 'rgba(240,170,95,0.85)';
+        for (let wy = by + 6; wy < waterY - 4; wy += 8) {
+            for (let wx = bx + 3; wx < bx + bw - 3; wx += 7) {
+                if ((wx + wy + i) % 3 === 0) {
+                    ctx.fillRect(wx, wy, 2, 3);
+                }
+            }
+        }
+    }
+
+    // ===== LAKE =====
+    const water = ctx.createLinearGradient(0, waterY, 0, groundY);
+    water.addColorStop(0, '#3a5e7e');
+    water.addColorStop(1, '#26405a');
+    ctx.fillStyle = water;
+    ctx.fillRect(0, waterY, CANVAS_WIDTH, groundY - waterY);
+
+    // City light reflections shimmering on the water
+    ctx.fillStyle = 'rgba(240,170,95,0.25)';
+    for (let i = 0; i < buildings.length; i += 2) {
+        const [bx, , bw] = buildings[i];
+        ctx.fillRect(bx + 2, waterY, Math.max(2, bw - 6), 26);
+    }
+
+    // ===== FOREGROUND EVERGREENS (silhouettes along the shore) =====
+    function drawTree(tx, ty, h) {
+        const w = h * 0.5;
+        ctx.fillStyle = '#13241a';
+        ctx.beginPath();
+        ctx.moveTo(tx, ty - h);
+        ctx.lineTo(tx - w / 2, ty - h * 0.45);
+        ctx.lineTo(tx - w * 0.32, ty - h * 0.45);
+        ctx.lineTo(tx - w * 0.6, ty);
+        ctx.lineTo(tx + w * 0.6, ty);
+        ctx.lineTo(tx + w * 0.32, ty - h * 0.45);
+        ctx.lineTo(tx + w / 2, ty - h * 0.45);
+        ctx.closePath();
+        ctx.fill();
+    }
+    drawTree(40, groundY + 6, 70);
+    drawTree(90, groundY + 10, 50);
+    drawTree(330, groundY + 8, 60);
+    drawTree(372, groundY + 12, 78);
+    drawTree(300, groundY + 14, 44);
+}
+
 // Draw background (sky gradient - light blue at top, slightly darker at bottom)
 function drawBackground() {
+    // Travel-themed skin: render the scenic dusk landscape instead of the flat sky
+    if (isSkyTheme) {
+        drawSkyBackground();
+        return;
+    }
+
     // Create linear gradient from top to bottom
     const gradient = ctx.createLinearGradient(0, 0, 0, CANVAS_HEIGHT);
     
@@ -432,8 +590,57 @@ function drawBackground() {
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
+// Render the bird as a fluffy cloud (travel/sky theme)
+function renderCloudBird() {
+    const cx = bird.x + bird.width / 2;
+    const cy = bird.y + bird.height / 2;
+    const w = bird.width;
+    const h = bird.height;
+
+    // Puff layout (offsets relative to cloud center, radius)
+    const puffs = [
+        [-w * 0.34, h * 0.12, h * 0.40],
+        [-w * 0.04, -h * 0.20, h * 0.50],
+        [w * 0.28, -h * 0.02, h * 0.44],
+        [w * 0.14, h * 0.26, h * 0.36],
+        [-w * 0.20, h * 0.30, h * 0.34]
+    ];
+
+    function tracePuffs(scale, dy) {
+        ctx.beginPath();
+        for (let i = 0; i < puffs.length; i++) {
+            const [px, py, pr] = puffs[i];
+            ctx.moveTo(cx + px + pr * scale, cy + py + dy);
+            ctx.arc(cx + px, cy + py + dy, pr * scale, 0, Math.PI * 2);
+        }
+    }
+
+    ctx.save();
+
+    // Soft drop shadow / underside shading (slightly larger, offset down)
+    tracePuffs(1.05, h * 0.18);
+    ctx.fillStyle = '#b9cad9';
+    ctx.fill();
+
+    // Main cloud body (bright white on top)
+    tracePuffs(1.0, 0);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+
+    // Subtle highlight on the upper-left puffs
+    ctx.beginPath();
+    ctx.arc(cx - w * 0.04, cy - h * 0.28, h * 0.30, 0, Math.PI * 2);
+    ctx.fillStyle = '#f4f9ff';
+    ctx.fill();
+
+    ctx.restore();
+}
+
 // Render bird with improved visual design (rounded body with eye)
 function renderBird() {
+    // Travel-themed skin: the "bird" is a drifting cloud
+    if (isSkyTheme) return renderCloudBird();
+
     // Calculate rotation angle from bird velocity
     // Map velocity range (FLAP_STRENGTH to MAX_VELOCITY) to angle range (-30 to 90 degrees)
     // FLAP_STRENGTH (-8) maps to -30 degrees (tilted up)
@@ -602,8 +809,29 @@ function renderPipes() {
 // Ground styling constants
 const GRASS_HEIGHT = 12;  // Height of the grass strip at top of ground
 
+// Render the shoreline ground for the travel/sky theme (dusk beach + waterline)
+function renderSkyGround() {
+    const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
+
+    // Wet sand / shore gradient
+    const shore = ctx.createLinearGradient(0, groundY, 0, CANVAS_HEIGHT);
+    shore.addColorStop(0, '#5a5360');
+    shore.addColorStop(1, '#3b3742');
+    ctx.fillStyle = shore;
+    ctx.fillRect(0, groundY, CANVAS_WIDTH, GROUND_HEIGHT);
+
+    // Bright waterline lapping at the top edge of the shore
+    ctx.fillStyle = '#7fa9c4';
+    ctx.fillRect(0, groundY, CANVAS_WIDTH, 3);
+    ctx.fillStyle = 'rgba(220,235,245,0.5)';
+    ctx.fillRect(0, groundY + 3, CANVAS_WIDTH, 2);
+}
+
 // Render ground at bottom of canvas with grass strip and texture
 function renderGround() {
+    // Travel-themed skin: render a dusk shoreline instead of grass/dirt
+    if (isSkyTheme) return renderSkyGround();
+
     const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
 
     // ===== GRASS STRIP =====
