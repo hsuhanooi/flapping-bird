@@ -57,10 +57,6 @@ const PIPE_WIDTH = 52;  // Width of each pipe in pixels
 const PIPE_GAP = 120;  // Vertical gap between top and bottom pipes in pixels
 const PIPE_SPEED = 2;  // Horizontal speed of pipes (pixels per frame)
 const PIPE_SPAWN_INTERVAL = 90;  // Frames between spawning new pipes
-// Sky theme: buildings sit flush against each other (no horizontal gap).
-// Spacing between obstacles = PIPE_SPEED * interval, so PIPE_WIDTH / PIPE_SPEED
-// makes each building's right edge meet the next building's left edge exactly.
-const SKY_BUILDING_INTERVAL = PIPE_WIDTH / PIPE_SPEED;  // 26 frames
 
 // Pipes array to hold all active pipes
 const pipes = [];
@@ -222,17 +218,7 @@ function spawnPipe() {
     // This ensures there's always at least 50px space at top and bottom
     const minTopHeight = 50;
     const maxTopHeight = groundY - PIPE_GAP - 50;
-    let topHeight = Math.floor(Math.random() * (maxTopHeight - minTopHeight + 1)) + minTopHeight;
-
-    // Sky theme: buildings are flush, so a fully random gap height would make
-    // the skyline impossible to thread. Nudge each gap only a little from the
-    // previous building's gap to keep a continuous, navigable cityscape.
-    if (isSkyTheme && pipes.length > 0) {
-        const prevTop = pipes[pipes.length - 1].topHeight;
-        const maxStep = 26;  // max vertical change between adjacent buildings
-        const delta = Math.max(-maxStep, Math.min(maxStep, topHeight - prevTop));
-        topHeight = Math.max(minTopHeight, Math.min(maxTopHeight, prevTop + delta));
-    }
+    const topHeight = Math.floor(Math.random() * (maxTopHeight - minTopHeight + 1)) + minTopHeight;
 
     // Calculate bottomY from topHeight + PIPE_GAP
     const bottomY = topHeight + PIPE_GAP;
@@ -335,10 +321,8 @@ function updatePipes() {
         }
     }
     
-    // Spawn new pipe at regular intervals.
-    // Sky theme spawns buildings flush side-by-side at a much tighter cadence.
-    if ((!isSkyTheme && frameCount % PIPE_SPAWN_INTERVAL === 0) ||
-        (isSkyTheme && frameCount % SKY_BUILDING_INTERVAL === 0)) {
+    // Spawn new pipe at regular intervals
+    if (frameCount % PIPE_SPAWN_INTERVAL === 0) {
         spawnPipe();
     }
 }
