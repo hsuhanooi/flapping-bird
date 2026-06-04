@@ -54,7 +54,9 @@ const GROUND_HEIGHT = 80;  // Height of ground area at bottom of canvas (pixels)
 
 // Pipe constants
 const PIPE_WIDTH = 52;  // Width of each pipe in pixels
-const PIPE_GAP = 120;  // Vertical gap between top and bottom pipes in pixels
+const PIPE_GAP = 120;  // Smallest (hardest) vertical gap between top and bottom pipes
+const GAP_START = 230;  // Generous starting gap so early play is easy
+const GAP_SHRINK_RATE = 0.02;  // px per frame; gap shrinks very slowly toward PIPE_GAP over time
 const PIPE_SPEED = 2;  // Horizontal speed of pipes (pixels per frame)
 const PIPE_SPAWN_INTERVAL = 90;  // Frames between spawning new pipes
 
@@ -214,14 +216,20 @@ function updateBird() {
 // Spawn a new pipe at the right edge of the canvas
 function spawnPipe() {
     const groundY = CANVAS_HEIGHT - GROUND_HEIGHT;
-    // Generate random topHeight between 50 and (groundY - PIPE_GAP - 50)
+
+    // Vertical gap starts generous (easy) and shrinks very slowly as the game
+    // goes on, bottoming out at PIPE_GAP (the hardest gap). frameCount resets
+    // each run, so every game starts easy and ramps up gradually over time.
+    const gap = Math.max(PIPE_GAP, GAP_START - frameCount * GAP_SHRINK_RATE);
+
+    // Generate random topHeight between 50 and (groundY - gap - 50)
     // This ensures there's always at least 50px space at top and bottom
     const minTopHeight = 50;
-    const maxTopHeight = groundY - PIPE_GAP - 50;
+    const maxTopHeight = groundY - gap - 50;
     const topHeight = Math.floor(Math.random() * (maxTopHeight - minTopHeight + 1)) + minTopHeight;
 
-    // Calculate bottomY from topHeight + PIPE_GAP
-    const bottomY = topHeight + PIPE_GAP;
+    // Calculate bottomY from topHeight + the current gap
+    const bottomY = topHeight + gap;
     
     // Create new pipe object and add to pipes array
     const newPipe = {
